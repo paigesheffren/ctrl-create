@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #050a30;
+  --mist: #d0d7eb;
+  --royal: #1800ad;
+  --snow: #f4f6fc;
+}
+html, body { scroll-behavior: smooth; background: var(--snow); }
