@@ -22,12 +22,17 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, -apple-system, sans-serif;
       background: radial-gradient(circle at top, #0b1060 0, #02041a 40%, #000 100%);
       color: #ffffff;
       line-height: 1.6;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
     a {
@@ -43,7 +48,7 @@
       width: 360px;
       height: 360px;
       background: radial-gradient(circle at 30% 30%, #1800ad, transparent);
-      opacity: 0.16;
+      opacity: 0.14;
       filter: blur(2px);
       pointer-events: none;
       z-index: 0;
@@ -57,21 +62,23 @@
       100% { transform: translate3d(10px,-20px,0) scale(1.05); }
     }
 
-    /* BIG MOVING BACKGROUND LOGO */
+    /* BIG MOVING / GLOWING BACKGROUND LOGO */
 
     .bg-logo {
       position: fixed;
       inset: 0;
       margin: auto;
       width: min(520px, 72vw);
-      opacity: 0.09;
       z-index: 1;
       pointer-events: none;
-      mix-blend-mode: screen;
-      filter: drop-shadow(0 26px 80px rgba(0,0,0,0.9));
       transform-origin: center;
-      animation: bgLogoFloat 18s ease-in-out infinite alternate;
-      will-change: transform, opacity;
+      mix-blend-mode: screen;
+      opacity: 0.12;
+      filter: drop-shadow(0 0 22px rgba(24,0,173,0.7));
+      animation:
+        bgLogoFloat 18s ease-in-out infinite alternate,
+        pulseGlow 6s ease-in-out infinite;
+      will-change: transform, opacity, filter;
     }
 
     @keyframes bgLogoFloat {
@@ -86,11 +93,19 @@
       }
     }
 
-    /* Make sure content sits above */
+    @keyframes pulseGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 14px rgba(24,0,173,0.3));
+      }
+      50% {
+        filter: drop-shadow(0 0 40px rgba(24,0,173,0.9));
+      }
+    }
+
     header,
     main {
       position: relative;
-      z-index: 2;
+      z-index: 3; /* above logo + blob */
     }
 
     header {
@@ -172,7 +187,7 @@
       padding: 8px 14px;
       border-radius: 999px;
       border: 1px solid rgba(208,215,235,0.3);
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--muted);
@@ -185,7 +200,7 @@
     }
 
     .nav-cta span {
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .nav-cta:hover {
@@ -212,9 +227,9 @@
       padding: 32px 26px;
       border-radius: var(--radius-xl);
       background:
-        radial-gradient(circle at top left, rgba(24,0,173,0.16), transparent),
+        radial-gradient(circle at top left, rgba(24,0,173,0.18), transparent),
         rgba(5,10,48,0.98);
-      border: 1px solid rgba(208,215,235,0.14);
+      border: 1px solid rgba(208,215,235,0.16);
       box-shadow: 0 18px 60px rgba(0,0,0,0.55);
       overflow: hidden;
       transform: translateY(24px);
@@ -229,7 +244,7 @@
     }
 
     .eyebrow {
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
@@ -271,7 +286,7 @@
     .btn-ghost {
       padding: 10px 18px;
       border-radius: 999px;
-      font-size: 13px;
+      font-size: 12px;
       border: none;
       cursor: pointer;
       display: inline-flex;
@@ -309,7 +324,7 @@
     }
 
     .hero-meta {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
     }
 
@@ -325,7 +340,7 @@
       width: 100%;
       height: 210px;
       border-radius: 22px;
-      background: radial-gradient(circle at top, rgba(24,0,173,0.28), rgba(5,10,48,1));
+      background: radial-gradient(circle at top, rgba(24,0,173,0.32), rgba(5,10,48,1));
       border: 1px solid rgba(208,215,235,0.18);
       overflow: hidden;
       display: flex;
@@ -341,8 +356,8 @@
       width: 230px;
       height: 230px;
       border-radius: 50%;
-      border: 1px dashed rgba(208,215,235,0.12);
-      box-shadow: 0 0 40px rgba(24,0,173,0.22);
+      border: 1px dashed rgba(208,215,235,0.18);
+      box-shadow: 0 0 40px rgba(24,0,173,0.24);
       animation: orbit-spin 16s linear infinite;
     }
 
@@ -352,7 +367,7 @@
       height: 9px;
       border-radius: 999px;
       background: #f4f6fc;
-      box-shadow: 0 0 16px rgba(244,246,252,0.65);
+      box-shadow: 0 0 16px rgba(244,246,252,0.7);
       animation: orbit-dot 6s linear infinite;
     }
 
@@ -376,6 +391,7 @@
       text-align: center;
       font-size: 11px;
       color: var(--muted);
+      padding: 0 10px;
     }
 
     .orbit-label h3 {
@@ -388,7 +404,7 @@
       display: inline-block;
       margin-top: 6px;
       padding: 4px 9px;
-      font-size: 9px;
+      font-size: 8px;
       border-radius: 999px;
       border: 1px solid rgba(208,215,235,0.22);
       text-transform: uppercase;
@@ -413,7 +429,7 @@
     }
 
     .muted-label {
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
@@ -424,13 +440,13 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 10px;
+      font-size: 9px;
       color: var(--accent);
       background: rgba(24,0,173,0.16);
       padding: 4px 10px;
       border-radius: 999px;
       border: 1px solid rgba(208,215,235,0.14);
-      margin-bottom: 10px;
+      margin-top: 10px;
     }
 
     .grid-3 {
@@ -446,7 +462,7 @@
       background: rgba(5,10,48,0.98);
       border: 1px solid rgba(208,215,235,0.12);
       box-shadow: 0 10px 26px rgba(0,0,0,0.55);
-      transform: translateY(16px);
+      transform: translateY(18px);
       opacity: 0;
       transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-med);
       will-change: transform, opacity;
@@ -491,7 +507,7 @@
       margin-top: 8px;
     }
 
-    /* "Get a quote" */
+    /* Quote box */
 
     .quote-box {
       margin-top: 18px;
@@ -536,11 +552,11 @@
       border-top: 1px solid rgba(208,215,235,0.12);
     }
 
-    /* Scroll reveal */
+    /* Scroll reveal base */
 
     .scroll-reveal {
       opacity: 0;
-      transform: translateY(18px);
+      transform: translateY(22px);
       transition: transform var(--transition-med), opacity var(--transition-med);
       will-change: transform, opacity;
     }
@@ -548,6 +564,51 @@
     .scroll-reveal.reveal {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Floating CTA */
+
+    .float-cta {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), #5e6bff);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.8);
+      cursor: pointer;
+      z-index: 5;
+      transition: all 0.25s ease;
+    }
+
+    .float-cta span.icon {
+      font-size: 14px;
+    }
+
+    .float-cta:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 18px 46px rgba(24,0,173,0.9);
+    }
+
+    /* Cursor trail dots */
+
+    .trail-dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(208,215,235,0.7);
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s linear;
     }
 
     /* Mobile */
@@ -559,8 +620,8 @@
       }
 
       nav ul {
-        gap: 12px;
-        font-size: 12px;
+        gap: 10px;
+        font-size: 11px;
       }
 
       .hero {
@@ -573,13 +634,20 @@
         height: 190px;
       }
 
-      .bg-logo {
-        width: 68vw;
-        opacity: 0.11;
+      section {
+        margin-top: 38px;
       }
 
-      section {
-        margin-top: 40px;
+      .bg-logo {
+        width: 70vw;
+        opacity: 0.16;
+      }
+
+      .float-cta {
+        right: 14px;
+        bottom: 14px;
+        padding: 9px 14px;
+        font-size: 11px;
       }
     }
   </style>
@@ -662,14 +730,14 @@
       typical design agencies in Montréal.
     </p>
     <ul>
-      <li>7–14 day turnarounds</li>
-      <li>AI-generated copy, human edited</li>
-      <li>Cheaper than typical designers</li>
+      <li>7–14 day turnarounds.</li>
+      <li>AI-generated copy, human edited.</li>
+      <li>Cheaper than typical designers.</li>
       <li>We match your logo, colours, and tone — AI just speeds it up.</li>
     </ul>
 
     <div class="pill">
-      <span>●</span> Palette locked in:
+      <span>●</span> Palette:
       #050a30 • #d0d7eb • #1800ad • #f4f6fc
     </div>
   </section>
@@ -681,21 +749,19 @@
       <div class="card">
         <h3>One-page sites</h3>
         <span>
-          Perfect for launches, promos, personal brands, or link-in-bio.
+          Launch pages, promos, and portfolios that tell your story in one smooth scroll.
         </span>
       </div>
       <div class="card">
         <h3>Business websites</h3>
         <span>
-          3–5 sections with services, about, gallery, FAQs, and contact —
-          built to convert, not just look pretty.
+          3–5 sections: services, about, gallery, FAQs, contact — built to convert.
         </span>
       </div>
       <div class="card">
         <h3>Brand & content</h3>
         <span>
-          We plug into your existing brand or help you define one — then
-          AI helps us move quicker without losing the human touch.
+          We tune your visuals, typography, and copy so everything feels cohesive and sharp.
         </span>
       </div>
     </div>
@@ -719,18 +785,18 @@
       <div class="card">
         <h3>Business Pro</h3>
         <div class="price-tag">$1,000–$1,800</div>
-        <p>3–5 pages, SEO setup, gallery/blog, analytics.</p>
+        <p>3–5 pages, SEO basics, gallery/blog, analytics.</p>
       </div>
 
       <div class="card">
         <h3>Premium Custom</h3>
         <div class="price-tag">$2,000–$3,500</div>
-        <p>6–10 pages, brand integration, light e-com.</p>
+        <p>6–10 pages, deeper brand work, light e-com.</p>
       </div>
     </div>
 
     <div class="add-ons">
-      Add-ons: hosting setup ($150), logo ($150–$250),
+      Add-ons: hosting setup ($150), logo design ($150–$250),
       maintenance ($60–$100/mo).
     </div>
   </section>
@@ -744,7 +810,7 @@
         Drop us a quick brief (business, goals, budget, timeline) and we’ll reply with
         a scoped plan and flat-rate quote.
         <br />
-        <small>Clicking the button opens your email with a pre-filled template.</small>
+        <small>Click the button to open an email with a pre-filled template.</small>
       </div>
       <a
         href="mailto:ctrl@create.com?subject=New%20Project%20Inquiry%20-%20CTRL%20%26%20Create&body=Tell%20us%20about%20your%20business%2C%20your%20goals%2C%20your%20deadline%2C%20and%20your%20rough%20budget.%20We%27ll%20come%20back%20with%20a%20tight%2C%20clear%20plan.%0A%0AName%3A%0ABusiness%3A%0AWebsite%20type%3A%20(One-page%2C%20Business%2C%20Custom)%0ATimeline%3A%0ABudget%20range%3A%0ANotes%3A"
@@ -760,6 +826,11 @@
     <div>AI-assisted. Human-finished.</div>
   </footer>
 </main>
+
+<!-- Floating CTA -->
+<a href="#quote" class="float-cta">
+  <span class="icon">✉️</span> Let’s talk about your site
+</a>
 
 <script>
   // Hero entrance
@@ -778,14 +849,14 @@
         }
       });
     },
-    { threshold: 0.18 }
+    { threshold: 0.2 }
   );
 
-  document.querySelectorAll(".scroll-reveal, .card, .quote-box").forEach((el) => {
-    observer.observe(el);
-  });
+  document
+    .querySelectorAll(".scroll-reveal, .card, .quote-box")
+    .forEach((el) => observer.observe(el));
 
-  // Smooth scroll
+  // Smooth scroll for internal links
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const targetId = link.getAttribute("href").substring(1);
@@ -800,7 +871,7 @@
     });
   });
 
-  // Parallax for bg logo + orbit
+  // Mousemove parallax for bg-logo & orbit
   const bgLogo = document.querySelector(".bg-logo");
   const orbit = document.querySelector(".hero-orbit");
 
@@ -809,8 +880,10 @@
     const y = (e.clientY / window.innerHeight) - 0.5;
 
     if (bgLogo) {
+      const translateX = x * 30;
+      const translateY = y * 18;
       bgLogo.style.transform =
-        `translate3d(${x * 30}px, ${y * 20}px, 0) scale(1.02)`;
+        `translate3d(${translateX}px, ${translateY}px, 0) scale(1.02)`;
     }
 
     if (orbit) {
@@ -818,6 +891,48 @@
         `rotate3d(1, -1, 0, ${x * 10}deg) translateY(0)`;
     }
   });
+
+  // Subtle scroll-based parallax on logo (adds to mouse effect)
+  window.addEventListener("scroll", () => {
+    const scrolled = window.scrollY || window.pageYOffset;
+    if (bgLogo) {
+      const offset = scrolled * -0.04;
+      bgLogo.style.marginTop = offset + "px";
+    }
+  });
+
+  // Cursor trail (lightweight)
+  const trailCount = 10;
+  const dots = [];
+  for (let i = 0; i < trailCount; i++) {
+    const dot = document.createElement("div");
+    dot.className = "trail-dot";
+    document.body.appendChild(dot);
+    dots.push({ el: dot, x: 0, y: 0 });
+  }
+
+  let mouseX = 0;
+  let mouseY = 0;
+
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dots[0].x = mouseX;
+    dots[0].y = mouseY;
+    dots[0].el.style.opacity = "1";
+  });
+
+  function animateTrail() {
+    for (let i = dots.length - 1; i > 0; i--) {
+      dots[i].x += (dots[i - 1].x - dots[i].x) * 0.3;
+      dots[i].y += (dots[i - 1].y - dots[i].y) * 0.3;
+      dots[i].el.style.left = dots[i].x + "px";
+      dots[i].el.style.top = dots[i].y + "px";
+      dots[i].el.style.opacity = (0.2 + (i / dots.length) * 0.4).toString();
+    }
+    requestAnimationFrame(animateTrail);
+  }
+  animateTrail();
 </script>
 </body>
 </html>
