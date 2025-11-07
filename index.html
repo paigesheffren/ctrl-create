@@ -1,181 +1,800 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>CTRL & Create</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="CTRL & Create — simple, fast, AI-assisted websites for small businesses." />
-  <!-- Tailwind CDN for quick styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CTRL & Create — AI-Assisted Web Design</title>
+
   <style>
     :root {
-      --navy: #050a30;
-      --mist: #d0d7eb;
-      --royal: #1800ad;
-      --snow: #f4f6fc;
+      --bg-dark: #050a30;
+      --bg-light: #f4f6fc;
+      --accent: #1800ad;
+      --muted: #d0d7eb;
+      --radius-xl: 24px;
+      --transition-fast: 0.3s ease;
+      --transition-med: 0.6s cubic-bezier(.25,.8,.25,1);
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: var(--snow);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #0b1060 0, #02041a 40%, #000 100%);
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Top floating glow blob */
+    .blob {
+      position: fixed;
+      top: -150px;
+      right: -100px;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle at 30% 30%, #1800ad, transparent);
+      opacity: 0.14;
+      filter: blur(2px);
+      pointer-events: none;
+      z-index: 0;
+      animation: blobFloat 16s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+
+    @keyframes blobFloat {
+      0% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(-40px,40px,0) scale(1.1); }
+      100% { transform: translate3d(10px,-20px,0) scale(1.05); }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background:
+        radial-gradient(circle at top left, rgba(24,0,173,0.16), transparent),
+        rgba(5,10,48,0.94);
+      border-bottom: 1px solid rgba(208,215,235,0.08);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.65));
+      transform-origin: center;
+      animation: logoFloat 3.4s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0) rotate3d(1, -1, 0, 0deg); }
+      50% { transform: translateY(-4px) rotate3d(1, -1, 0, 6deg); }
+    }
+
+    .brand-text {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .brand span {
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 3px;
+      transition: color var(--transition-fast);
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width var(--transition-fast);
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(208,215,235,0.3);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all var(--transition-fast);
+    }
+
+    .nav-cta span {
+      font-size: 16px;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent);
+      color: #f4f6fc;
+      border-color: transparent;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.4);
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 20px 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1.4fr);
+      gap: 36px;
+      align-items: center;
+      padding: 32px 26px;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at top left, rgba(24,0,173,0.16), transparent),
+        rgba(5,10,48,0.98);
+      border: 1px solid rgba(208,215,235,0.14);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.55);
+      overflow: hidden;
+      transform: translateY(24px);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    .hero.kick-in {
+      transform: translateY(0);
+      opacity: 1;
+      transition: all var(--transition-med);
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .eyebrow span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 14px #1800ad;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 36px);
+      margin: 10px 0 10px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #5e6bff);
+      color: #f4f6fc;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.6);
+      transform-origin: center;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(208,215,235,0.32);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-ghost:hover {
+      color: #ffffff;
+      border-color: var(--accent);
+      background: rgba(24,0,173,0.16);
+      transform: translateY(-1px);
+    }
+
+    .hero-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hero-meta strong {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    /* Animated card on right */
+
+    .hero-orbit {
+      position: relative;
+      width: 100%;
+      height: 210px;
+      border-radius: 22px;
+      background: radial-gradient(circle at top, rgba(24,0,173,0.28), rgba(5,10,48,1));
+      border: 1px solid rgba(208,215,235,0.18);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+      will-change: transform;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      border: 1px dashed rgba(208,215,235,0.12);
+      box-shadow: 0 0 40px rgba(24,0,173,0.22);
+      animation: orbit-spin 16s linear infinite;
+    }
+
+    .orbit-dot {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: #f4f6fc;
+      box-shadow: 0 0 16px rgba(244,246,252,0.65);
+      animation: orbit-dot 6s linear infinite;
+    }
+
+    .orbit-dot:nth-child(2) { top: 8%; left: 52%; }
+    .orbit-dot:nth-child(3) { bottom: 12%; left: 16%; animation-duration: 8s; }
+    .orbit-dot:nth-child(4) { top: 40%; right: 14%; animation-duration: 10s; }
+
+    @keyframes orbit-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes orbit-dot {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .orbit-label {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .orbit-label h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: #ffffff;
+    }
+
+    .orbit-label span {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 9px;
+      font-size: 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(208,215,235,0.22);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    /* Sections */
+
+    section {
+      margin-top: 52px;
+    }
+
+    section h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    section p,
+    section li {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .muted-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--accent);
+      background: rgba(24,0,173,0.16);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(208,215,235,0.14);
+      margin-bottom: 10px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .card {
+      padding: 14px 12px;
+      border-radius: 18px;
+      background: rgba(5,10,48,0.98);
+      border: 1px solid rgba(208,215,235,0.12);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.55);
+      transform: translateY(16px);
+      opacity: 0;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-med);
+      will-change: transform, opacity;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: #ffffff;
+    }
+
+    .card span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .card.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: translateY(-6px) rotate3d(1,-1,0,4deg);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.8);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .price-tag {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .add-ons {
+      font-size: 11px;
+      margin-top: 8px;
+    }
+
+    /* "Get a quote" section */
+
+    .quote-box {
+      margin-top: 18px;
+      padding: 16px 14px;
+      border-radius: 18px;
+      background: linear-gradient(
+        135deg,
+        rgba(24,0,173,0.32),
+        rgba(5,10,48,0.98)
+      );
+      border: 1px solid rgba(208,215,235,0.2);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+      font-size: 12px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+      transform: translateY(24px);
+      opacity: 0;
+      transition: transform var(--transition-med), opacity var(--transition-med);
+      will-change: transform, opacity;
+    }
+
+    .quote-box.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .quote-box small {
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 16px 0 6px;
+      font-size: 10px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid rgba(208,215,235,0.12);
+    }
+
+    /* Scroll reveal base class */
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: transform var(--transition-med), opacity var(--transition-med);
+      will-change: transform, opacity;
+    }
+
+    .scroll-reveal.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      nav ul {
+        gap: 12px;
+        font-size: 12px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 22px 18px 20px;
+      }
+
+      .hero-orbit {
+        margin-top: 4px;
+        height: 190px;
+      }
+
+      section {
+        margin-top: 40px;
+      }
     }
   </style>
 </head>
-<body class="text-slate-900">
-  <!-- NAV -->
-  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <img src="assets/logo.png" alt="CTRL & Create logo" class="h-10 w-10 object-contain" />
-        <span class="font-extrabold tracking-tight text-xl">
-          CTRL <span class="text-[var(--royal)]">&</span> Create
+<body>
+<div class="blob"></div>
+
+<header>
+  <div class="nav-inner">
+    <div class="brand">
+      <img src="assets/logo.png" alt="CTRL & Create logo" class="brand-logo-img" />
+      <div>
+        <div class="brand-text">CTRL & Create</div>
+        <span>AI-assisted web design studio</span>
+      </div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#quote">Get a quote</a></li>
+      </ul>
+    </nav>
+
+    <a href="#quote" class="nav-cta">
+      Start a project <span>↗</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div>
+      <div class="eyebrow">
+        <span class="dot"></span> AI-assisted web design
+      </div>
+      <h1>Websites built faster — for less.</h1>
+      <p>
+        We use AI to speed up structure, copy, and assets — then finish it by hand
+        so it’s clean, on-brand, and ready to go.
+      </p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-primary">
+          See pricing <span>→</span>
+        </a>
+        <a href="#quote" class="btn-ghost">
+          Start a project brief
+        </a>
+      </div>
+      <div class="hero-meta">
+        Montréal, QC • <strong>ctrl@create.com</strong><br />
+        <span>Starter sites from $600 CAD • 7–14 day turnarounds</span>
+      </div>
+    </div>
+
+    <div class="hero-orbit">
+      <div class="orbit-ring"></div>
+      <div class="orbit-dot"></div>
+      <div class="orbit-dot"></div>
+      <div class="orbit-dot"></div>
+      <div class="orbit-label">
+        <h3>AI + Humans, in sync.</h3>
+        <p>
+          We prototype with AI, refine by hand, and ship polished,
+          conversion-focused sites for small businesses & creators.
+        </p>
+        <span>CTRL & CREATE • READY</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section id="services" class="scroll-reveal">
+    <div class="muted-label">Why CTRL & Create?</div>
+    <h2>Premium feel without premium drama.</h2>
+    <p>
+      We keep things simple: clear timelines, sharp visuals, and pricing that lands below
+      typical design agencies in Montréal.
+    </p>
+    <ul>
+      <li>7–14 day turnarounds</li>
+      <li>AI-generated copy, human edited</li>
+      <li>Cheaper than typical designers</li>
+      <li>We match your logo, colours, and tone — AI just speeds it up.</li>
+    </ul>
+
+    <div class="pill">
+      <span>●</span> Palette locked in:
+      #050a30 • #d0d7eb • #1800ad • #f4f6fc
+    </div>
+  </section>
+
+  <!-- WHAT WE BUILD -->
+  <section class="scroll-reveal">
+    <h2>What we build</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>One-page sites</h3>
+        <span>
+          Perfect for launches, promos, personal brands, or link-in-bio.
         </span>
       </div>
-      <nav class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#services" class="hover:text-[var(--royal)]">Services</a>
-        <a href="#pricing" class="hover:text-[var(--royal)]">Pricing</a>
-        <a href="#contact" class="px-4 py-2 rounded-xl bg-[var(--royal)] text-white shadow hover:shadow-md transition">Get a quote</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-[var(--navy)] via-[#0b0f4a] to-[var(--royal)]"></div>
-    <div class="relative max-w-6xl mx-auto px-4 py-20 md:py-24 text-white">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <p class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 ring-1 ring-white/20 text-xs uppercase tracking-wide mb-4">
-            AI-assisted web design
-          </p>
-          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-            Websites built faster — for less.
-          </h1>
-          <p class="mt-4 text-base md:text-lg text-white/90 max-w-prose">
-            We use AI to speed up structure, copy, and assets — then finish it by hand so it’s clean, on-brand, and ready to go.
-          </p>
-          <div class="mt-8 flex flex-wrap gap-4">
-            <a href="#pricing" class="px-6 py-3 rounded-xl bg-white text-[var(--navy)] font-semibold hover:shadow-lg transition">See pricing</a>
-            <a href="#contact" class="px-6 py-3 rounded-xl border border-white/40 text-white hover:bg-white/10">Start a project</a>
-          </div>
-          <p class="mt-4 text-sm text-white/70">Montréal, QC • Contact: <a href="mailto:ctrl@create.com" class="underline">ctrl@create.com</a></p>
-        </div>
-        <div class="md:justify-self-end">
-          <div class="bg-white/10 backdrop-blur rounded-3xl p-6 ring-1 ring-white/20 shadow-xl max-w-sm ml-auto">
-            <h2 class="text-base font-semibold mb-3">Why CTRL & Create?</h2>
-            <ul class="space-y-3 text-sm text-white/90">
-              <li class="flex items-start gap-3">
-                <span class="h-2 w-2 rounded-full bg-emerald-300 mt-2"></span>
-                7–14 day turnarounds
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="h-2 w-2 rounded-full bg-sky-300 mt-2"></span>
-                AI-generated copy, human edited
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="h-2 w-2 rounded-full bg-indigo-300 mt-2"></span>
-                Cheaper than typical designers
-              </li>
-            </ul>
-            <p class="mt-5 text-xs text-white/60">Starter sites from $600 CAD.</p>
-          </div>
-        </div>
+      <div class="card">
+        <h3>Business websites</h3>
+        <span>
+          3–5 sections with services, about, gallery, FAQs, and contact —
+          built to convert, not just look pretty.
+        </span>
+      </div>
+      <div class="card">
+        <h3>Brand & content</h3>
+        <span>
+          We plug into your existing brand or help you define one — then
+          AI helps us move quicker without losing the human touch.
+        </span>
       </div>
     </div>
   </section>
 
-  <!-- COLOR STRIP -->
-  <section class="bg-white border-y border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between gap-6">
-      <div class="flex items-center gap-3">
-        <div class="h-8 w-8 rounded-lg border" style="background: #050a30" title="#050a30"></div>
-        <div class="h-8 w-8 rounded-lg border" style="background: #d0d7eb" title="#d0d7eb"></div>
-        <div class="h-8 w-8 rounded-lg border" style="background: #1800ad" title="#1800ad"></div>
-        <div class="h-8 w-8 rounded-lg border" style="background: #f4f6fc" title="#f4f6fc"></div>
-      </div>
-      <p class="text-xs md:text-sm text-slate-500">
-        Palette: #050a30 • #d0d7eb • #1800ad • #f4f6fc
-      </p>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section id="services" class="max-w-6xl mx-auto px-4 py-16 md:py-20">
-    <h2 class="text-3xl md:text-4xl font-bold tracking-tight">What we build</h2>
-    <p class="mt-3 text-slate-600 max-w-2xl">
-      Clean, conversion-friendly websites for small businesses, creators, and local brands.
+    <!-- PRICING -->
+  <section id="pricing" class="scroll-reveal">
+    <div class="muted-label">Pricing</div>
+    <h2>Transparent, project-based pricing.</h2>
+    <p>
+      We stay below typical agency rates in Montréal while keeping quality high.
     </p>
-    <div class="mt-10 grid md:grid-cols-3 gap-6">
-      <div class="rounded-2xl bg-white border border-slate-200 p-6 hover:shadow-sm transition">
-        <h3 class="text-lg font-semibold">One-page sites</h3>
-        <p class="mt-2 text-slate-600 text-sm">Perfect for launches, promos, personal brands, or link-in-bio.</p>
+
+    <div class="pricing-grid">
+      <div class="card">
+        <h3>Starter</h3>
+        <div class="price-tag">$600–$900</div>
+        <p>1-page, AI-assisted copy, responsive, contact form.</p>
       </div>
-      <div class="rounded-2xl bg-white border border-slate-200 p-6 hover:shadow-sm transition">
-        <h3 class="text-lg font-semibold">Business websites</h3>
-        <p class="mt-2 text-slate-600 text-sm">3–5 sections with services, about, gallery, FAQs, and contact.</p>
+
+      <div class="card">
+        <h3>Business Pro</h3>
+        <div class="price-tag">$1,000–$1,800</div>
+        <p>3–5 pages, SEO setup, gallery/blog, analytics.</p>
       </div>
-      <div class="rounded-2xl bg-white border border-slate-200 p-6 hover:shadow-sm transition">
-        <h3 class="text-lg font-semibold">Brand & content</h3>
-        <p class="mt-2 text-slate-600 text-sm">We match your logo, colours, and tone — AI just speeds it up.</p>
+
+      <div class="card">
+        <h3>Premium Custom</h3>
+        <div class="price-tag">$2,000–$3,500</div>
+        <p>6–10 pages, brand integration, light e-com.</p>
       </div>
+    </div>
+
+    <div class="add-ons">
+      Add-ons: hosting setup ($150), logo ($150–$250),
+      maintenance ($60–$100/mo).
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section id="pricing" class="bg-[var(--navy)] text-white">
-    <div class="max-w-6xl mx-auto px-4 py-16 md:py-20">
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Pricing</h2>
-      <p class="mt-3 text-white/70 max-w-2xl">We stay below typical agency rates in Montréal.</p>
-      <div class="mt-10 grid md:grid-cols-3 gap-6">
-        <div class="rounded-3xl p-6 bg-white/5 border border-white/10">
-          <h3 class="text-lg font-semibold">Starter</h3>
-          <p class="text-3xl font-extrabold mt-2">$600–$900</p>
-          <p class="mt-2 text-sm text-white/70">1-page, AI-assisted copy, responsive, contact form</p>
-        </div>
-        <div class="rounded-3xl p-6 bg-white text-[var(--navy)] border border-transparent shadow-xl">
-          <h3 class="text-lg font-semibold">Business Pro</h3>
-          <p class="text-3xl font-extrabold mt-2 text-[var(--royal)]">$1,000–$1,800</p>
-          <p class="mt-2 text-sm text-slate-600">3–5 pages, SEO setup, gallery/blog, analytics</p>
-        </div>
-        <div class="rounded-3xl p-6 bg-white/5 border border-white/10">
-          <h3 class="text-lg font-semibold">Premium Custom</h3>
-          <p class="text-3xl font-extrabold mt-2">$2,000–$3,500</p>
-          <p class="mt-2 text-sm text-white/70">6–10 pages, brand integration, light e-com</p>
-        </div>
+  <!-- GET A QUOTE -->
+  <section id="quote">
+    <div class="muted-label">Let’s build your site</div>
+    <h2 class="scroll-reveal">Tell us what you need in one click.</h2>
+    <div class="quote-box">
+      <div>
+        Drop us a quick brief (business, goals, budget, timeline) and we’ll reply with
+        a scoped plan and flat-rate quote.
+        <br />
+        <small>Clicking the button opens your email with a pre-filled template.</small>
       </div>
-      <p class="mt-6 text-xs text-white/50">Add-ons: hosting setup ($150), logo ($150–$250), maintenance ($60–$100/mo).</p>
+      <a
+        href="mailto:ctrl@create.com?subject=New%20Project%20Inquiry%20-%20CTRL%20%26%20Create&body=Tell%20us%20about%20your%20business%2C%20your%20goals%2C%20your%20deadline%2C%20and%20your%20rough%20budget.%20We%27ll%20come%20back%20with%20a%20tight%2C%20clear%20plan.%0A%0AName%3A%0ABusiness%3A%0AWebsite%20type%3A%20(One-page%2C%20Business%2C%20Custom)%0ATimeline%3A%0ABudget%20range%3A%0ANotes%3A"
+        class="btn-primary"
+      >
+        Email CTRL & Create
+      </a>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="max-w-3xl mx-auto px-4 py-16 md:py-20">
-    <div class="rounded-3xl bg-white border border-slate-200 p-8 md:p-10 shadow-sm">
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Let’s build your site</h2>
-      <p class="mt-2 text-slate-600">Fill this in and it’ll open your email app to send us the details.</p>
-      <form class="mt-6 space-y-4" onsubmit="event.preventDefault();const f=new FormData(event.target);const subject=encodeURIComponent('New project: '+(f.get('name')||''));const body=encodeURIComponent('Name: '+f.get('name')+'\\nEmail: '+f.get('email')+'\\nBusiness: '+f.get('business')+'\\nBudget: '+f.get('budget')+'\\n\\nProject details:\\n'+f.get('details'));window.location.href='mailto:ctrl@create.com?subject='+subject+'&body='+body;">
-        <div class="grid md:grid-cols-2 gap-4">
-          <input name="name" required placeholder="Your name" class="px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[var(--royal)]" />
-          <input name="email" type="email" required placeholder="Your email" class="px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[var(--royal)]" />
-        </div>
-        <input name="business" placeholder="Business / brand" class="px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[var(--royal)]" />
-        <input name="budget" placeholder="Budget (CAD)" class="px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[var(--royal)]" />
-        <textarea name="details" rows="4" placeholder="Tell us what you need: pages, style, examples…" class="px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[var(--royal)]"></textarea>
-        <button class="w-full md:w-auto px-6 py-3 rounded-xl bg-[var(--royal)] text-white font-semibold hover:shadow-lg">Email CTRL & Create</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-[var(--navy)] text-white">
-    <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <img src="assets/logo.png" alt="CTRL & Create" class="h-8 w-8" />
-        <span class="font-semibold">CTRL & Create</span>
-      </div>
-      <p class="text-white/60 text-sm">© <span id="year"></span> CTRL & Create — Montréal, QC</p>
-    </div>
+  <footer>
+    <div>© CTRL & Create — Montréal, QC</div>
+    <div>AI-assisted. Human-finished.</div>
   </footer>
+</main>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+<script>
+  // Initial hero entrance
+  window.addEventListener("load", () => {
+    const hero = document.querySelector(".hero");
+    if (hero) hero.classList.add("kick-in");
+  });
+
+  // Scroll reveal for sections & cards & quote box
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.18 }
+  );
+
+  document.querySelectorAll(".scroll-reveal, .card, .quote-box").forEach((el) => {
+    observer.observe(el);
+  });
+
+  // Smooth scroll for internal links
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const targetId = link.getAttribute("href").substring(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({
+          top: target.offsetTop - 80,
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+
+  // Subtle parallax / 3D feel for blob + hero orbit
+  const blob = document.querySelector(".blob");
+  const orbit = document.querySelector(".hero-orbit");
+
+  window.addEventListener("mousemove", (e) => {
+    const x = (e.clientX / window.innerWidth) - 0.5;
+    const y = (e.clientY / window.innerHeight) - 0.5;
+
+    if (blob) {
+      blob.style.transform =
+        `translate3d(${x * 40}px, ${y * 30}px, 0)`;
+    }
+
+    if (orbit) {
+      orbit.style.transform =
+        `rotate3d(1, -1, 0, ${x * 10}deg) translateY(0)`;
+    }
+  });
+</script>
 </body>
 </html>
+
