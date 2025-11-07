@@ -35,7 +35,7 @@
       text-decoration: none;
     }
 
-    /* Top floating glow blob */
+    /* Glow blob */
     .blob {
       position: fixed;
       top: -150px;
@@ -43,7 +43,7 @@
       width: 360px;
       height: 360px;
       background: radial-gradient(circle at 30% 30%, #1800ad, transparent);
-      opacity: 0.14;
+      opacity: 0.16;
       filter: blur(2px);
       pointer-events: none;
       z-index: 0;
@@ -57,10 +57,45 @@
       100% { transform: translate3d(10px,-20px,0) scale(1.05); }
     }
 
+    /* BIG MOVING BACKGROUND LOGO */
+
+    .bg-logo {
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      width: min(520px, 72vw);
+      opacity: 0.09;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 26px 80px rgba(0,0,0,0.9));
+      transform-origin: center;
+      animation: bgLogoFloat 18s ease-in-out infinite alternate;
+      will-change: transform, opacity;
+    }
+
+    @keyframes bgLogoFloat {
+      0% {
+        transform: translate3d(0, -10px, 0) scale(1) rotate(-2deg);
+      }
+      50% {
+        transform: translate3d(0, 10px, 0) scale(1.04) rotate(2deg);
+      }
+      100% {
+        transform: translate3d(0, -4px, 0) scale(1.02) rotate(0deg);
+      }
+    }
+
+    /* Make sure content sits above */
+    header,
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
       backdrop-filter: blur(16px);
       background:
         radial-gradient(circle at top left, rgba(24,0,173,0.16), transparent),
@@ -80,34 +115,20 @@
 
     .brand {
       display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-logo-img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.65));
-      transform-origin: center;
-      animation: logoFloat 3.4s ease-in-out infinite;
-    }
-
-    @keyframes logoFloat {
-      0%, 100% { transform: translateY(0) rotate3d(1, -1, 0, 0deg); }
-      50% { transform: translateY(-4px) rotate3d(1, -1, 0, 6deg); }
+      flex-direction: column;
+      gap: 2px;
     }
 
     .brand-text {
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       font-size: 12px;
       text-transform: uppercase;
     }
 
     .brand span {
       font-weight: 400;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       font-size: 10px;
       text-transform: uppercase;
       color: var(--muted);
@@ -179,8 +200,6 @@
       max-width: 1120px;
       margin: 0 auto;
       padding: 40px 20px 56px;
-      position: relative;
-      z-index: 1;
     }
 
     /* HERO */
@@ -299,7 +318,7 @@
       font-weight: 500;
     }
 
-    /* Animated card on right */
+    /* Right hero animation card */
 
     .hero-orbit {
       position: relative;
@@ -472,7 +491,7 @@
       margin-top: 8px;
     }
 
-    /* "Get a quote" section */
+    /* "Get a quote" */
 
     .quote-box {
       margin-top: 18px;
@@ -517,7 +536,7 @@
       border-top: 1px solid rgba(208,215,235,0.12);
     }
 
-    /* Scroll reveal base class */
+    /* Scroll reveal */
 
     .scroll-reveal {
       opacity: 0;
@@ -554,6 +573,11 @@
         height: 190px;
       }
 
+      .bg-logo {
+        width: 68vw;
+        opacity: 0.11;
+      }
+
       section {
         margin-top: 40px;
       }
@@ -563,14 +587,14 @@
 <body>
 <div class="blob"></div>
 
+<!-- Big moving logo background -->
+<img src="assets/logo.png" alt="CTRL & Create logo" class="bg-logo" />
+
 <header>
   <div class="nav-inner">
     <div class="brand">
-      <img src="assets/logo.png" alt="CTRL & Create logo" class="brand-logo-img" />
-      <div>
-        <div class="brand-text">CTRL & Create</div>
-        <span>AI-assisted web design studio</span>
-      </div>
+      <div class="brand-text">CTRL & Create</div>
+      <span>AI-assisted web design studio</span>
     </div>
 
     <nav>
@@ -677,7 +701,7 @@
     </div>
   </section>
 
-    <!-- PRICING -->
+  <!-- PRICING -->
   <section id="pricing" class="scroll-reveal">
     <div class="muted-label">Pricing</div>
     <h2>Transparent, project-based pricing.</h2>
@@ -738,13 +762,13 @@
 </main>
 
 <script>
-  // Initial hero entrance
+  // Hero entrance
   window.addEventListener("load", () => {
     const hero = document.querySelector(".hero");
     if (hero) hero.classList.add("kick-in");
   });
 
-  // Scroll reveal for sections & cards & quote box
+  // Scroll reveal
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -761,7 +785,7 @@
     observer.observe(el);
   });
 
-  // Smooth scroll for internal links
+  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const targetId = link.getAttribute("href").substring(1);
@@ -776,17 +800,17 @@
     });
   });
 
-  // Subtle parallax / 3D feel for blob + hero orbit
-  const blob = document.querySelector(".blob");
+  // Parallax for bg logo + orbit
+  const bgLogo = document.querySelector(".bg-logo");
   const orbit = document.querySelector(".hero-orbit");
 
   window.addEventListener("mousemove", (e) => {
     const x = (e.clientX / window.innerWidth) - 0.5;
     const y = (e.clientY / window.innerHeight) - 0.5;
 
-    if (blob) {
-      blob.style.transform =
-        `translate3d(${x * 40}px, ${y * 30}px, 0)`;
+    if (bgLogo) {
+      bgLogo.style.transform =
+        `translate3d(${x * 30}px, ${y * 20}px, 0) scale(1.02)`;
     }
 
     if (orbit) {
@@ -797,4 +821,3 @@
 </script>
 </body>
 </html>
-
