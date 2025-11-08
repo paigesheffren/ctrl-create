@@ -40,7 +40,22 @@
       text-decoration: none;
     }
 
+    /* Scroll progress bar (#1) */
+
+    .scroll-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, #1800ad, #5e6bff, #f4f6fc);
+      z-index: 40;
+      pointer-events: none;
+      transition: width 0.12s linear;
+    }
+
     /* Glow blob */
+
     .blob {
       position: fixed;
       top: -150px;
@@ -62,7 +77,7 @@
       100% { transform: translate3d(10px,-20px,0) scale(1.05); }
     }
 
-    /* BIG MOVING / GLOWING BACKGROUND LOGO */
+    /* Big moving / glowing background logo */
 
     .bg-logo {
       position: fixed;
@@ -82,30 +97,20 @@
     }
 
     @keyframes bgLogoFloat {
-      0% {
-        transform: translate3d(0, -10px, 0) scale(1) rotate(-2deg);
-      }
-      50% {
-        transform: translate3d(0, 10px, 0) scale(1.04) rotate(2deg);
-      }
-      100% {
-        transform: translate3d(0, -4px, 0) scale(1.02) rotate(0deg);
-      }
+      0% { transform: translate3d(0, -10px, 0) scale(1) rotate(-2deg); }
+      50% { transform: translate3d(0, 10px, 0) scale(1.04) rotate(2deg); }
+      100% { transform: translate3d(0, -4px, 0) scale(1.02) rotate(0deg); }
     }
 
     @keyframes pulseGlow {
-      0%, 100% {
-        filter: drop-shadow(0 0 14px rgba(24,0,173,0.3));
-      }
-      50% {
-        filter: drop-shadow(0 0 40px rgba(24,0,173,0.9));
-      }
+      0%, 100% { filter: drop-shadow(0 0 14px rgba(24,0,173,0.3)); }
+      50% { filter: drop-shadow(0 0 40px rgba(24,0,173,0.9)); }
     }
 
     header,
     main {
       position: relative;
-      z-index: 3; /* above logo + blob */
+      z-index: 3;
     }
 
     header {
@@ -121,7 +126,7 @@
     .nav-inner {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 10px 20px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -153,7 +158,7 @@
       display: flex;
       list-style: none;
       gap: 20px;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--muted);
     }
 
@@ -183,11 +188,21 @@
       width: 100%;
     }
 
+    /* Smart nav highlight (#5) */
+
+    nav a.active {
+      color: #ffffff;
+    }
+
+    nav a.active::after {
+      width: 100%;
+    }
+
     .nav-cta {
-      padding: 8px 14px;
+      padding: 7px 14px;
       border-radius: 999px;
       border: 1px solid rgba(208,215,235,0.3);
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--muted);
@@ -217,7 +232,7 @@
       padding: 40px 20px 56px;
     }
 
-    /* HERO */
+    /* HERO with intro animation (#6) */
 
     .hero {
       display: grid;
@@ -244,7 +259,7 @@
     }
 
     .eyebrow {
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
@@ -263,8 +278,36 @@
 
     .hero h1 {
       font-size: clamp(26px, 4vw, 36px);
-      margin: 10px 0 10px;
+      margin: 10px 0 4px;
       font-weight: 700;
+    }
+
+    /* Typing tagline (#2) */
+
+    .typing-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      color: var(--muted);
+      min-height: 18px;
+    }
+
+    .typing-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 8px;
+      color: var(--muted);
+    }
+
+    .typing {
+      font-size: 12px;
+      color: #f4f6fc;
+      border-right: 2px solid #f4f6fc;
+      padding-right: 4px;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     .hero p {
@@ -279,7 +322,7 @@
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .btn-primary,
@@ -333,7 +376,7 @@
       font-weight: 500;
     }
 
-    /* Right hero animation card */
+    /* Hero orbit card */
 
     .hero-orbit {
       position: relative;
@@ -507,6 +550,40 @@
       margin-top: 8px;
     }
 
+    /* Process timeline (#3) */
+
+    .process {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .step {
+      padding: 12px 12px 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(208,215,235,0.16);
+      background: rgba(2,4,26,0.98);
+      font-size: 11px;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .step-label {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .step-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #ffffff;
+    }
+
     /* Quote box */
 
     .quote-box {
@@ -566,7 +643,7 @@
       transform: translateY(0);
     }
 
-    /* Floating CTA */
+    /* Floating CTA (kept from previous) */
 
     .float-cta {
       position: fixed;
@@ -596,7 +673,7 @@
       box-shadow: 0 18px 46px rgba(24,0,173,0.9);
     }
 
-    /* Cursor trail dots */
+    /* Cursor trail (#5/6 existing flair) */
 
     .trail-dot {
       position: fixed;
@@ -616,12 +693,12 @@
     @media (max-width: 720px) {
       .nav-inner {
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
       }
 
       nav ul {
-        gap: 10px;
-        font-size: 11px;
+        gap: 8px;
+        font-size: 10px;
       }
 
       .hero {
@@ -653,6 +730,7 @@
   </style>
 </head>
 <body>
+<div class="scroll-bar"></div>
 <div class="blob"></div>
 
 <!-- Big moving logo background -->
@@ -668,6 +746,7 @@
     <nav>
       <ul>
         <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#quote">Get a quote</a></li>
       </ul>
@@ -687,6 +766,15 @@
         <span class="dot"></span> AI-assisted web design
       </div>
       <h1>Websites built faster — for less.</h1>
+
+      <!-- Typing tagline (#2) -->
+      <div class="typing-wrap">
+        <span class="typing-label">We build for</span>
+        <span class="typing"
+              data-words='["small businesses.", "founders & startups.", "creators & freelancers.", "brands that want to look legit."]'>
+        </span>
+      </div>
+
       <p>
         We use AI to speed up structure, copy, and assets — then finish it by hand
         so it’s clean, on-brand, and ready to go.
@@ -696,7 +784,7 @@
           See pricing <span>→</span>
         </a>
         <a href="#quote" class="btn-ghost">
-          Start a project brief
+          Share your project idea
         </a>
       </div>
       <div class="hero-meta">
@@ -714,9 +802,9 @@
         <h3>AI + Humans, in sync.</h3>
         <p>
           We prototype with AI, refine by hand, and ship polished,
-          conversion-focused sites for small businesses & creators.
+          conversion-focused sites that feel custom — not cookie-cutter.
         </p>
-        <span>CTRL & CREATE • READY</span>
+        <span>CTRL & CREATE • LIVE</span>
       </div>
     </div>
   </section>
@@ -731,14 +819,37 @@
     </p>
     <ul>
       <li>7–14 day turnarounds.</li>
-      <li>AI-generated copy, human edited.</li>
-      <li>Cheaper than typical designers.</li>
-      <li>We match your logo, colours, and tone — AI just speeds it up.</li>
+      <li>AI-generated, human-edited copy so it sounds like you.</li>
+      <li>Cheaper than traditional agencies, same polished result.</li>
+      <li>We match your logo, colours, voice, and audience.</li>
     </ul>
 
     <div class="pill">
       <span>●</span> Palette:
       #050a30 • #d0d7eb • #1800ad • #f4f6fc
+    </div>
+  </section>
+
+  <!-- PROCESS (#3) -->
+  <section id="process" class="scroll-reveal">
+    <div class="muted-label">How we work</div>
+    <h2>A tight three-step build process.</h2>
+    <div class="process">
+      <div class="step">
+        <div class="step-label">Step 01</div>
+        <div class="step-title">Brief & direction</div>
+        <p>You tell us who you are, who you serve, and what “good” looks like. We respond with a clear sitemap & vibe.</p>
+      </div>
+      <div class="step">
+        <div class="step-label">Step 02</div>
+        <div class="step-title">AI-assisted build</div>
+        <p>We use AI for structure and draft copy, then refine everything by hand to keep it sharp, on-brand, and original.</p>
+      </div>
+      <div class="step">
+        <div class="step-label">Step 03</div>
+        <div class="step-title">Launch & handoff</div>
+        <p>We ship, hook up your domain, connect analytics, and hand you a site you can actually update.</p>
+      </div>
     </div>
   </section>
 
@@ -749,19 +860,20 @@
       <div class="card">
         <h3>One-page sites</h3>
         <span>
-          Launch pages, promos, and portfolios that tell your story in one smooth scroll.
+          Launch pages & promos that scroll clean and convert quickly.
         </span>
       </div>
       <div class="card">
         <h3>Business websites</h3>
         <span>
-          3–5 sections: services, about, gallery, FAQs, contact — built to convert.
+          3–5 sections with services, about, gallery, FAQs, and contact —
+          built for trust and clarity.
         </span>
       </div>
       <div class="card">
         <h3>Brand & content</h3>
         <span>
-          We tune your visuals, typography, and copy so everything feels cohesive and sharp.
+          Visual systems, layout, and messaging that make your brand feel intentional.
         </span>
       </div>
     </div>
@@ -807,7 +919,7 @@
     <h2 class="scroll-reveal">Tell us what you need in one click.</h2>
     <div class="quote-box">
       <div>
-        Drop us a quick brief (business, goals, budget, timeline) and we’ll reply with
+        Drop a quick brief (business, goals, budget, timeline) and we’ll reply with
         a scoped plan and flat-rate quote.
         <br />
         <small>Click the button to open an email with a pre-filled template.</small>
@@ -833,13 +945,21 @@
 </a>
 
 <script>
-  // Hero entrance
+  // Hero intro animation (#6)
   window.addEventListener("load", () => {
     const hero = document.querySelector(".hero");
     if (hero) hero.classList.add("kick-in");
   });
 
-  // Scroll reveal
+  // Scroll progress bar (#1)
+  const scrollBar = document.querySelector(".scroll-bar");
+  window.addEventListener("scroll", () => {
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const scrolled = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    if (scrollBar) scrollBar.style.width = scrolled + "%";
+  });
+
+  // Scroll reveal (existing)
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -851,12 +971,11 @@
     },
     { threshold: 0.2 }
   );
-
   document
     .querySelectorAll(".scroll-reveal, .card, .quote-box")
     .forEach((el) => observer.observe(el));
 
-  // Smooth scroll for internal links
+  // Smooth scroll for internal links (existing)
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const targetId = link.getAttribute("href").substring(1);
@@ -871,7 +990,33 @@
     });
   });
 
-  // Mousemove parallax for bg-logo & orbit
+  // Smart nav highlight (#5)
+  const navLinks = document.querySelectorAll("nav a[href^='#']");
+  const sectionIds = ["services", "process", "pricing", "quote"];
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach((link) => {
+            link.classList.toggle(
+              "active",
+              link.getAttribute("href") === "#" + id
+            );
+          });
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  sectionIds.forEach((id) => {
+    const sec = document.getElementById(id);
+    if (sec) sectionObserver.observe(sec);
+  });
+
+  // Parallax for bg-logo & orbit (existing)
   const bgLogo = document.querySelector(".bg-logo");
   const orbit = document.querySelector(".hero-orbit");
 
@@ -892,7 +1037,6 @@
     }
   });
 
-  // Subtle scroll-based parallax on logo (adds to mouse effect)
   window.addEventListener("scroll", () => {
     const scrolled = window.scrollY || window.pageYOffset;
     if (bgLogo) {
@@ -901,7 +1045,7 @@
     }
   });
 
-  // Cursor trail (lightweight)
+  // Cursor trail (existing / #6)
   const trailCount = 10;
   const dots = [];
   for (let i = 0; i < trailCount; i++) {
@@ -928,11 +1072,43 @@
       dots[i].y += (dots[i - 1].y - dots[i].y) * 0.3;
       dots[i].el.style.left = dots[i].x + "px";
       dots[i].el.style.top = dots[i].y + "px";
-      dots[i].el.style.opacity = (0.2 + (i / dots.length) * 0.4).toString();
+      dots[i].el.style.opacity = (0.15 + (i / dots.length) * 0.35).toString();
     }
     requestAnimationFrame(animateTrail);
   }
   animateTrail();
+
+  // Typing effect (#2)
+  const typingEl = document.querySelector(".typing");
+  if (typingEl) {
+    const words = JSON.parse(typingEl.getAttribute("data-words") || "[]");
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function type() {
+      if (!words.length) return;
+      const current = words[wordIndex];
+      if (!deleting) {
+        typingEl.textContent = current.slice(0, charIndex++);
+        if (charIndex <= current.length) {
+          setTimeout(type, 70);
+        } else {
+          setTimeout(() => { deleting = true; type(); }, 1200);
+        }
+      } else {
+        typingEl.textContent = current.slice(0, charIndex--);
+        if (charIndex >= 0) {
+          setTimeout(type, 40);
+        } else {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          setTimeout(type, 220);
+        }
+      }
+    }
+    type();
+  }
 </script>
 </body>
 </html>
