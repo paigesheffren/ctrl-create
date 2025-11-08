@@ -14,6 +14,7 @@
       --radius-xl: 24px;
       --transition-fast: 0.3s ease;
       --transition-med: 0.6s cubic-bezier(.25,.8,.25,1);
+      --header-offset: 110px; /* used for scroll spacing */
     }
 
     * {
@@ -40,7 +41,7 @@
       text-decoration: none;
     }
 
-    /* Scroll progress bar (#1) */
+    /* Scroll progress bar */
 
     .scroll-bar {
       position: fixed;
@@ -119,7 +120,7 @@
       backdrop-filter: blur(16px);
       background:
         radial-gradient(circle at top left, rgba(24,0,173,0.16), transparent),
-        rgba(5,10,48,0.94);
+        rgba(5,10,48,0.96);
       border-bottom: 1px solid rgba(208,215,235,0.08);
     }
 
@@ -188,8 +189,6 @@
       width: 100%;
     }
 
-    /* Smart nav highlight (#5) */
-
     nav a.active {
       color: #ffffff;
     }
@@ -232,7 +231,7 @@
       padding: 40px 20px 56px;
     }
 
-    /* HERO with intro animation (#6) */
+    /* HERO */
 
     .hero {
       display: grid;
@@ -250,6 +249,7 @@
       transform: translateY(24px);
       opacity: 0;
       will-change: transform, opacity;
+      scroll-margin-top: var(--header-offset); /* for anchors if you ever link to #top */
     }
 
     .hero.kick-in {
@@ -268,7 +268,7 @@
       gap: 6px;
     }
 
-    .eyebrow span.dot {
+    .eyebrow .dot {
       width: 6px;
       height: 6px;
       border-radius: 999px;
@@ -282,7 +282,7 @@
       font-weight: 700;
     }
 
-    /* Typing tagline (#2) */
+    /* Typing tagline */
 
     .typing-wrap {
       display: flex;
@@ -376,7 +376,7 @@
       font-weight: 500;
     }
 
-    /* Hero orbit card */
+    /* Hero orbit */
 
     .hero-orbit {
       position: relative;
@@ -454,10 +454,11 @@
       letter-spacing: 0.14em;
     }
 
-    /* Sections */
+    /* Sections (with scroll offset to avoid header overlap) */
 
     section {
       margin-top: 52px;
+      scroll-margin-top: var(--header-offset);
     }
 
     section h2 {
@@ -550,7 +551,7 @@
       margin-top: 8px;
     }
 
-    /* Process timeline (#3) */
+    /* Process timeline */
 
     .process {
       display: grid;
@@ -566,7 +567,6 @@
       background: rgba(2,4,26,0.98);
       font-size: 11px;
       box-shadow: 0 10px 26px rgba(0,0,0,0.6);
-      position: relative;
     }
 
     .step-label {
@@ -643,7 +643,7 @@
       transform: translateY(0);
     }
 
-    /* Floating CTA (kept from previous) */
+    /* Floating CTA */
 
     .float-cta {
       position: fixed;
@@ -673,7 +673,7 @@
       box-shadow: 0 18px 46px rgba(24,0,173,0.9);
     }
 
-    /* Cursor trail (#5/6 existing flair) */
+    /* Cursor trail */
 
     .trail-dot {
       position: fixed;
@@ -733,7 +733,6 @@
 <div class="scroll-bar"></div>
 <div class="blob"></div>
 
-<!-- Big moving logo background -->
 <img src="assets/logo.png" alt="CTRL & Create logo" class="bg-logo" />
 
 <header>
@@ -767,7 +766,6 @@
       </div>
       <h1>Websites built faster — for less.</h1>
 
-      <!-- Typing tagline (#2) -->
       <div class="typing-wrap">
         <span class="typing-label">We build for</span>
         <span class="typing"
@@ -830,7 +828,7 @@
     </div>
   </section>
 
-  <!-- PROCESS (#3) -->
+  <!-- PROCESS -->
   <section id="process" class="scroll-reveal">
     <div class="muted-label">How we work</div>
     <h2>A tight three-step build process.</h2>
@@ -859,22 +857,15 @@
     <div class="grid-3">
       <div class="card">
         <h3>One-page sites</h3>
-        <span>
-          Launch pages & promos that scroll clean and convert quickly.
-        </span>
+        <span>Launch pages & promos that scroll clean and convert quickly.</span>
       </div>
       <div class="card">
         <h3>Business websites</h3>
-        <span>
-          3–5 sections with services, about, gallery, FAQs, and contact —
-          built for trust and clarity.
-        </span>
+        <span>3–5 sections with services, about, gallery, FAQs, and contact — built for trust and clarity.</span>
       </div>
       <div class="card">
         <h3>Brand & content</h3>
-        <span>
-          Visual systems, layout, and messaging that make your brand feel intentional.
-        </span>
+        <span>Visual systems, layout, and messaging that make your brand feel intentional.</span>
       </div>
     </div>
   </section>
@@ -939,19 +930,23 @@
   </footer>
 </main>
 
-<!-- Floating CTA -->
 <a href="#quote" class="float-cta">
   <span class="icon">✉️</span> Let’s talk about your site
 </a>
 
 <script>
-  // Hero intro animation (#6)
+  const HEADER_OFFSET = parseInt(
+    getComputedStyle(document.documentElement).getPropertyValue("--header-offset"),
+    10
+  ) || 110;
+
+  // Hero intro
   window.addEventListener("load", () => {
     const hero = document.querySelector(".hero");
     if (hero) hero.classList.add("kick-in");
   });
 
-  // Scroll progress bar (#1)
+  // Scroll progress bar
   const scrollBar = document.querySelector(".scroll-bar");
   window.addEventListener("scroll", () => {
     const docHeight = document.body.scrollHeight - window.innerHeight;
@@ -959,13 +954,13 @@
     if (scrollBar) scrollBar.style.width = scrolled + "%";
   });
 
-  // Scroll reveal (existing)
-  const observer = new IntersectionObserver(
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("reveal");
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
     },
@@ -973,24 +968,27 @@
   );
   document
     .querySelectorAll(".scroll-reveal, .card, .quote-box")
-    .forEach((el) => observer.observe(el));
+    .forEach((el) => revealObserver.observe(el));
 
-  // Smooth scroll for internal links (existing)
+  // Smooth scroll (uses header offset so content doesn't hide)
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const targetId = link.getAttribute("href").substring(1);
       const target = document.getElementById(targetId);
-      if (target) {
-        e.preventDefault();
-        window.scrollTo({
-          top: target.offsetTop - 80,
-          behavior: "smooth",
-        });
-      }
+      if (!target) return;
+
+      e.preventDefault();
+      const rect = target.getBoundingClientRect();
+      const offsetTop = rect.top + window.pageYOffset - HEADER_OFFSET;
+
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
     });
   });
 
-  // Smart nav highlight (#5)
+  // Smart nav highlight
   const navLinks = document.querySelectorAll("nav a[href^='#']");
   const sectionIds = ["services", "process", "pricing", "quote"];
 
@@ -1016,7 +1014,7 @@
     if (sec) sectionObserver.observe(sec);
   });
 
-  // Parallax for bg-logo & orbit (existing)
+  // Parallax for bg logo & orbit
   const bgLogo = document.querySelector(".bg-logo");
   const orbit = document.querySelector(".hero-orbit");
 
@@ -1045,7 +1043,7 @@
     }
   });
 
-  // Cursor trail (existing / #6)
+  // Cursor trail
   const trailCount = 10;
   const dots = [];
   for (let i = 0; i < trailCount; i++) {
@@ -1078,7 +1076,7 @@
   }
   animateTrail();
 
-  // Typing effect (#2)
+  // Typing effect
   const typingEl = document.querySelector(".typing");
   if (typingEl) {
     const words = JSON.parse(typingEl.getAttribute("data-words") || "[]");
@@ -1089,6 +1087,7 @@
     function type() {
       if (!words.length) return;
       const current = words[wordIndex];
+
       if (!deleting) {
         typingEl.textContent = current.slice(0, charIndex++);
         if (charIndex <= current.length) {
