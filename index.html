@@ -9,9 +9,9 @@
       --bg-main: #020817;
       --bg-elevated: rgba(6, 12, 30, 0.96);
       --bg-glass: rgba(4, 10, 26, 0.92);
-      --accent: #3b82f6;         /* electric blue */
-      --accent-soft: #22d3ee;    /* cyan */
-      --accent-deep: #4f46e5;    /* indigo */
+      --accent: #3b82f6;
+      --accent-soft: #22d3ee;
+      --accent-deep: #4f46e5;
       --text-main: #e5e7eb;
       --text-soft: #9ca3af;
       --border-subtle: rgba(148, 163, 253, 0.18);
@@ -51,7 +51,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 80%) ,
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 80%),
                   rgba(3, 7, 18, 0.98);
       border-radius: var(--radius-xl) var(--radius-xl) 0 0;
       border: 1px solid var(--border-subtle);
@@ -100,13 +100,13 @@
       padding: 40px 50px 48px;
       display: flex;
       gap: 40px;
-      align-items: stretch;
+      align-items: center;
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow-soft);
     }
 
-    /* Floating logo */
+    /* LEFT: logo (sharper) */
 
     .hero-left {
       flex: 1.1;
@@ -118,42 +118,44 @@
 
     .hero-logo-wrap {
       position: relative;
+      max-width: 360px;         /* controls size on desktop */
       width: 100%;
-      max-width: 420px;
-      aspect-ratio: 3 / 4;
       display: flex;
       justify-content: center;
       align-items: center;
-      filter: drop-shadow(0 32px 80px rgba(15, 23, 42, 0.9));
-      animation: floatLogo 6s ease-in-out infinite;
+      animation: floatLogo 7s ease-in-out infinite;
+      /* softer shadow so edges stay crisp */
+      filter: drop-shadow(0 24px 60px rgba(15, 23, 42, 0.8));
     }
 
+    /* subtle frame *behind* the logo, not on top of it */
     .hero-logo-wrap::before {
       content: "";
       position: absolute;
-      inset: 7%;
+      inset: -10px;
       border-radius: 26px;
-      border: 1px solid rgba(148, 163, 253, 0.22);
+      border: 1px solid rgba(148, 163, 253, 0.18);
       background:
-        radial-gradient(circle at top, rgba(59, 130, 246, 0.09), transparent),
-        rgba(2, 6, 23, 0.7);
-      backdrop-filter: blur(10px);
-      pointer-events: none;
+        radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent),
+        transparent;
+      z-index: -1;
     }
 
     .hero-logo {
-      max-width: 80%;
-      max-height: 80%;
+      width: 100%;
+      height: auto;
       object-fit: contain;
+      image-rendering: -webkit-optimize-contrast; /* helps on some devices */
+      image-rendering: crisp-edges;
     }
 
     @keyframes floatLogo {
       0%   { transform: translateY(0px); }
-      50%  { transform: translateY(-14px); }
+      50%  { transform: translateY(-10px); }
       100% { transform: translateY(0px); }
     }
 
-    /* Hero text */
+    /* RIGHT: text */
 
     .hero-right {
       flex: 1.2;
@@ -501,12 +503,20 @@
         margin-top: 10px;
       }
 
+      .hero-left {
+        order: -1; /* logo on top on mobile */
+      }
+
       .hero-title-main {
         font-size: 34px;
       }
 
       .hero-title-sub {
         font-size: 26px;
+      }
+
+      .hero-logo-wrap {
+        max-width: 260px; /* keep it big but not overscaled on phones */
       }
     }
 
@@ -530,7 +540,6 @@
 </head>
 <body>
 
-  <!-- Top browser-style frame -->
   <div class="browser-frame">
     <div class="browser-dot"></div>
     <div class="browser-dot"></div>
@@ -538,7 +547,6 @@
     <div class="browser-bar"></div>
   </div>
 
-  <!-- HERO -->
   <header>
     <div class="hero-left">
       <div class="hero-logo-wrap">
@@ -572,7 +580,6 @@
 
   <main>
 
-    <!-- PROCESS (exact text) -->
     <section id="process">
       <h2 class="section-title">A simple, fast process</h2>
 
@@ -600,7 +607,6 @@
       </div>
     </section>
 
-    <!-- PRICING (exact text) -->
     <section id="pricing">
       <div id="pricing-inner">
         <h2 class="section-title">Transparent pricing</h2>
@@ -609,7 +615,6 @@
         </p>
 
         <div class="pricing-grid">
-          <!-- Starter -->
           <div class="pricing-card">
             <div class="pricing-title">Starter</div>
             <div class="pricing-label">Perfect for launches</div>
@@ -623,7 +628,6 @@
             <button class="pricing-btn">Choose Starter</button>
           </div>
 
-          <!-- Business Pro -->
           <div class="pricing-card highlight">
             <div class="pricing-title">Business Pro</div>
             <div class="pricing-label">Best value for SMBs</div>
@@ -637,7 +641,6 @@
             <button class="pricing-btn">Choose Business Pro</button>
           </div>
 
-          <!-- Premium Custom -->
           <div class="pricing-card">
             <div class="pricing-title">Premium Custom</div>
             <div class="pricing-label">Bigger scope, still fast</div>
@@ -658,7 +661,6 @@
       </div>
     </section>
 
-    <!-- WORK -->
     <section id="work">
       <h2 class="section-title">Selected work</h2>
       <p class="section-subtitle">Show off what CTRL &amp; CREATE can do with live links and screenshots.</p>
@@ -668,7 +670,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact">
       <h2 class="section-title">Tell us what you’re building</h2>
       <p class="section-subtitle">Send a quick brief and we’ll reply with options within 24 hours.</p>
@@ -682,7 +683,6 @@
   </main>
 
   <script>
-    // Smooth scroll for "I gotta know more"
     document.getElementById('scrollMore').addEventListener('click', function () {
       const target = document.getElementById('process');
       if (!target) return;
