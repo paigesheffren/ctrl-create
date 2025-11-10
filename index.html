@@ -12,8 +12,8 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background: #050505;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, -apple-system, sans-serif;
+      background: #05050b;
       color: #ffffff;
       line-height: 1.6;
       overflow-x: hidden;
@@ -24,13 +24,13 @@
       text-decoration: none;
     }
 
-    /* Top browser frame mock (optional, like your reference) */
+    /* Top browser frame (like reference) */
     .browser-frame {
       padding: 16px 32px;
       display: flex;
       align-items: center;
       gap: 10px;
-      background: #111218;
+      background: #101223;
       border-radius: 32px 32px 0 0;
       border: 1px solid #262626;
       border-bottom: none;
@@ -57,7 +57,7 @@
       flex: 1;
       height: 14px;
       border-radius: 999px;
-      background: #22252f;
+      background: #23263a;
       margin-left: 12px;
     }
 
@@ -69,7 +69,7 @@
       border-radius: 0 0 32px 32px;
       border: 1px solid #262626;
       border-top: none;
-      background: radial-gradient(circle at top left, #151515 0, #050505 55%, #000000 100%);
+      background: radial-gradient(circle at top left, #15151c 0, #05050b 50%, #000000 100%);
       padding: 40px 50px 48px;
       display: flex;
       gap: 40px;
@@ -78,7 +78,7 @@
       overflow: hidden;
     }
 
-    /* Left side: big floating logo (replacing the girl) */
+    /* Left side: big floating logo (replaces the girl) */
 
     .hero-left {
       flex: 1.1;
@@ -121,7 +121,7 @@
       100% { transform: translateY(0px); }
     }
 
-    /* Right side: text card like Patty Moore layout */
+    /* Right side: text card like Patty Moore */
 
     .hero-right {
       flex: 1.2;
@@ -132,11 +132,10 @@
     }
 
     .hero-card {
-      padding: 32px 32px 28px;
-      border-radius: 0;
+      padding: 32px 32px 26px;
       border-left: 1px solid rgba(255, 255, 255, 0.08);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(10px);
     }
 
@@ -166,7 +165,7 @@
       font-size: 14px;
       color: rgba(255, 255, 255, 0.8);
       max-width: 440px;
-      margin-bottom: 26px;
+      margin-bottom: 22px;
     }
 
     .hero-tagline {
@@ -174,7 +173,7 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: rgba(255, 255, 255, 0.55);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .hero-cta {
@@ -226,7 +225,7 @@
       pointer-events: none;
     }
 
-    /* Main content */
+    /* MAIN LAYOUT */
 
     main {
       max-width: 1200px;
@@ -236,51 +235,216 @@
 
     section {
       padding: 40px 0;
-      border-bottom: 1px solid #181818;
+      border-bottom: 1px solid #15151f;
     }
 
     h2.section-title {
-      font-size: 24px;
+      font-size: 34px;
       margin-bottom: 8px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.78);
+      letter-spacing: 0.02em;
+      font-weight: 700;
     }
 
     .section-subtitle {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 20px;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.72);
+      margin-bottom: 24px;
     }
 
-    .grid-3 {
+    /* PROCESS (matches screenshot text & style) */
+
+    .process-wrapper {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .process-card {
+      background: #f4f6fb;
+      color: #101828;
+      border-radius: 28px;
+      padding: 32px 24px 26px;
+      position: relative;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+    }
+
+    .process-number {
+      position: absolute;
+      top: -18px;
+      left: 24px;
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      background: #1f3df5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 20px;
+      box-shadow: 0 10px 24px rgba(31, 61, 245, 0.5);
+    }
+
+    .process-card h3 {
+      margin-top: 14px;
+      font-size: 22px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .process-card p {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    /* PRICING (matches screenshot text & layout) */
+
+    #pricing {
+      background: #05071a;
+      margin: 40px -24px 0;
+      padding: 48px 24px 40px;
+      border-radius: 32px 32px 0 0;
+      border-top: 1px solid #111827;
+    }
+
+    #pricing-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 22px;
+      margin-top: 28px;
+    }
+
+    .pricing-card {
+      border-radius: 32px;
+      padding: 28px 24px 24px;
+      background: #050b2a;
+      border: 1px solid #111827;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: 0 22px 48px rgba(15, 23, 42, 0.42);
+    }
+
+    .pricing-card.highlight {
+      background: #ffffff;
+      color: #05071a;
+      transform: translateY(-10px);
+    }
+
+    .pricing-label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .pricing-card.highlight .pricing-label {
+      color: #4b5563;
+    }
+
+    .pricing-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .pricing-note {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .pricing-card.highlight .pricing-note {
+      color: #6b7280;
+    }
+
+    .pricing-price {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 4px 0 4px;
+      color: #3b5cff;
+    }
+
+    .pricing-card.highlight .pricing-price {
+      color: #3b5cff;
+    }
+
+    .pricing-list {
+      list-style: none;
+      margin: 6px 0 14px;
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.78);
     }
 
-    .card {
-      padding: 16px 16px 14px;
-      border-radius: 16px;
-      border: 1px solid #202020;
-      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.02), #060606);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.55);
+    .pricing-list li {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .card h3 {
-      font-size: 16px;
-      margin-bottom: 6px;
+    .pricing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #3b82f6;
+    }
+
+    .pricing-card.highlight .pricing-dot {
+      background: #111827;
+    }
+
+    .pricing-btn {
+      margin-top: auto;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      font-size: 14px;
       font-weight: 600;
+      cursor: pointer;
+      background: #ffffff;
+      color: #050b2a;
     }
 
-    .muted {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.55);
+    .pricing-card.highlight .pricing-btn {
+      background: #3b5cff;
+      color: #ffffff;
+    }
+
+    .pricing-addons {
+      font-size: 11px;
+      color: rgba(209, 213, 219, 0.85);
+      margin-top: 14px;
+    }
+
+    /* Simple other sections */
+
+    .card-simple {
+      padding: 18px 18px 16px;
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      background: rgba(2, 6, 23, 0.9);
+      font-size: 14px;
+      color: rgba(249, 250, 251, 0.9);
+      max-width: 680px;
     }
 
     /* Responsive */
+
+    @media (max-width: 1024px) {
+      .process-wrapper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .pricing-card.highlight {
+        transform: none;
+      }
+    }
 
     @media (max-width: 900px) {
       header {
@@ -299,16 +463,29 @@
       .hero-title-sub {
         font-size: 28px;
       }
+    }
 
-      .grid-3 {
-        grid-template-columns: 1fr;
+    @media (max-width: 640px) {
+      .browser-frame {
+        margin: 16px auto 0;
+        padding: 10px 16px;
+      }
+      .browser-bar {
+        display: none;
+      }
+      main {
+        padding: 26px 16px 0;
+      }
+      #pricing {
+        margin: 32px -16px 0;
+        padding: 32px 16px 26px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- top browser-like bar to match reference -->
+  <!-- Top browser mock -->
   <div class="browser-frame">
     <div class="browser-dot"></div>
     <div class="browser-dot"></div>
@@ -318,32 +495,32 @@
 
   <!-- HERO -->
   <header>
-    <!-- Floating logo side (replaces the girl photo) -->
+    <!-- Floating logo -->
     <div class="hero-left">
       <div class="hero-logo-wrap">
-        <!-- make sure this path/filename matches your repo -->
         <img src="assets/logo.png" alt="CTRL & CREATE Logo" class="hero-logo">
       </div>
     </div>
 
-    <!-- Text card side (keeps your original wording) -->
+    <!-- Text card -->
     <div class="hero-right">
       <div class="hero-card">
-        <div class="hero-label">WEB EXPERIENCES FOR BRANDS THAT WANT AN EDGE</div>
+        <div class="hero-label">WE BUILD SHARP, FAST SITES FOR BRANDS THAT WANT AN EDGE</div>
 
-        <!-- Use your original hero text instead of "Patty Moore / Director" -->
+        <!-- Same spirit as your original hero copy -->
         <div class="hero-title-main">CTRL &amp; CREATE</div>
         <div class="hero-title-sub">Web Design Studio</div>
 
         <div class="hero-body">
-          We use AI to speed up structure, copy, and assets — then finish everything by hand
-          so your site stays clean, on-brand, fast, and actually converts. No bloated templates.
-          Just sharp builds for small businesses, creators, and startups.
+          We use AI to speed up structure, copy, and assets — then finish it by hand
+          so it’s clean, on-brand, and ready to go.
         </div>
 
-        <div class="hero-tagline">Strategy &nbsp;•&nbsp; Design &nbsp;•&nbsp; Development &nbsp;•&nbsp; Launch</div>
+        <div class="hero-tagline">
+          Montreal-based &nbsp;•&nbsp; AI-assisted &nbsp;•&nbsp; Human-finished
+        </div>
 
-        <!-- "I gotta know more" replaces PORTFOLIO and scrolls down -->
+        <!-- Scroll CTA -->
         <button class="hero-cta" id="scrollMore">
           <span class="label">I gotta know more</span>
           <span class="arrow">&#8595;</span>
@@ -352,94 +529,121 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT: same info/sections as your original site (edit text as needed) -->
-  <main id="page-content">
+  <main>
 
-    <section id="services">
-      <h2 class="section-title">Services</h2>
-      <p class="section-subtitle">Everything you need to launch or glow-up your online presence.</p>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Launch-Ready Websites</h3>
-          <p>Custom one-page or multi-page sites for small businesses, salons, bars, online shops, freelancers, and creators.</p>
-        </div>
-        <div class="card">
-          <h3>AI-Accelerated Builds</h3>
-          <p>We leverage AI for fast wireframes, copy drafts, and asset ideas — then refine manually so it feels human, not robotic.</p>
-        </div>
-        <div class="card">
-          <h3>Brand &amp; Content Support</h3>
-          <p>Light branding, layouts, and basic SEO so your site actually gets seen and makes sense to real people.</p>
-        </div>
-      </div>
-    </section>
-
+    <!-- PROCESS (exact wording) -->
     <section id="process">
-      <h2 class="section-title">Process</h2>
-      <p class="section-subtitle">Simple, clear, and fast — the same flow from your original site.</p>
-      <div class="grid-3">
-        <div class="card">
-          <h3>01. Discover</h3>
-          <p>Quick intake on your goals, vibe, and must-haves. We confirm pages, features, and timelines.</p>
+      <h2 class="section-title">A simple, fast process</h2>
+
+      <div class="process-wrapper">
+        <div class="process-card">
+          <div class="process-number">1</div>
+          <h3>Discover</h3>
+          <p>Tell us your goals, audience, and examples you like. We align on scope and timeline.</p>
         </div>
-        <div class="card">
-          <h3>02. Design &amp; Build</h3>
-          <p>Wireframes → visuals → live build on your domain or temporary link so you can click through.</p>
+        <div class="process-card">
+          <div class="process-number">2</div>
+          <h3>Design</h3>
+          <p>We draft structure, copy, and visuals using AI + human review to lock the direction.</p>
         </div>
-        <div class="card">
-          <h3>03. Refine &amp; Launch</h3>
-          <p>We tweak copy, layout, and animations, hook up forms/links, and push the final version live.</p>
+        <div class="process-card">
+          <div class="process-number">3</div>
+          <h3>Build</h3>
+          <p>We implement, optimize for mobile &amp; SEO, and integrate your tools.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-number">4</div>
+          <h3>Launch</h3>
+          <p>We deploy, hand over assets, and offer maintenance to keep you sharp.</p>
         </div>
       </div>
     </section>
 
+    <!-- PRICING (exact wording) -->
     <section id="pricing">
-      <h2 class="section-title">Pricing</h2>
-      <p class="section-subtitle">Transparent packages like you outlined before — adjust numbers if needed.</p>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Starter</h3>
-          <p>One-page scroll site for new brands or promos.</p>
-          <p class="muted">Includes: custom design, mobile-friendly build, basic copy, 1 round of revisions.</p>
+      <div id="pricing-inner">
+        <h2 class="section-title">Transparent pricing</h2>
+        <p class="section-subtitle">
+          We stay 20–40% below typical Montréal agency rates—without cutting corners.
+        </p>
+
+        <div class="pricing-grid">
+          <!-- Starter -->
+          <div class="pricing-card">
+            <div class="pricing-title">Starter</div>
+            <div class="pricing-label">Perfect for launches</div>
+            <div class="pricing-price">$600–$900</div>
+            <ul class="pricing-list">
+              <li><span class="pricing-dot"></span>One-page site</li>
+              <li><span class="pricing-dot"></span>AI-assisted copy</li>
+              <li><span class="pricing-dot"></span>Responsive + basic SEO</li>
+              <li><span class="pricing-dot"></span>Contact form</li>
+            </ul>
+            <button class="pricing-btn">Choose Starter</button>
+          </div>
+
+          <!-- Business Pro -->
+          <div class="pricing-card highlight">
+            <div class="pricing-title">Business Pro</div>
+            <div class="pricing-label">Best value for SMBs</div>
+            <div class="pricing-price">$1,000–$1,800</div>
+            <ul class="pricing-list">
+              <li><span class="pricing-dot"></span>3–5 pages</li>
+              <li><span class="pricing-dot"></span>SEO setup</li>
+              <li><span class="pricing-dot"></span>Gallery / blog</li>
+              <li><span class="pricing-dot"></span>Analytics + handoff</li>
+            </ul>
+            <button class="pricing-btn">Choose Business Pro</button>
+          </div>
+
+          <!-- Premium Custom -->
+          <div class="pricing-card">
+            <div class="pricing-title">Premium Custom</div>
+            <div class="pricing-label">Bigger scope, still fast</div>
+            <div class="pricing-price">$2,000–$3,500</div>
+            <ul class="pricing-list">
+              <li><span class="pricing-dot"></span>6–10 pages</li>
+              <li><span class="pricing-dot"></span>Brand integration</li>
+              <li><span class="pricing-dot"></span>Light e-commerce</li>
+              <li><span class="pricing-dot"></span>AI visuals &amp; copy</li>
+            </ul>
+            <button class="pricing-btn">Choose Premium</button>
+          </div>
         </div>
-        <div class="card">
-          <h3>Standard</h3>
-          <p>3–5 pages for small businesses ready to look legit.</p>
-          <p class="muted">Includes: services pages, contact forms, simple animations, 2 rounds of revisions.</p>
-        </div>
-        <div class="card">
-          <h3>Custom</h3>
-          <p>For e-commerce, bookings, or special flows — built around what you actually need.</p>
-          <p class="muted">Tell us your idea, we’ll map it and quote it.</p>
+
+        <div class="pricing-addons">
+          Add-ons: maintenance ($60–$100/mo), logo design ($150–$250), hosting setup ($150).
         </div>
       </div>
     </section>
 
-    <section id="portfolio">
-      <h2 class="section-title">Work</h2>
-      <p class="section-subtitle">Showcase a few example sites here (including your own projects).</p>
-      <div class="card">
-        <p>Add your live links and screenshots — CTRL &amp; CREATE is itself your case study.</p>
+    <!-- SIMPLE "WORK" / "CONTACT" (you can customize further) -->
+    <section id="work">
+      <h2 class="section-title">Selected work</h2>
+      <p class="section-subtitle">Ask to see live examples built for Montréal creators, gyms, shops, and studios.</p>
+      <div class="card-simple">
+        Use this space to drop screenshots and links (including this site) as proof of what CTRL &amp; CREATE can do.
       </div>
     </section>
 
     <section id="contact">
-      <h2 class="section-title">Let’s Build</h2>
-      <p class="section-subtitle">Same call-to-action as your original — easy to reach you.</p>
-      <div class="card">
-        <p>Drop your details below and we’ll reply with next steps within 24 hours.</p>
-        <p class="muted">Email: your@email.com<br>Instagram / TikTok / etc: @ctrlcreate</p>
+      <h2 class="section-title">Tell us what you’re building</h2>
+      <p class="section-subtitle">Send a quick brief and we’ll reply with options within 24 hours.</p>
+      <div class="card-simple">
+        Email: your@email.com<br/>
+        Instagram: @ctrlcreate<br/>
+        Or embed your preferred form / Calendly link here.
       </div>
     </section>
 
   </main>
 
   <script>
-    // Smooth scroll for "I gotta know more"
+    // Smooth scroll for "I gotta know more" -> scrolls to process section
     document.getElementById('scrollMore').addEventListener('click', function () {
-      const content = document.getElementById('services');
-      if (!content) return;
-      const rect = content.getBoundingClientRect();
+      const target = document.getElementById('process');
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
       const offset = window.scrollY + rect.top - 40;
       window.scrollTo({ top: offset, behavior: 'smooth' });
     });
