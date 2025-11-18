@@ -22,11 +22,7 @@
       --font-sans: system-ui, -apple-system, BlinkMacSystemFont, -apple-system, sans-serif;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: var(--font-sans);
@@ -39,13 +35,9 @@
       overflow-x: hidden;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     /* Top browser frame */
-
     .browser-frame {
       padding: 16px 32px;
       display: flex;
@@ -60,33 +52,12 @@
       margin: 24px auto 0;
       box-shadow: var(--shadow-soft);
     }
-
-    .browser-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #f97316;
-    }
-
-    .browser-dot:nth-child(2) {
-      background: #22c55e;
-    }
-
-    .browser-dot:nth-child(3) {
-      background: #ef4444;
-    }
-
-    .browser-bar {
-      flex: 1;
-      height: 14px;
-      border-radius: 999px;
-      background: radial-gradient(circle at left, rgba(148, 163, 253, 0.5), transparent);
-      margin-left: 12px;
-      opacity: 0.4;
-    }
+    .browser-dot { width: 10px; height: 10px; border-radius: 50%; background: #f97316; }
+    .browser-dot:nth-child(2) { background: #22c55e; }
+    .browser-dot:nth-child(3) { background: #ef4444; }
+    .browser-bar { flex: 1; height: 14px; border-radius: 999px; background: radial-gradient(circle at left, rgba(148, 163, 253, 0.5), transparent); margin-left: 12px; opacity: 0.4; }
 
     /* HERO */
-
     header {
       max-width: 1200px;
       margin: 0 auto 40px;
@@ -106,38 +77,29 @@
       box-shadow: var(--shadow-soft);
     }
 
-    /* LEFT: logo (sharper) */
-
-    .hero-left {
-      flex: 1.1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
+    /* LEFT: logo — now more dramatic animation */
+    .hero-left { flex: 1.1; display: flex; justify-content: center; align-items: center; position: relative; }
 
     .hero-logo-wrap {
       position: relative;
-      max-width: 360px;         /* controls size on desktop */
+      max-width: 360px;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: floatLogo 7s ease-in-out infinite;
-      /* softer shadow so edges stay crisp */
-      filter: drop-shadow(0 24px 60px rgba(15, 23, 42, 0.8));
+      animation: floatLogo 6s ease-in-out infinite;
+      filter: drop-shadow(0 28px 70px rgba(15, 23, 42, 0.85));
+      transform-style: preserve-3d;
+      will-change: transform;
     }
 
-    /* subtle frame *behind* the logo, not on top of it */
     .hero-logo-wrap::before {
       content: "";
       position: absolute;
       inset: -10px;
       border-radius: 26px;
       border: 1px solid rgba(148, 163, 253, 0.18);
-      background:
-        radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent),
-        transparent;
+      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent), transparent;
       z-index: -1;
     }
 
@@ -145,26 +107,22 @@
       width: 100%;
       height: auto;
       object-fit: contain;
-      image-rendering: -webkit-optimize-contrast; /* helps on some devices */
+      image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
+      will-change: transform;
     }
 
+    /* More dramatic motion: bigger float + subtle tilt/scale */
     @keyframes floatLogo {
-      0%   { transform: translateY(0px); }
-      50%  { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+      0%   { transform: translateY(0px) rotateZ(0deg) rotateX(0deg) scale(1); }
+      25%  { transform: translateY(-18px) rotateZ(-1.2deg) rotateX(2deg) scale(1.015); }
+      50%  { transform: translateY(-34px) rotateZ(0.6deg) rotateX(-2deg) scale(1.03); }
+      75%  { transform: translateY(-18px) rotateZ(1.2deg) rotateX(1deg) scale(1.015); }
+      100% { transform: translateY(0px) rotateZ(0deg) rotateX(0deg) scale(1); }
     }
 
     /* RIGHT: text */
-
-    .hero-right {
-      flex: 1.2;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-    }
-
+    .hero-right { flex: 1.2; display: flex; flex-direction: column; justify-content: center; position: relative; }
     .hero-card {
       padding: 32px 32px 26px;
       border-left: 1px solid rgba(148, 163, 253, 0.28);
@@ -173,368 +131,187 @@
       backdrop-filter: blur(16px);
       box-shadow: 0 18px 50px rgba(15, 23, 42, 0.6);
     }
-
-    .hero-label {
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent-soft);
-      margin-bottom: 18px;
-    }
-
-    .hero-title-main {
-      font-size: 44px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      line-height: 1.1;
-      color: #f9fafb;
-    }
-
-    .hero-title-sub {
-      font-size: 34px;
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 14px;
-      color: var(--accent);
-    }
-
-    .hero-body {
-      font-size: 14px;
-      color: var(--text-soft);
-      max-width: 440px;
-      margin-bottom: 22px;
-    }
-
-    .hero-tagline {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: rgba(156, 163, 175, 0.96);
-      margin-bottom: 10px;
-    }
+    .hero-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 18px; }
+    .hero-title-main { font-size: 44px; font-weight: 700; letter-spacing: 0.04em; line-height: 1.1; color: #f9fafb; }
+    .hero-title-sub { font-size: 34px; font-weight: 300; line-height: 1.1; margin-bottom: 14px; color: var(--accent); }
+    .hero-body { font-size: 14px; color: var(--text-soft); max-width: 440px; margin-bottom: 22px; }
+    .hero-tagline { font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(156, 163, 175, 0.96); margin-bottom: 10px; }
 
     .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 9px 18px 9px 0;
-      cursor: pointer;
-      color: #e5e7eb;
-      border: none;
-      background: transparent;
-      position: relative;
+      display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.16em; padding: 9px 18px 9px 0; cursor: pointer; color: #e5e7eb;
+      border: none; background: transparent; position: relative;
     }
-
     .hero-cta span.label {
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 253, 0.6);
-      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.32), transparent),
-                  rgba(2, 6, 23, 1);
+      padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(148, 163, 253, 0.6);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.32), transparent), rgba(2, 6, 23, 1);
       box-shadow: 0 6px 16px rgba(15, 23, 42, 0.7);
     }
-
     .hero-cta .arrow {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      transform-origin: center;
+      width: 26px; height: 26px; border-radius: 999px; border: 1px solid rgba(56, 189, 248, 0.7);
+      display: flex; align-items: center; justify-content: center; font-size: 18px; transform-origin: center;
       transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
       box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
     }
-
-    .hero-cta:hover .arrow {
-      transform: translateY(4px);
-      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.6);
-      border-color: var(--accent);
-    }
-
-    .hero-cta::after {
-      content: "";
-      position: absolute;
-      inset: 14px -8px -6px;
-      border-bottom: 1px solid rgba(148, 163, 253, 0.18);
-      opacity: 0.9;
-      pointer-events: none;
-    }
+    .hero-cta:hover .arrow { transform: translateY(4px); box-shadow: 0 10px 24px rgba(56, 189, 248, 0.6); border-color: var(--accent); }
+    .hero-cta::after { content: ""; position: absolute; inset: 14px -8px -6px; border-bottom: 1px solid rgba(148, 163, 253, 0.18); opacity: 0.9; pointer-events: none; }
 
     /* MAIN */
-
-    main {
-      max-width: 1200px;
-      margin: 0 auto 80px;
-      padding: 40px 24px 0;
-    }
-
-    section {
-      padding: 40px 0;
-      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
-    }
-
-    h2.section-title {
-      font-size: 34px;
-      margin-bottom: 8px;
-      letter-spacing: 0.02em;
-      font-weight: 700;
-      color: #f9fafb;
-    }
-
-    .section-subtitle {
-      font-size: 15px;
-      color: var(--text-soft);
-      margin-bottom: 24px;
-    }
+    main { max-width: 1200px; margin: 0 auto 80px; padding: 40px 24px 0; }
+    section { padding: 40px 0; border-bottom: 1px solid rgba(15, 23, 42, 0.9); }
+    h2.section-title { font-size: 34px; margin-bottom: 8px; letter-spacing: 0.02em; font-weight: 700; color: #f9fafb; }
+    .section-subtitle { font-size: 15px; color: var(--text-soft); margin-bottom: 24px; }
 
     /* PROCESS */
-
-    .process-wrapper {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
+    .process-wrapper { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
     .process-card {
-      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.06), transparent),
-                  #050816;
-      color: #e5e7eb;
-      border-radius: var(--radius-lg);
-      padding: 32px 24px 26px;
-      position: relative;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
-      border: 1px solid rgba(75, 85, 99, 0.4);
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.06), transparent), #050816;
+      color: #e5e7eb; border-radius: var(--radius-lg); padding: 32px 24px 26px; position: relative;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4); border: 1px solid rgba(75, 85, 99, 0.4);
     }
-
     .process-number {
-      position: absolute;
-      top: -18px;
-      left: 24px;
-      width: 54px;
-      height: 54px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent-deep), var(--accent-soft));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 20px;
-      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.7);
+      position: absolute; top: -18px; left: 24px; width: 54px; height: 54px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent-deep), var(--accent-soft)); display: flex; align-items: center; justify-content: center;
+      color: #ffffff; font-weight: 700; font-size: 20px; box-shadow: 0 12px 26px rgba(37, 99, 235, 0.7);
     }
-
-    .process-card h3 {
-      margin-top: 14px;
-      font-size: 22px;
-      margin-bottom: 10px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    .process-card p {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #d1d5db;
-    }
+    .process-card h3 { margin-top: 14px; font-size: 22px; margin-bottom: 10px; font-weight: 700; color: #ffffff; }
+    .process-card p { font-size: 16px; line-height: 1.6; color: #d1d5db; }
 
     /* PRICING */
-
     #pricing {
-      background:
-        radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent 70%),
-        #020817;
-      margin: 40px -24px 0;
-      padding: 48px 24px 40px;
-      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-      border-top: 1px solid var(--border-subtle);
-      box-shadow: 0 -10px 40px rgba(15, 23, 42, 0.7);
+      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent 70%), #020817;
+      margin: 40px -24px 0; padding: 48px 24px 40px; border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      border-top: 1px solid var(--border-subtle); box-shadow: 0 -10px 40px rgba(15, 23, 42, 0.7);
     }
+    #pricing-inner { max-width: 1200px; margin: 0 auto; }
 
-    #pricing-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 28px;
-    }
-
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 28px; }
     .pricing-card {
-      border-radius: var(--radius-xl);
-      padding: 26px 22px 22px;
-      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent),
-                  rgba(3, 7, 18, 0.98);
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      box-shadow: var(--shadow-soft);
+      border-radius: var(--radius-xl); padding: 26px 22px 22px;
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent), rgba(3, 7, 18, 0.98);
+      border: 1px solid rgba(75, 85, 99, 0.9); display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow-soft);
     }
-
     .pricing-card.highlight {
-      background:
-        radial-gradient(circle at top, rgba(59, 130, 246, 0.24), transparent),
-        #020817;
-      border: 1px solid rgba(129, 140, 248, 0.9);
-      transform: translateY(-10px);
+      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.24), transparent), #020817;
+      border: 1px solid rgba(129, 140, 248, 0.9); transform: translateY(-10px);
     }
+    .pricing-title { font-size: 20px; font-weight: 700; color: #f9fafb; }
+    .pricing-label { font-size: 13px; color: var(--text-soft); }
+    .pricing-price { font-size: 30px; font-weight: 800; margin: 4px 0; color: var(--accent-soft); }
+    .pricing-card.highlight .pricing-price { color: var(--accent); }
 
-    .pricing-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #f9fafb;
-    }
-
-    .pricing-label {
-      font-size: 13px;
-      color: var(--text-soft);
-    }
-
-    .pricing-price {
-      font-size: 30px;
-      font-weight: 800;
-      margin: 4px 0;
-      color: var(--accent-soft);
-    }
-
-    .pricing-card.highlight .pricing-price {
-      color: var(--accent);
-    }
-
-    .pricing-list {
-      list-style: none;
-      margin: 6px 0 14px;
-      font-size: 14px;
-      color: #d1d5db;
-    }
-
-    .pricing-list li {
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .pricing-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-    }
-
-    .pricing-card.highlight .pricing-dot {
-      background: var(--accent);
-    }
+    .pricing-list { list-style: none; margin: 6px 0 14px; font-size: 14px; color: #d1d5db; }
+    .pricing-list li { margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .pricing-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--accent-soft); }
+    .pricing-card.highlight .pricing-dot { background: var(--accent); }
 
     .pricing-btn {
-      margin-top: auto;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: none;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-      color: #020817;
+      margin-top: auto; display: inline-flex; justify-content: center; align-items: center; padding: 10px 18px;
+      border-radius: 999px; border: none; font-size: 14px; font-weight: 600; cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft)); color: #020817;
       box-shadow: 0 10px 26px rgba(37, 99, 235, 0.65);
       transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     }
+    .pricing-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(37, 99, 235, 0.85); }
 
-    .pricing-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 36px rgba(37, 99, 235, 0.85);
+    .pricing-addons { font-size: 11px; color: rgba(148, 163, 253, 0.92); margin-top: 14px; }
+
+    /* Package details (dynamic reveal) */
+    #package-details {
+      display: none;
+      margin-top: 28px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(129, 140, 248, 0.6);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent),
+        rgba(3, 7, 18, 0.98);
+      box-shadow: var(--shadow-soft);
+      padding: 26px 22px 22px;
     }
+    #package-details h3 { font-size: 22px; margin-bottom: 8px; }
+    #package-details p { color: var(--text-soft); margin-bottom: 16px; }
+    #package-details ul { margin-left: 18px; margin-bottom: 18px; }
+    #package-details li { margin-bottom: 8px; }
 
-    .pricing-addons {
-      font-size: 11px;
-      color: rgba(148, 163, 253, 0.92);
-      margin-top: 14px;
+    .contact-start-btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(148, 163, 253, 0.6);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.32), transparent), rgba(2, 6, 23, 1);
+      color: #e5e7eb; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.12em;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.6);
     }
 
     /* Simple sections */
-
     .card-simple {
-      padding: 18px 18px 16px;
-      border-radius: 18px;
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent),
-        rgba(2, 6, 23, 0.98);
-      font-size: 14px;
-      color: #e5e7eb;
-      max-width: 680px;
-      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 16px; border-radius: 18px; border: 1px solid rgba(75, 85, 99, 0.9);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent), rgba(2, 6, 23, 0.98);
+      font-size: 14px; color: #e5e7eb; max-width: 680px; box-shadow: var(--shadow-soft);
+    }
+
+    /* WORK / PORTFOLIO — new intriguing cards */
+    .work-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .work-card {
+      position: relative; overflow: hidden; border-radius: 18px; border: 1px solid rgba(148, 163, 253, 0.2);
+      background: #0b1224; box-shadow: 0 16px 36px rgba(2, 6, 23, 0.6);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      cursor: pointer;
+      isolation: isolate;
+    }
+    .work-card img {
+      width: 100%; height: 220px; object-fit: cover; display: block;
+      transform: scale(1.02);
+      transition: transform 0.5s ease;
+      filter: saturate(1.05) contrast(1.02);
+    }
+    .work-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(2, 6, 23, 0.9); }
+    .work-card:hover img { transform: scale(1.08); }
+
+    .work-glow {
+      content: ""; position: absolute; inset: -40%; background: radial-gradient( circle at var(--mx, 50%) var(--my, 50%), rgba(59,130,246,0.18), transparent 40% );
+      opacity: 0; transition: opacity 0.35s ease;
+      pointer-events: none; z-index: 0;
+    }
+    .work-card:hover .work-glow { opacity: 1; }
+
+    .work-overlay {
+      position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,6,23,0) 40%, rgba(2,6,23,0.85) 100%);
+      display: flex; align-items: end; padding: 16px; z-index: 1;
+    }
+    .work-meta { display: flex; flex-direction: column; gap: 6px; }
+    .work-title { font-weight: 700; font-size: 16px; color: #fff; }
+    .work-sub { font-size: 13px; color: #cbd5e1; }
+    .work-actions { margin-top: 8px; }
+    .work-btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft)); color: #020817; border: none;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.6);
     }
 
     /* Responsive */
-
     @media (max-width: 1024px) {
-      .process-wrapper {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .pricing-grid {
-        grid-template-columns: 1fr;
-      }
-      .pricing-card.highlight {
-        transform: none;
-      }
+      .process-wrapper { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.highlight { transform: none; }
+      .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-
     @media (max-width: 900px) {
-      header {
-        flex-direction: column;
-        padding: 26px 22px 30px;
-      }
-
-      .hero-card {
-        margin-top: 10px;
-      }
-
-      .hero-left {
-        order: -1; /* logo on top on mobile */
-      }
-
-      .hero-title-main {
-        font-size: 34px;
-      }
-
-      .hero-title-sub {
-        font-size: 26px;
-      }
-
-      .hero-logo-wrap {
-        max-width: 260px; /* keep it big but not overscaled on phones */
-      }
+      header { flex-direction: column; padding: 26px 22px 30px; }
+      .hero-card { margin-top: 10px; }
+      .hero-left { order: -1; }
+      .hero-title-main { font-size: 34px; }
+      .hero-title-sub { font-size: 26px; }
+      .hero-logo-wrap { max-width: 260px; }
     }
-
     @media (max-width: 640px) {
-      .browser-frame {
-        margin: 16px auto 0;
-        padding: 10px 16px;
-      }
-      .browser-bar {
-        display: none;
-      }
-      main {
-        padding: 26px 16px 0;
-      }
-      #pricing {
-        margin: 32px -16px 0;
-        padding: 32px 16px 26px;
-      }
+      .browser-frame { margin: 16px auto 0; padding: 10px 16px; }
+      .browser-bar { display: none; }
+      main { padding: 26px 16px 0; }
+      #pricing { margin: 32px -16px 0; padding: 32px 16px 26px; }
+      .work-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -625,7 +402,7 @@
               <li><span class="pricing-dot"></span>Responsive + basic SEO</li>
               <li><span class="pricing-dot"></span>Contact form</li>
             </ul>
-            <button class="pricing-btn">Choose Starter</button>
+            <button class="pricing-btn" data-package="Starter">Choose Starter</button>
           </div>
 
           <div class="pricing-card highlight">
@@ -638,7 +415,7 @@
               <li><span class="pricing-dot"></span>Gallery / blog</li>
               <li><span class="pricing-dot"></span>Analytics + handoff</li>
             </ul>
-            <button class="pricing-btn">Choose Business Pro</button>
+            <button class="pricing-btn" data-package="Business Pro">Choose Business Pro</button>
           </div>
 
           <div class="pricing-card">
@@ -651,8 +428,18 @@
               <li><span class="pricing-dot"></span>Light e-commerce</li>
               <li><span class="pricing-dot"></span>AI visuals &amp; copy</li>
             </ul>
-            <button class="pricing-btn">Choose Premium</button>
+            <button class="pricing-btn" data-package="Premium Custom">Choose Premium</button>
           </div>
+        </div>
+
+        <!-- Dynamic details section (hidden until a package is chosen) -->
+        <div id="package-details" aria-live="polite">
+          <h3 id="package-heading">Choosing …</h3>
+          <p id="package-intro"></p>
+          <ul id="package-list"></ul>
+          <a id="package-contact" class="contact-start-btn" href="mailto:your@email.com?subject=Project%20inquiry%20—%20CTRL%20%26%20CREATE">
+            Contact us to start
+          </a>
         </div>
 
         <div class="pricing-addons">
@@ -663,10 +450,51 @@
 
     <section id="work">
       <h2 class="section-title">Selected work</h2>
-      <p class="section-subtitle">Show off what CTRL &amp; CREATE can do with live links and screenshots.</p>
-      <div class="card-simple">
-        Add a few recent sites here (including this one) so clients can see real builds with motion, clean copy,
-        and AI-assisted workflows.
+      <p class="section-subtitle">Real builds with motion, clean copy, and AI-assisted workflows.</p>
+
+      <div class="work-grid">
+        <!-- Card 1 -->
+        <a class="work-card" href="https://paigesheffren.github.io/ctrl-create/" target="_blank" rel="noopener">
+          <span class="work-glow"></span>
+          <img src="assets/work-ctrl-create.jpg" alt="CTRL & CREATE website preview">
+          <div class="work-overlay">
+            <div class="work-meta">
+              <div class="work-title">CTRL & CREATE</div>
+              <div class="work-sub">Studio landing page</div>
+              <div class="work-actions"><span class="work-btn">View Site ↗</span></div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a class="work-card" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
+          <span class="work-glow"></span>
+          <img src="assets/work-s3sammy.jpg" alt="S3 Sammy portfolio preview">
+          <div class="work-overlay">
+            <div class="work-meta">
+              <div class="work-title">S3 Sammy</div>
+              <div class="work-sub">Automotive photo portfolio</div>
+              <div class="work-actions"><span class="work-btn">View Site ↗</span></div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3 (placeholder) -->
+        <a class="work-card" href="#" target="_blank" rel="noopener">
+          <span class="work-glow"></span>
+          <img src="assets/work-placeholder.jpg" alt="Client project preview">
+          <div class="work-overlay">
+            <div class="work-meta">
+              <div class="work-title">Client Project</div>
+              <div class="work-sub">Brand-forward website</div>
+              <div class="work-actions"><span class="work-btn">View Site ↗</span></div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="card-simple" style="margin-top:16px">
+        Tip: replace <code>assets/work-ctrl-create.jpg</code>, <code>assets/work-s3sammy.jpg</code>, and <code>assets/work-placeholder.jpg</code> with your real project thumbnails (1200×800+ works well).
       </div>
     </section>
 
@@ -674,8 +502,8 @@
       <h2 class="section-title">Tell us what you’re building</h2>
       <p class="section-subtitle">Send a quick brief and we’ll reply with options within 24 hours.</p>
       <div class="card-simple">
-        Email: your@email.com<br/>
-        Instagram: @ctrlcreate<br/>
+        Email: <a href="mailto:your@email.com">your@email.com</a><br/>
+        Instagram: <a href="https://instagram.com/ctrlcreate" target="_blank" rel="noopener">@ctrlcreate</a><br/>
         Or embed your form / Calendly / preferred contact flow here.
       </div>
     </section>
@@ -683,12 +511,100 @@
   </main>
 
   <script>
+    // Smooth scroll for the hero CTA
     document.getElementById('scrollMore').addEventListener('click', function () {
       const target = document.getElementById('process');
       if (!target) return;
       const rect = target.getBoundingClientRect();
       const offset = window.scrollY + rect.top - 40;
       window.scrollTo({ top: offset, behavior: 'smooth' });
+    });
+
+    // Package details data
+    const PACKAGE_CONTENT = {
+      "Starter": {
+        intro: "Choosing Starter means you will get a focused, fast-launch foundation:",
+        bullets: [
+          "One-page, conversion-focused layout tailored to your brand",
+          "AI-assisted copywriting polished by a human editor",
+          "Mobile-first build with basic on-page SEO",
+          "Contact form integration (Netlify/Formspree/EmailJS)",
+          "Performance pass (image compression, lazy-loading)",
+          "One revision round after launch"
+        ]
+      },
+      "Business Pro": {
+        intro: "Choosing Business Pro means you will get a full small-business web presence:",
+        bullets: [
+          "3–5 custom pages (Home, About, Services, Gallery/Blog, Contact)",
+          "SEO setup (metadata, sitemap, semantic headings, internal linking)",
+          "CMS-ready sections or blog (optional) for easy updates",
+          "Analytics + basic conversion tracking (GA4/Meta Pixel on request)",
+          "Brand-consistent components and iconography",
+          "Two revision rounds and post-launch handoff"
+        ]
+      },
+      "Premium Custom": {
+        intro: "Choosing Premium Custom means you will get a brand-integrated experience:",
+        bullets: [
+          "6–10 pages with deeper storytelling and interactions",
+          "Brand system integration (palette, type, component library)",
+          "Light e-commerce or booking integration (Stripe/Shopify lite, Calendly)",
+          "Advanced visuals: micro-animations, parallax, AI assets tuned by hand",
+          "Technical SEO, structured data, performance budget",
+          "Staging environment + two post-launch support sessions"
+        ]
+      }
+    };
+
+    // Hook up pricing buttons
+    const details = document.getElementById('package-details');
+    const heading = document.getElementById('package-heading');
+    const intro = document.getElementById('package-intro');
+    const list = document.getElementById('package-list');
+    const contactBtn = document.getElementById('package-contact');
+
+    function openPackage(name) {
+      const data = PACKAGE_CONTENT[name];
+      if (!data) return;
+
+      heading.textContent = `Choosing ${name} means you will get…`;
+      intro.textContent = data.intro;
+
+      // Build list
+      list.innerHTML = "";
+      data.bullets.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        list.appendChild(li);
+      });
+
+      // Update email subject with package name
+      const base = "mailto:your@email.com";
+      const subject = `Project inquiry — ${encodeURIComponent(name)} Package`;
+      contactBtn.href = `${base}?subject=${encodeURIComponent(subject)}`;
+
+      // Reveal section and scroll to it
+      details.style.display = 'block';
+      const rect = details.getBoundingClientRect();
+      const offset = window.scrollY + rect.top - 40;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.pricing-btn').forEach(btn => {
+      btn.addEventListener('click', () => openPackage(btn.dataset.package));
+    });
+
+    // Pretty mouse-follow glow on work cards
+    document.querySelectorAll('.work-card').forEach(card => {
+      const glow = card.querySelector('.work-glow');
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        glow.style.setProperty('--mx', x + '%');
+        glow.style.setProperty('--my', y + '%');
+      });
     });
   </script>
 
