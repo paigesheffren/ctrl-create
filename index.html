@@ -6,35 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
-      --bg-body: #020617;
-      --bg-surface: #020617;
-      --bg-card: #020617;
-      --bg-muted: #0b1120;
+      --bg-teal-dark: #0b615b;
+      --bg-teal-light: #18c4b1;
+      --bg-deep: #00333b;
+      --pill-dark: #00524e;
 
-      --accent: #38bdf8;
-      --accent-soft: #22c55e;
-      --accent-strong: #a855f7;
-      --accent-warm: #f97316;
+      --text-main: #ffffff;
+      --text-soft: #e5e5e5;
+      --text-muted: #c4c4c4;
+      --text-black: #050505;
 
-      --text-main: #f9fafb;
-      --text-soft: #9ca3af;
-      --border-subtle: rgba(148, 163, 184, 0.25);
+      --accent-yellow: #facc15;
 
-      --radius-lg: 20px;
-      --radius-md: 14px;
       --radius-pill: 999px;
+      --radius-card: 24px;
+      --radius-soft: 16px;
 
-      --shadow-soft: 0 22px 60px rgba(15, 23, 42, 0.9);
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.35);
 
       --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      --page-width: 1080px;
-      --nav-height: 70px;
+      --page-width: 1120px;
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     html {
@@ -44,10 +41,7 @@
     body {
       font-family: var(--font-sans);
       color: var(--text-main);
-      background:
-        radial-gradient(circle at -10% -10%, rgba(56, 189, 248, 0.2), transparent 60%),
-        radial-gradient(circle at 110% 0%, rgba(168, 85, 247, 0.18), transparent 60%),
-        var(--bg-body);
+      background: linear-gradient(115deg, var(--bg-teal-dark), var(--bg-teal-light));
       min-height: 100vh;
       overflow-x: hidden;
     }
@@ -68,552 +62,300 @@
       padding: 0 20px;
     }
 
-    /* BACK TO TOP */
-    .back-top {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at 0 0, #facc15, #f97316);
-      color: #111827;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.95);
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(8px);
-      pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      z-index: 40;
-    }
-
-    .back-top.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    /* NAVBAR */
+    /* TOP PILL NAV (like screenshot) */
     .nav-shell {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      backdrop-filter: blur(18px);
+      padding-top: 26px;
+      padding-bottom: 10px;
     }
 
-    .nav {
-      height: var(--nav-height);
-      max-width: var(--page-width);
-      margin: 0 auto;
-      padding: 10px 20px;
+    .nav-pills {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(15, 23, 42, 0.85);
-      background: linear-gradient(
-        90deg,
-        rgba(2, 6, 23, 0.96),
-        rgba(15, 23, 42, 0.97)
-      );
-      transition: height 0.2s ease, border-bottom-color 0.2s ease, background 0.2s ease;
-    }
-
-    .nav.shrink {
-      height: 58px;
-      border-bottom-color: rgba(56, 189, 248, 0.8);
-      background: rgba(15, 23, 42, 0.98);
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-logo-wrap {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      border: 1px solid rgba(248, 250, 252, 0.16);
-      background: radial-gradient(circle at 10% 0%, #facc15, #f97316 45%, #4b5563 100%);
-      display: flex;
-      align-items: center;
       justify-content: center;
-      overflow: hidden;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+      gap: 26px;
     }
 
-    .nav-logo-wrap img {
-      width: 140%;
-      height: auto;
-      transform: translateY(2px);
-    }
-
-    .nav-brand {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .nav-brand-main {
-      font-size: 14px;
+    .nav-pill {
+      min-width: 140px;
+      padding: 12px 26px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: var(--pill-dark);
+      color: #ffffff;
+      font-size: 13px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-    }
-
-    .nav-brand-sub {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      color: var(--text-soft);
-    }
-
-    .nav-link {
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .nav-link:hover {
-      border-color: rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-    }
-
-    .btn {
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      border: none;
+      justify-content: center;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-      padding: 9px 16px;
-      position: relative;
-      overflow: hidden;
-      white-space: nowrap;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
 
-    .btn-primary {
-      background: radial-gradient(circle at 0 0, #facc15, #f97316 40%, #7c2d12);
-      color: #111827;
-      box-shadow: 0 16px 40px rgba(248, 181, 74, 0.8);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .nav-pill:hover {
+      transform: translateY(-2px);
+      background: #016a63;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
     }
 
-    .btn-primary::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, rgba(255, 255, 255, 0.3), transparent 60%);
-      transform: translateX(-120%);
-      transition: transform 0.4s ease;
+    /* HERO SECTION */
+    .hero {
+      padding: 40px 0 70px;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 20px 52px rgba(248, 181, 74, 0.95);
-    }
-
-    .btn-primary:hover::after {
-      transform: translateX(120%);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text-soft);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      font-weight: 500;
-    }
-
-    .btn-outline:hover {
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-    }
-
-    /* HERO */
-    header.hero {
-      padding: 40px 0 60px;
-    }
-
-    .hero-grid {
+    .hero-inner {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 36px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 32px;
       align-items: center;
     }
 
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-screen-wrap {
+      max-width: 520px;
+      margin-left: -20px;
+    }
+
+    .hero-tagline-block {
+      text-align: right;
+      max-width: 380px;
+      margin-left: auto;
+    }
+
+    .hero-tagline-main {
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-black);
+      margin-bottom: 10px;
+    }
+
+    .hero-subcopy {
+      font-size: 14px;
+      color: var(--text-black);
+      opacity: 0.9;
+    }
+
+    /* small studio badge under text */
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(15, 23, 42, 0.96);
+      gap: 6px;
+      margin-top: 20px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 0, 0, 0.12);
+      color: var(--text-black);
       font-size: 11px;
-      color: var(--text-soft);
-      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 600;
     }
 
     .hero-badge-dot {
       width: 7px;
       height: 7px;
       border-radius: 999px;
-      background: radial-gradient(circle, #22c55e, #15803d);
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.95);
-    }
-
-    .hero-title {
-      font-size: 40px;
-      line-height: 1.1;
-      letter-spacing: 0.01em;
-      margin-bottom: 12px;
-    }
-
-    .hero-title span.em {
-      background-image: linear-gradient(120deg, #38bdf8, #a855f7, #22c55e);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 15px;
-      color: var(--text-soft);
-      max-width: 440px;
-      margin-bottom: 20px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .hero-footnote {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-
-    .hero-footnote span {
-      font-weight: 500;
-      color: #e5e7eb;
-    }
-
-    .hero-panel {
-      position: relative;
-    }
-
-    .hero-panel-card {
-      border-radius: var(--radius-lg);
-      background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.98));
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      padding: 18px 18px 16px;
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-    }
-
-    .hero-panel-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      gap: 12px;
-    }
-
-    .hero-mini {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .hero-mini-logo {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      background: #020617;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-    }
-
-    .hero-mini-logo img {
-      width: 130%;
-      height: auto;
-    }
-
-    .hero-mini-label {
-      font-size: 11px;
-      color: var(--text-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-
-    .hero-status-pill {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.7);
-      color: #bbf7d0;
-    }
-
-    .hero-panel-list {
-      display: grid;
-      gap: 8px;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-    .hero-panel-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 10px;
-      border-radius: var(--radius-md);
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(30, 64, 175, 0.8);
-    }
-
-    .hero-panel-item-label {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .hero-panel-item-label span:first-child {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .hero-panel-item-label strong {
-      font-size: 13px;
-    }
-
-    .hero-panel-tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(37, 99, 235, 0.2);
-      border: 1px solid rgba(37, 99, 235, 0.7);
-      color: #bfdbfe;
-    }
-
-    .hero-panel-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 4px;
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .hero-panel-foot span.highlight {
-      color: #facc15;
+      background: radial-gradient(circle, #22c55e, #166534);
     }
 
     /* SECTION BASE */
     section {
-      padding: 40px 0;
-      border-top: 1px solid rgba(15, 23, 42, 0.95);
-      position: relative;
+      padding: 50px 0;
+      background: transparent;
     }
 
-    .section-headline {
+    .section-header {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: flex-end;
-      margin-bottom: 20px;
+      gap: 16px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
+      color: #031716;
     }
 
     .section-kicker {
       font-size: 11px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--text-soft);
-      margin-bottom: 4px;
-    }
-
-    .section-title {
-      font-size: 24px;
-    }
-
-    .section-subtitle {
-      font-size: 13px;
-      color: var(--text-soft);
-      max-width: 420px;
-    }
-
-    /* PROCESS */
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .process-card {
-      border-radius: var(--radius-lg);
-      background: rgba(15, 23, 42, 0.97);
-      border: 1px solid rgba(55, 65, 81, 0.85);
-      padding: 18px 14px 16px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    .process-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 1);
-      border-color: rgba(59, 130, 246, 0.9);
-    }
-
-    .process-step {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 0 0, #38bdf8, #1d4ed8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.9);
-    }
-
-    .process-card h3 {
-      font-size: 15px;
+      color: rgba(3, 23, 22, 0.8);
       margin-bottom: 6px;
     }
 
-    .process-card p {
+    .section-title {
+      font-size: 22px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .section-subtitle {
+      max-width: 420px;
       font-size: 13px;
-      color: var(--text-soft);
+      color: #06342f;
+    }
+
+    /* CARDS BACKGROUND STRIPS */
+    .strip {
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 40px;
+      padding: 26px 26px 28px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* PROCESS GRID */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .process-card {
+      border-radius: var(--radius-soft);
+      background: #fdfdfd;
+      padding: 18px 14px 16px;
+      color: #031716;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .process-step {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #0f766e;
+      margin-bottom: 4px;
+    }
+
+    .process-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .process-body {
+      font-size: 13px;
+      color: #374151;
     }
 
     /* PRICING */
-    #pricing-section {
-      background:
-        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.18), transparent 65%),
-        var(--bg-surface);
-    }
-
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      gap: 18px;
     }
 
     .pricing-card {
-      border-radius: var(--radius-lg);
-      background: rgba(15, 23, 42, 0.97);
-      border: 1px solid rgba(55, 65, 81, 0.95);
+      border-radius: var(--radius-soft);
+      background: #fdfdfd;
       padding: 18px 16px 16px;
-      box-shadow: var(--shadow-soft);
+      color: #031716;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
     .pricing-card.highlight {
-      border-color: rgba(59, 130, 246, 0.9);
-      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.3), rgba(15, 23, 42, 1));
-      transform: translateY(-2px);
+      border: 2px solid #0f766e;
     }
 
-    .pricing-title {
-      font-size: 17px;
-      font-weight: 600;
+    .pricing-name {
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
     }
 
     .pricing-label {
-      font-size: 13px;
-      color: var(--text-soft);
+      font-size: 12px;
+      color: #4b5563;
     }
 
     .pricing-price {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-top: 4px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f766e;
+      margin-top: 6px;
     }
 
     .pricing-card.highlight .pricing-price {
-      color: #facc15;
+      color: #b45309;
     }
 
     .pricing-list {
       list-style: none;
       font-size: 13px;
-      color: var(--text-soft);
+      color: #374151;
       margin-top: 8px;
       margin-bottom: 10px;
     }
 
     .pricing-list li {
       display: flex;
-      align-items: center;
       gap: 6px;
       margin-bottom: 4px;
     }
 
-    .pricing-bullet {
+    .pricing-dot {
       width: 6px;
       height: 6px;
       border-radius: 999px;
-      background: var(--accent);
+      background: #0f766e;
+      margin-top: 5px;
     }
 
-    .pricing-card.highlight .pricing-bullet {
-      background: #facc15;
+    .pricing-card.highlight .pricing-dot {
+      background: #b45309;
+    }
+
+    .pricing-cta {
+      margin-top: auto;
+      align-self: flex-start;
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: #0f766e;
+      color: #f9fafb;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
     }
 
     .pricing-addons {
-      font-size: 11px;
-      color: rgba(148, 163, 253, 0.9);
       margin-top: 16px;
+      font-size: 11px;
+      color: #022c22;
     }
 
     /* PACKAGE DETAILS PANEL */
     #package-details {
-      margin-top: 20px;
-      border-radius: var(--radius-lg);
-      background: rgba(15, 23, 42, 0.98);
-      border: 1px solid rgba(129, 140, 248, 0.9);
+      margin-top: 22px;
+      border-radius: var(--radius-soft);
+      background: #fdfdfd;
       padding: 16px 16px 14px;
-      box-shadow: var(--shadow-soft);
+      color: #031716;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
       display: none;
       font-size: 13px;
     }
 
     #package-details h3 {
-      font-size: 17px;
-      margin-bottom: 4px;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
 
     #package-details p {
-      color: var(--text-soft);
       margin-bottom: 8px;
+      color: #374151;
     }
 
     #package-list {
@@ -625,75 +367,67 @@
       margin-bottom: 4px;
     }
 
-    .contact-start-btn {
+    .package-contact-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(129, 140, 248, 0.95);
-      background: rgba(15, 23, 42, 0.98);
-      color: #e5e7eb;
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid #0f766e;
+      background: #0f766e;
+      color: #f9fafb;
       font-size: 11px;
-      letter-spacing: 0.12em;
+      font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      font-weight: 600;
-      cursor: pointer;
     }
 
-    /* WORK */
+    /* WORK GRID */
     .work-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      gap: 18px;
     }
 
     .work-card {
-      position: relative;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-soft);
       overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: #020617;
-      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.9);
+      background: #022c22;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
     }
 
     .work-card img {
       width: 100%;
       height: 210px;
       object-fit: cover;
-      transform: scale(1.02);
+      display: block;
+      transform: scale(1.03);
       transition: transform 0.3s ease;
     }
 
-    .work-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 1);
-    }
-
     .work-card:hover img {
-      transform: scale(1.06);
+      transform: scale(1.08);
     }
 
     .work-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 45%, rgba(2, 6, 23, 0.95) 100%);
+      background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.8) 100%);
       display: flex;
       align-items: flex-end;
       padding: 14px;
     }
 
     .work-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
       font-size: 13px;
     }
 
     .work-title {
-      font-weight: 600;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 2px;
     }
 
     .work-sub {
@@ -703,40 +437,41 @@
     .work-btn {
       margin-top: 6px;
       padding: 5px 10px;
-      border-radius: 999px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       border: none;
-      font-size: 12px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #38bdf8, #a855f7);
-      color: #020617;
+      background: #fefce8;
+      color: #022c22;
+      font-weight: 700;
     }
 
     /* CONTACT */
     .contact-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 24px;
-      align-items: flex-start;
+      gap: 20px;
     }
 
     .contact-card {
-      border-radius: var(--radius-lg);
-      background: rgba(15, 23, 42, 0.97);
-      border: 1px solid rgba(59, 130, 246, 0.9);
+      border-radius: var(--radius-soft);
+      background: #fdfdfd;
       padding: 18px 16px 16px;
-      box-shadow: var(--shadow-soft);
+      color: #022c22;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      font-size: 14px;
+    }
+
+    .contact-card strong {
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.16em;
     }
 
     .contact-row {
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .contact-row strong {
-      color: #e5e7eb;
+      margin-bottom: 12px;
     }
 
     .contact-form {
@@ -752,18 +487,19 @@
     }
 
     .field label {
-      color: var(--text-soft);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #4b5563;
     }
 
     .field input,
     .field textarea {
-      border-radius: 10px;
-      border: 1px solid rgba(31, 41, 55, 0.95);
-      background: rgba(15, 23, 42, 0.9);
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
       padding: 8px 10px;
       font-family: inherit;
       font-size: 13px;
-      color: var(--text-main);
       outline: none;
     }
 
@@ -774,72 +510,55 @@
 
     .field input:focus,
     .field textarea:focus {
-      border-color: rgba(56, 189, 248, 0.9);
-      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.7);
+      border-color: #0f766e;
+      box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.4);
+    }
+
+    .contact-submit {
+      margin-top: 4px;
+      align-self: flex-start;
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: #0f766e;
+      color: #f9fafb;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
     }
 
     .contact-note {
-      font-size: 12px;
-      color: var(--text-soft);
-      margin-top: 6px;
-    }
-
-    /* REVEAL ANIMATION */
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    section.reveal::before {
-      content: "";
-      position: absolute;
-      left: 20px;
-      top: 0;
-      width: 120px;
-      height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #38bdf8, #a855f7, transparent);
-      transform-origin: left;
-      transform: scaleX(0);
-      opacity: 0;
-      transition: transform 0.6s ease, opacity 0.6s ease;
-    }
-
-    section.reveal.visible::before {
-      transform: scaleX(1);
-      opacity: 1;
+      font-size: 11px;
+      color: #4b5563;
+      margin-top: 4px;
     }
 
     /* FOOTER */
     footer {
-      border-top: 1px solid rgba(15, 23, 42, 1);
-      padding: 18px 0 24px;
+      padding: 24px 0 30px;
       font-size: 11px;
-      color: var(--text-soft);
+      color: rgba(3, 23, 22, 0.9);
     }
 
     .footer-row {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
     }
 
     /* RESPONSIVE */
     @media (max-width: 960px) {
-      .hero-grid {
+      .hero-inner {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .hero-panel {
-        order: -1;
+      .hero-screen-wrap {
+        margin: 0 auto;
+      }
+      .hero-tagline-block {
+        max-width: none;
       }
 
       .process-grid {
@@ -860,12 +579,9 @@
     }
 
     @media (max-width: 720px) {
-      .nav-links {
-        display: none;
-      }
-
-      .hero-title {
-        font-size: 32px;
+      .nav-pills {
+        gap: 12px;
+        flex-wrap: wrap;
       }
 
       .process-grid,
@@ -874,128 +590,52 @@
         grid-template-columns: minmax(0, 1fr);
       }
 
-      .footer-row {
-        flex-direction: column;
-        align-items: flex-start;
+      .strip {
+        padding: 20px 16px 22px;
       }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-      .reveal {
-        opacity: 1 !important;
-        transform: none !important;
+      .hero-tagline-main {
+        font-size: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Back to top -->
-  <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
-
-  <!-- NAV -->
+  <!-- TOP PILL NAV -->
   <div class="nav-shell">
-    <header class="nav" id="nav">
-      <div class="nav-left">
-        <div class="nav-logo-wrap">
-          <img src="assets/logo.png" alt="CTRL & CREATE logo">
-        </div>
-        <div class="nav-brand">
-          <div class="nav-brand-main">CTRL &amp; CREATE</div>
-          <div class="nav-brand-sub">AI-powered web design studio</div>
-        </div>
-      </div>
-      <nav class="nav-links" aria-label="Primary">
-        <button class="nav-link" data-scroll="process-section">Process</button>
-        <button class="nav-link" data-scroll="pricing-section">Pricing</button>
-        <button class="nav-link" data-scroll="work-section">Work</button>
-        <button class="nav-link" data-scroll="contact-section">Contact</button>
+    <div class="container">
+      <nav class="nav-pills">
+        <button class="nav-pill" data-scroll="process-section">Process</button>
+        <button class="nav-pill" data-scroll="pricing-section">Pricing</button>
+        <button class="nav-pill" data-scroll="work-section">Work</button>
+        <button class="nav-pill" data-scroll="contact-section">Contact</button>
       </nav>
-      <button class="btn btn-primary" data-scroll="contact-section">
-        <span>Get your site</span>
-        <span>↗</span>
-      </button>
-    </header>
+    </div>
   </div>
 
   <!-- HERO -->
   <header class="hero" id="top">
     <div class="container">
-      <div class="hero-grid">
-        <div class="hero-copy reveal">
+      <div class="hero-inner">
+        <div class="hero-visual">
+          <div class="hero-screen-wrap">
+            <!-- Replace src with your sketch monitor PNG (the one in your screenshot) -->
+            <img src="assets/hero-monitor.png" alt="CTRL & CREATE monitor illustration">
+          </div>
+        </div>
+        <div class="hero-tagline-block">
+          <h1 class="hero-tagline-main">
+            AI-powered web design<br />
+            human-finished details
+          </h1>
+          <p class="hero-subcopy">
+            We use AI to speed up structure, copy, and assets — then finish everything by hand
+            so your site feels clean, on-brand, and ready to launch.
+          </p>
           <div class="hero-badge">
             <span class="hero-badge-dot"></span>
-            <span>AI-assisted, human-finished websites</span>
-          </div>
-          <h1 class="hero-title">
-            Web design that starts with <span class="em">AI</span> and ends with <span class="em">craft</span>.
-          </h1>
-          <p class="hero-subtitle">
-            We use AI to speed up structure, copy, and assets — then finish everything by hand so it’s clean, on-brand, and ready to launch.
-          </p>
-          <div class="hero-actions">
-            <button class="btn btn-primary" data-scroll="pricing-section">
-              <span>See packages</span>
-              <span>↓</span>
-            </button>
-            <button class="btn btn-outline" data-scroll="process-section">
-              <span>How the process works</span>
-            </button>
-          </div>
-          <p class="hero-footnote">
-            <span>Montreal-based</span> • AI-assisted builds • Conversion-minded layouts
-          </p>
-        </div>
-
-        <div class="hero-panel reveal">
-          <div class="hero-panel-card">
-            <div class="hero-panel-top">
-              <div class="hero-mini">
-                <div class="hero-mini-logo">
-                  <img src="assets/logo.png" alt="CTRL & CREATE logo">
-                </div>
-                <div>
-                  <div class="hero-mini-label">CTRL &amp; CREATE</div>
-                  <div style="font-size:12px;color:#e5e7eb;">Studio snapshot</div>
-                </div>
-              </div>
-              <span class="hero-status-pill">Spots open</span>
-            </div>
-
-            <div class="hero-panel-list">
-              <div class="hero-panel-item">
-                <div class="hero-panel-item-label">
-                  <span>Entry package</span>
-                  <strong>Starter</strong>
-                </div>
-                <span class="hero-panel-tag">$600–$900</span>
-              </div>
-              <div class="hero-panel-item">
-                <div class="hero-panel-item-label">
-                  <span>Most chosen</span>
-                  <strong>Business Pro</strong>
-                </div>
-                <span class="hero-panel-tag">$1,000–$1,800</span>
-              </div>
-              <div class="hero-panel-item">
-                <div class="hero-panel-item-label">
-                  <span>For bigger scopes</span>
-                  <strong>Premium Custom</strong>
-                </div>
-                <span class="hero-panel-tag">$2,000–$3,500</span>
-              </div>
-            </div>
-
-            <div class="hero-panel-foot">
-              <span>AI-assisted builds, human-finished details.</span>
-              <span class="highlight">20–40% below typical agency rates</span>
-            </div>
+            <span>Montreal-based studio • single & multi-page builds</span>
           </div>
         </div>
       </div>
@@ -1003,240 +643,245 @@
   </header>
 
   <!-- PROCESS -->
-  <section id="process-section" class="reveal">
+  <section id="process-section">
     <div class="container">
-      <div class="section-headline">
-        <div>
-          <div class="section-kicker">Our workflow</div>
-          <h2 class="section-title">A simple, fast process</h2>
+      <div class="strip">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Our workflow</div>
+            <h2 class="section-title">A simple, fast process</h2>
+          </div>
+          <p class="section-subtitle">
+            From first call to launch, we keep things clear and focused so you always know what we’re doing — and why.
+          </p>
         </div>
-        <p class="section-subtitle">
-          From first call to launch, we keep things clear and focused so you always know what we’re doing — and why.
-        </p>
-      </div>
 
-      <div class="process-grid">
-        <article class="process-card">
-          <div class="process-step">1</div>
-          <h3>Discover</h3>
-          <p>Tell us your goals, audience, and examples you like. We align on scope and timeline.</p>
-        </article>
-        <article class="process-card">
-          <div class="process-step">2</div>
-          <h3>Design</h3>
-          <p>We draft structure, copy, and visuals using AI + human review to lock the direction.</p>
-        </article>
-        <article class="process-card">
-          <div class="process-step">3</div>
-          <h3>Build</h3>
-          <p>We implement, optimize for mobile &amp; SEO, and integrate your tools.</p>
-        </article>
-        <article class="process-card">
-          <div class="process-step">4</div>
-          <h3>Launch</h3>
-          <p>We deploy, hand over assets, and offer maintenance to keep you sharp.</p>
-        </article>
+        <div class="process-grid">
+          <article class="process-card">
+            <div class="process-step">Step 1</div>
+            <div class="process-title">Discover</div>
+            <p class="process-body">
+              Tell us your goals, audience, and examples you like. We align on scope and timeline.
+            </p>
+          </article>
+          <article class="process-card">
+            <div class="process-step">Step 2</div>
+            <div class="process-title">Design</div>
+            <p class="process-body">
+              We draft structure, copy, and visuals using AI + human review to lock the direction.
+            </p>
+          </article>
+          <article class="process-card">
+            <div class="process-step">Step 3</div>
+            <div class="process-title">Build</div>
+            <p class="process-body">
+              We implement, optimize for mobile &amp; SEO, and integrate your tools.
+            </p>
+          </article>
+          <article class="process-card">
+            <div class="process-step">Step 4</div>
+            <div class="process-title">Launch</div>
+            <p class="process-body">
+              We deploy, hand over assets, and offer maintenance to keep you sharp.
+            </p>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- PRICING -->
-  <section id="pricing-section" class="reveal">
+  <section id="pricing-section">
     <div class="container">
-      <div class="section-headline">
-        <div>
-          <div class="section-kicker">Transparent pricing</div>
-          <h2 class="section-title">Three ways to ship your site</h2>
+      <div class="strip">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Transparent pricing</div>
+            <h2 class="section-title">Three ways to ship your site</h2>
+          </div>
+          <p class="section-subtitle">
+            We stay roughly 20–40% below typical Montréal agency rates — without cutting corners on design or implementation.
+          </p>
         </div>
-        <p class="section-subtitle">
-          We stay roughly 20–40% below typical Montréal agency rates — without cutting corners on design or implementation.
+
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <div class="pricing-name">Starter</div>
+            <div class="pricing-label">Perfect for launches</div>
+            <div class="pricing-price">$600–$900</div>
+            <ul class="pricing-list">
+              <li><span class="pricing-dot"></span><span>One-page site</span></li>
+              <li><span class="pricing-dot"></span><span>AI-assisted copy</span></li>
+              <li><span class="pricing-dot"></span><span>Responsive + basic SEO</span></li>
+              <li><span class="pricing-dot"></span><span>Contact form</span></li>
+            </ul>
+            <button class="pricing-cta pricing-btn" data-package="Starter">
+              Choose Starter
+            </button>
+          </article>
+
+          <article class="pricing-card highlight">
+            <div class="pricing-name">Business Pro</div>
+            <div class="pricing-label">Best value for SMBs</div>
+            <div class="pricing-price">$1,000–$1,800</div>
+            <ul class="pricing-list">
+              <li><span class="pricing-dot"></span><span>3–5 pages</span></li>
+              <li><span class="pricing-dot"></span><span>SEO setup</span></li>
+              <li><span class="pricing-dot"></span><span>Gallery / blog</span></li>
+              <li><span class="pricing-dot"></span><span>Analytics + handoff</span></li>
+            </ul>
+            <button class="pricing-cta pricing-btn" data-package="Business Pro">
+              Choose Business Pro
+            </button>
+          </article>
+
+          <article class="pricing-card">
+            <div class="pricing-name">Premium Custom</div>
+            <div class="pricing-label">Bigger scope, still fast</div>
+            <div class="pricing-price">$2,000–$3,500</div>
+            <ul class="pricing-list">
+              <li><span class="pricing-dot"></span><span>6–10 pages</span></li>
+              <li><span class="pricing-dot"></span><span>Brand integration</span></li>
+              <li><span class="pricing-dot"></span><span>Light e-commerce</span></li>
+              <li><span class="pricing-dot"></span><span>AI visuals &amp; copy</span></li>
+            </ul>
+            <button class="pricing-cta pricing-btn" data-package="Premium Custom">
+              Choose Premium
+            </button>
+          </article>
+        </div>
+
+        <div id="package-details" aria-live="polite">
+          <h3 id="package-heading">Choosing …</h3>
+          <p id="package-intro"></p>
+          <ul id="package-list"></ul>
+          <a
+            id="package-contact"
+            class="package-contact-btn"
+            href="mailto:your@email.com"
+          >
+            <span>Contact us to start</span>
+          </a>
+        </div>
+
+        <p class="pricing-addons">
+          Add-ons: maintenance ($60–$100/mo), logo design ($150–$250), hosting setup ($150).
         </p>
       </div>
-
-      <div class="pricing-grid">
-        <article class="pricing-card">
-          <div class="pricing-title">Starter</div>
-          <div class="pricing-label">Perfect for launches</div>
-          <div class="pricing-price">$600–$900</div>
-          <ul class="pricing-list">
-            <li><span class="pricing-bullet"></span>One-page site</li>
-            <li><span class="pricing-bullet"></span>AI-assisted copy</li>
-            <li><span class="pricing-bullet"></span>Responsive + basic SEO</li>
-            <li><span class="pricing-bullet"></span>Contact form</li>
-          </ul>
-          <button class="btn btn-primary pricing-btn" data-package="Starter">
-            <span>Choose Starter</span>
-            <span>→</span>
-          </button>
-        </article>
-
-        <article class="pricing-card highlight">
-          <div class="pricing-title">Business Pro</div>
-          <div class="pricing-label">Best value for SMBs</div>
-          <div class="pricing-price">$1,000–$1,800</div>
-          <ul class="pricing-list">
-            <li><span class="pricing-bullet"></span>3–5 pages</li>
-            <li><span class="pricing-bullet"></span>SEO setup</li>
-            <li><span class="pricing-bullet"></span>Gallery / blog</li>
-            <li><span class="pricing-bullet"></span>Analytics + handoff</li>
-          </ul>
-          <button class="btn btn-primary pricing-btn" data-package="Business Pro">
-            <span>Choose Business Pro</span>
-            <span>→</span>
-          </button>
-        </article>
-
-        <article class="pricing-card">
-          <div class="pricing-title">Premium Custom</div>
-          <div class="pricing-label">Bigger scope, still fast</div>
-          <div class="pricing-price">$2,000–$3,500</div>
-          <ul class="pricing-list">
-            <li><span class="pricing-bullet"></span>6–10 pages</li>
-            <li><span class="pricing-bullet"></span>Brand integration</li>
-            <li><span class="pricing-bullet"></span>Light e-commerce</li>
-            <li><span class="pricing-bullet"></span>AI visuals &amp; copy</li>
-          </ul>
-          <button class="btn btn-primary pricing-btn" data-package="Premium Custom">
-            <span>Choose Premium</span>
-            <span>→</span>
-          </button>
-        </article>
-      </div>
-
-      <div id="package-details" aria-live="polite">
-        <h3 id="package-heading">Choosing …</h3>
-        <p id="package-intro"></p>
-        <ul id="package-list"></ul>
-        <a
-          id="package-contact"
-          class="contact-start-btn"
-          href="mailto:your@email.com"
-        >
-          <span>Contact us to start</span>
-          <span>↗</span>
-        </a>
-      </div>
-
-      <p class="pricing-addons">
-        Add-ons: maintenance ($60–$100/mo), logo design ($150–$250), hosting setup ($150).
-      </p>
     </div>
   </section>
 
   <!-- WORK -->
-  <section id="work-section" class="reveal">
+  <section id="work-section">
     <div class="container">
-      <div class="section-headline">
-        <div>
-          <div class="section-kicker">Selected work</div>
-          <h2 class="section-title">Sites we’ve brought to life</h2>
+      <div class="strip">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Selected work</div>
+            <h2 class="section-title">Sites we’ve brought to life</h2>
+          </div>
+          <p class="section-subtitle">
+            Show real builds with motion, clean copy, and AI-assisted workflows — including CTRL &amp; CREATE itself.
+          </p>
         </div>
-        <p class="section-subtitle">
-          Show real builds with motion, clean copy, and AI-assisted workflows — including CTRL &amp; CREATE itself.
-        </p>
-      </div>
 
-      <div class="work-grid">
-        <a class="work-card" href="https://paigesheffren.github.io/ctrl-create/" target="_blank" rel="noopener">
-          <img src="assets/work-ctrl-create.jpg" alt="CTRL & CREATE site preview">
-          <div class="work-overlay">
-            <div class="work-meta">
-              <div class="work-title">CTRL &amp; CREATE</div>
-              <div class="work-sub">Studio landing page</div>
-              <button class="work-btn">
-                <span>View site</span><span>↗</span>
-              </button>
+        <div class="work-grid">
+          <a class="work-card" href="https://paigesheffren.github.io/ctrl-create/" target="_blank" rel="noopener">
+            <img src="assets/work-ctrl-create.jpg" alt="CTRL & CREATE site preview">
+            <div class="work-overlay">
+              <div class="work-meta">
+                <div class="work-title">CTRL &amp; CREATE</div>
+                <div class="work-sub">Studio landing page</div>
+                <button class="work-btn">View site</button>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
 
-        <a class="work-card" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
-          <img src="assets/work-s3sammy.jpg" alt="S3 Sammy site preview">
-          <div class="work-overlay">
-            <div class="work-meta">
-              <div class="work-title">S3 Sammy</div>
-              <div class="work-sub">Automotive photo portfolio</div>
-              <button class="work-btn">
-                <span>View site</span><span>↗</span>
-              </button>
+          <a class="work-card" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
+            <img src="assets/work-s3sammy.jpg" alt="S3 Sammy site preview">
+            <div class="work-overlay">
+              <div class="work-meta">
+                <div class="work-title">S3 Sammy</div>
+                <div class="work-sub">Automotive photo portfolio</div>
+                <button class="work-btn">View site</button>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
 
-        <a class="work-card" href="#" target="_blank" rel="noopener">
-          <img src="assets/work-placeholder.jpg" alt="Client project preview">
-          <div class="work-overlay">
-            <div class="work-meta">
-              <div class="work-title">Client project</div>
-              <div class="work-sub">Brand-forward web experience</div>
-              <button class="work-btn">
-                <span>View site</span><span>↗</span>
-              </button>
+          <a class="work-card" href="#" target="_blank" rel="noopener">
+            <img src="assets/work-placeholder.jpg" alt="Client project preview">
+            <div class="work-overlay">
+              <div class="work-meta">
+                <div class="work-title">Client project</div>
+                <div class="work-sub">Brand-forward web experience</div>
+                <button class="work-btn">View site</button>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact-section" class="reveal">
+  <section id="contact-section">
     <div class="container">
-      <div class="section-headline">
-        <div>
-          <div class="section-kicker">Start a project</div>
-          <h2 class="section-title">Tell us what you’re building</h2>
-        </div>
-        <p class="section-subtitle">
-          A quick brief is enough. We’ll reply with options, timelines, and a recommended package.
-        </p>
-      </div>
-
-      <div class="contact-grid">
-        <div class="contact-card">
-          <div class="contact-row">
-            <strong>Email</strong><br>
-            <a href="mailto:your@email.com">
-              your@email.com
-            </a>
+      <div class="strip">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Start a project</div>
+            <h2 class="section-title">Tell us what you’re building</h2>
           </div>
-          <div class="contact-row">
-            <strong>Instagram</strong><br>
-            <a href="https://instagram.com/ctrlcreate" target="_blank" rel="noopener">
-              @ctrlcreate
-            </a>
-          </div>
-          <div class="contact-row">
-            Or embed your form / Calendly / preferred contact flow here.
-          </div>
+          <p class="section-subtitle">
+            A quick brief is enough. We’ll reply with options, timelines, and a recommended package.
+          </p>
         </div>
 
-        <div class="contact-card">
-          <form class="contact-form" onsubmit="event.preventDefault();">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" type="text" placeholder="Your name" />
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-row">
+              <strong>Email</strong><br>
+              <a href="mailto:your@email.com">
+                your@email.com
+              </a>
             </div>
-            <div class="field">
-              <label for="project">Project type</label>
-              <input id="project" type="text" placeholder="Single page, multi-page, e-commerce…" />
+            <div class="contact-row">
+              <strong>Instagram</strong><br>
+              <a href="https://instagram.com/ctrlcreate" target="_blank" rel="noopener">
+                @ctrlcreate
+              </a>
             </div>
-            <div class="field">
-              <label for="budget">Rough budget (optional)</label>
-              <input id="budget" type="text" placeholder="$600–$900, $1,000–$1,800, etc." />
+            <div class="contact-row">
+              Or embed your form / Calendly / preferred contact flow here.
             </div>
-            <div class="field">
-              <label for="message">What are you trying to launch?</label>
-              <textarea id="message" placeholder="Give us a quick sense of your goals, audience, and any examples you like."></textarea>
-            </div>
-            <button class="btn btn-primary" type="submit">
-              <span>Copy this into your email</span>
-              <span>↗</span>
-            </button>
-            <p class="contact-note">
-              This form is just a mockup — you can swap it for your actual form or Calendly link.
-            </p>
-          </form>
+          </div>
+
+          <div class="contact-card">
+            <form class="contact-form" onsubmit="event.preventDefault();">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" type="text" placeholder="Your name" />
+              </div>
+              <div class="field">
+                <label for="project">Project type</label>
+                <input id="project" type="text" placeholder="Single page, multi-page, e-commerce…" />
+              </div>
+              <div class="field">
+                <label for="budget">Rough budget (optional)</label>
+                <input id="budget" type="text" placeholder="$600–$900, $1,000–$1,800, etc." />
+              </div>
+              <div class="field">
+                <label for="message">What are you trying to launch?</label>
+                <textarea id="message" placeholder="Give us a quick sense of your goals, audience, and any examples you like."></textarea>
+              </div>
+              <button class="contact-submit" type="submit">
+                Copy this into your email
+              </button>
+              <p class="contact-note">
+                This form is just a mockup — swap it for your real form or booking link.
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -1257,11 +902,11 @@
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    function smoothScrollTo(targetId) {
-      const el = document.getElementById(targetId);
+    function smoothScrollTo(id) {
+      const el = document.getElementById(id);
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const top = window.scrollY + rect.top - 72;
+      const top = window.scrollY + rect.top - 40;
       if (prefersReduced) {
         window.scrollTo(0, top);
       } else {
@@ -1269,93 +914,46 @@
       }
     }
 
-    // Scroll for nav + buttons
-    document.querySelectorAll("[data-scroll]").forEach((btn) => {
+    // Nav pill scroll
+    document.querySelectorAll("[data-scroll]").forEach(btn => {
       btn.addEventListener("click", () => {
         const id = btn.getAttribute("data-scroll");
         smoothScrollTo(id);
       });
     });
 
-    // Nav shrink + back to top
-    const nav = document.getElementById("nav");
-    const backTop = document.getElementById("backTop");
-
-    function onScroll() {
-      const y = window.scrollY || window.pageYOffset;
-      if (nav) {
-        if (y > 80) nav.classList.add("shrink");
-        else nav.classList.remove("shrink");
-      }
-      if (backTop) {
-        if (y > 450) backTop.classList.add("show");
-        else backTop.classList.remove("show");
-      }
-    }
-
-    window.addEventListener("scroll", onScroll);
-    onScroll();
-
-    if (backTop) {
-      backTop.addEventListener("click", () => smoothScrollTo("top"));
-    }
-
-    // Reveal-on-scroll
-    if (!prefersReduced && "IntersectionObserver" in window) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.16 }
-      );
-
-      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-    } else {
-      document.querySelectorAll(".reveal").forEach((el) =>
-        el.classList.add("visible")
-      );
-    }
-
     // Dynamic pricing details
     const PACKAGE_CONTENT = {
-      Starter: {
-        intro:
-          "Choosing Starter means you get a focused, fast-launch foundation:",
+      "Starter": {
+        intro: "Choosing Starter means you get a focused, fast-launch foundation:",
         bullets: [
           "One-page layout tailored to your brand and offer",
           "AI-generated copy edited by a human for clarity and tone",
           "Responsive build with basic on-page SEO and fast load",
           "Contact form so leads go straight to your inbox",
-          "One revision round after launch",
-        ],
+          "One revision round after launch"
+        ]
       },
       "Business Pro": {
-        intro:
-          "Choosing Business Pro means you get a full small-business web presence:",
+        intro: "Choosing Business Pro means you get a full small-business web presence:",
         bullets: [
           "3–5 pages (Home, About, Services, Gallery/Blog, Contact)",
           "SEO setup (titles, descriptions, headings, internal links)",
           "Space for case studies, portfolio or blog posts",
           "Analytics + handoff so you know what’s working",
-          "Two revision rounds to polish after launch",
-        ],
+          "Two revision rounds to polish after launch"
+        ]
       },
       "Premium Custom": {
-        intro:
-          "Choosing Premium Custom means you get a brand-integrated experience:",
+        intro: "Choosing Premium Custom means you get a brand-integrated experience:",
         bullets: [
           "6–10 pages with deeper storytelling and custom sections",
           "Brand system woven through layout, color and typography",
           "Light e-commerce or booking integration if needed",
           "AI-assisted visuals tuned by hand for your look",
-          "Technical SEO + performance budget + staging setup",
-        ],
-      },
+          "Technical SEO + performance budget + staging setup"
+        ]
+      }
     };
 
     const details = document.getElementById("package-details");
@@ -1370,7 +968,7 @@
       heading.textContent = `Choosing ${name} means you will get…`;
       intro.textContent = data.intro;
       list.innerHTML = "";
-      data.bullets.forEach((item) => {
+      data.bullets.forEach(item => {
         const li = document.createElement("li");
         li.textContent = item;
         list.appendChild(li);
@@ -1382,7 +980,7 @@
       smoothScrollTo("pricing-section");
     }
 
-    document.querySelectorAll(".pricing-btn").forEach((btn) => {
+    document.querySelectorAll(".pricing-btn").forEach(btn => {
       btn.addEventListener("click", () => openPackage(btn.dataset.package));
     });
   </script>
