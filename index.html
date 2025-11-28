@@ -453,12 +453,16 @@
 .faq-face {
   position: absolute;
   inset: 0;
-  padding: 18px 18px 16px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;      /* center horizontally */
+  text-align: center;       /* center text */
+  gap: 12px;
   backface-visibility: hidden;
 }
+
 
 .faq-front {
   text-align: left;
@@ -472,11 +476,13 @@
   font-size: 26px;
   margin-bottom: 8px;
 }
-
 .faq-question {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
-  text-transform: uppercase;
+  text-transform: none;
+  line-height: 1.4;
+  color: #0f172a;
+  max-width: 85%;
 }
 
 .faq-question span.accent {
@@ -484,10 +490,13 @@
 }
 
 .faq-answer {
-  font-size: 13px;
+  font-size: 14px;
   color: #374151;
-  line-height: 1.5;
+  line-height: 1.6;
+  max-width: 85%;
+  text-align: center;
 }
+
 
 .faq-flip-btn {
   align-self: flex-start;
@@ -1302,9 +1311,9 @@
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">💻</div>
-                  <h3 class="faq-question">
-                    What <span class="accent">types of sites</span> do you build?
-                  </h3>
+        <h3 class="faq-question">
+  What types of websites do you build?
+</h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
@@ -1324,9 +1333,9 @@
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">⏱️</div>
-                  <h3 class="faq-question">
-                    How long does a <span class="accent">project</span> take?
-                  </h3>
+<h3 class="faq-question">
+  How long does a typical project take?
+</h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
@@ -1346,9 +1355,9 @@
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">🎯</div>
-                  <h3 class="faq-question">
-                    Can you work with <span class="accent">my existing site</span>?
-                  </h3>
+<h3 class="faq-question">
+  Can you redesign or improve my existing site?
+</h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
@@ -1368,9 +1377,9 @@
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">📂</div>
-                  <h3 class="faq-question">
-                    What do you <span class="accent">need from me</span> to start?
-                  </h3>
+<h3 class="faq-question">
+  What do you need from me before starting?
+</h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
@@ -1390,9 +1399,9 @@
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">🤖</div>
-                  <h3 class="faq-question">
-                    How much is really <span class="accent">done by AI</span>?
-                  </h3>
+<h3 class="faq-question">
+  How much of the project is actually done by AI?
+</h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
@@ -1412,9 +1421,9 @@
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">💳</div>
-                  <h3 class="faq-question">
-                    How do <span class="accent">payments</span> work?
-                  </h3>
+<h3 class="faq-question">
+  How do payments work for a website project?
+</h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
