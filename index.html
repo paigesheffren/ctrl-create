@@ -418,6 +418,111 @@
       transform: translateX(20%);
     }
 
+
+    /* FAQ flip cards */
+.faq-strip {
+  margin-top: 10px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.faq-card {
+  perspective: 1200px;
+}
+
+.faq-inner {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: 24px;
+  border: 2px solid #111827;
+  background: #ffffff;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.faq-card.flipped .faq-inner {
+  transform: rotateY(180deg);
+}
+
+.faq-face {
+  position: absolute;
+  inset: 0;
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backface-visibility: hidden;
+}
+
+.faq-front {
+  text-align: left;
+}
+
+.faq-back {
+  transform: rotateY(180deg);
+}
+
+.faq-icon {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.faq-question {
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.faq-question span.accent {
+  color: #059669;
+}
+
+.faq-answer {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.faq-flip-btn {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #111827;
+  color: #f9fafb;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #6b7280;
+}
+
+.faq-flip-btn:hover {
+  transform: translateY(1px);
+  box-shadow: 0 4px 0 #6b7280;
+}
+
+/* FAQ responsive */
+@media (max-width: 960px) {
+  .faq-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .faq-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
     /* Process */
     .process-grid {
       display: grid;
@@ -1176,6 +1281,158 @@
     </div>
   </section>
 
+    <!-- FAQ / Q&A -->
+  <section id="faq-section">
+    <div class="container">
+      <div class="strip js-strip faq-strip">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Questions & answers</div>
+            <h2 class="section-title">How working with us works</h2>
+          </div>
+          <p class="section-subtitle">
+            Quick answers to the stuff people usually ask before we start a project. Tap “flip card” to see more detail.
+          </p>
+        </div>
+
+        <div class="faq-grid">
+          <!-- Card 1 -->
+          <article class="faq-card">
+            <div class="faq-inner">
+              <div class="faq-face faq-front">
+                <div>
+                  <div class="faq-icon">💻</div>
+                  <h3 class="faq-question">
+                    What <span class="accent">types of sites</span> do you build?
+                  </h3>
+                </div>
+                <button class="faq-flip-btn" type="button">Flip card</button>
+              </div>
+              <div class="faq-face faq-back">
+                <p class="faq-answer">
+                  We do single-page landings, 3–10 page business sites, and light e-commerce or booking flows. 
+                  Everything is custom-designed for your brand, not a generic template.
+                </p>
+                <button class="faq-flip-btn" type="button">Back</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="faq-card">
+            <div class="faq-inner">
+              <div class="faq-face faq-front">
+                <div>
+                  <div class="faq-icon">⏱️</div>
+                  <h3 class="faq-question">
+                    How long does a <span class="accent">project</span> take?
+                  </h3>
+                </div>
+                <button class="faq-flip-btn" type="button">Flip card</button>
+              </div>
+              <div class="faq-face faq-back">
+                <p class="faq-answer">
+                  Most Starter builds ship in 1–2 weeks. Business Pro is usually 2–4 weeks. 
+                  Premium Custom depends on scope, but we’ll give you a clear timeline before we start.
+                </p>
+                <button class="faq-flip-btn" type="button">Back</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="faq-card">
+            <div class="faq-inner">
+              <div class="faq-face faq-front">
+                <div>
+                  <div class="faq-icon">🎯</div>
+                  <h3 class="faq-question">
+                    Can you work with <span class="accent">my existing site</span>?
+                  </h3>
+                </div>
+                <button class="faq-flip-btn" type="button">Flip card</button>
+              </div>
+              <div class="faq-face faq-back">
+                <p class="faq-answer">
+                  Yes. We can redesign around your current content, refresh the layout, or rebuild the whole thing 
+                  while keeping your domain, SEO, and tools intact.
+                </p>
+                <button class="faq-flip-btn" type="button">Back</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="faq-card">
+            <div class="faq-inner">
+              <div class="faq-face faq-front">
+                <div>
+                  <div class="faq-icon">📂</div>
+                  <h3 class="faq-question">
+                    What do you <span class="accent">need from me</span> to start?
+                  </h3>
+                </div>
+                <button class="faq-flip-btn" type="button">Flip card</button>
+              </div>
+              <div class="faq-face faq-back">
+                <p class="faq-answer">
+                  A rough brief, any existing logo/brand assets, and a sense of your budget and deadline. 
+                  We’ll guide you through the rest on a short kickoff call or email thread.
+                </p>
+                <button class="faq-flip-btn" type="button">Back</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="faq-card">
+            <div class="faq-inner">
+              <div class="faq-face faq-front">
+                <div>
+                  <div class="faq-icon">🤖</div>
+                  <h3 class="faq-question">
+                    How much is really <span class="accent">done by AI</span>?
+                  </h3>
+                </div>
+                <button class="faq-flip-btn" type="button">Flip card</button>
+              </div>
+              <div class="faq-face faq-back">
+                <p class="faq-answer">
+                  We use AI for drafts, structure, and ideas — then rewrite, redesign, and clean everything by hand. 
+                  You always get a human-reviewed, on-brand final result.
+                </p>
+                <button class="faq-flip-btn" type="button">Back</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="faq-card">
+            <div class="faq-inner">
+              <div class="faq-face faq-front">
+                <div>
+                  <div class="faq-icon">💳</div>
+                  <h3 class="faq-question">
+                    How do <span class="accent">payments</span> work?
+                  </h3>
+                </div>
+                <button class="faq-flip-btn" type="button">Flip card</button>
+              </div>
+              <div class="faq-face faq-back">
+                <p class="faq-answer">
+                  Typically 50% to reserve your slot and 50% on launch. For bigger projects, we can split it into 
+                  milestones so it lines up with your cash flow.
+                </p>
+                <button class="faq-flip-btn" type="button">Back</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- CONTACT -->
   <section id="contact-section">
     <div class="container">
@@ -1478,6 +1735,17 @@
         }, 250);
       }, 5000);
     }
+
+    // FAQ flip cards
+document.querySelectorAll(".faq-card").forEach(card => {
+  const buttons = card.querySelectorAll(".faq-flip-btn");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      card.classList.toggle("flipped");
+    });
+  });
+});
+
   </script>
 </body>
 </html>
