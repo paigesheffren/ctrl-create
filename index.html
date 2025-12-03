@@ -5,37 +5,35 @@
   <title>CTRL & CREATE — AI-powered Web Design Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
- :root {
-  /* Core brand colours (from the image) */
-  --brand-pink: #C72A83;
-  --brand-blue: #277396;
-  --brand-plum: #320D1F;
+:root {
+  /* Aurora palette (sampled from your image) */
+  --aurora-lime:  #72B66E;  /* bright green glow */
+  --aurora-teal:  #4B9691;  /* teal band */
+  --aurora-mid:   #3B745F;  /* mid green */
+  --aurora-deep:  #1F4629;  /* forest green */
+  --aurora-sky:   #0B2335;  /* deep night blue */
 
-  /* Map to your existing names */
-  --bg-teal-dark: #320D1F;   /* deep plum */
-  --bg-teal-light: #277396;  /* blue side */
-  --bg-deep: #1b0815;        /* slightly lighter plum for depth */
-  --pill-dark: #320D1F;
+  /* Hook into your existing names */
+  --bg-teal-dark: var(--aurora-sky);
+  --bg-teal-light: var(--aurora-deep);
+  --bg-deep: #020814;
+  --pill-dark: #020814;
 
   /* Text */
-  --text-main: #F9FAFB;      /* main light text */
-  --text-soft: #E5E7EB;      /* soft light grey */
-  --text-muted: #C4C4C4;     /* subtle */
-  --text-black: #F9FAFB;     /* for stuff on the gradient */
+  --text-main: #F9FAFB;
+  --text-soft: #E5E7EB;
+  --text-muted: #94A3B8;
+  --text-black: #020617;  /* for text on white cards */
 
-  /* Accents – reuse existing names so your CSS still works */
-  --accent-yellow: #C72A83;  /* use pink where "yellow" was */
-  --accent-teal: #277396;    /* use blue where "teal" was */
+  /* Accents (reuse your existing var names) */
+  --accent-teal: var(--aurora-teal);
+  --accent-yellow: var(--aurora-lime); /* now a neon green accent */
 
-  /* Radii */
+  /* Radii / shadows / fonts unchanged */
   --radius-pill: 999px;
   --radius-card: 24px;
   --radius-soft: 16px;
-
-  /* Shadows */
   --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
-
-  /* Font */
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   --page-width: 1120px;
 }
@@ -50,19 +48,47 @@
       scroll-behavior: smooth;
     }
 
-  body {
+body {
   font-family: var(--font-sans);
   color: var(--text-main);
-  background: linear-gradient(
-    135deg,
-    #320D1F 0%,     /* plum (left) */
-    #277396 100%    /* blue (right) */
-  );
-  background-size: 160% 160%;
+
+  /* multiple layers: soft glows + night sky */
+  background:
+    radial-gradient(circle at 10% 0%,   rgba(114,182,110,0.38), transparent 60%),
+    radial-gradient(circle at 80% 10%,  rgba(75,150,145,0.35), transparent 65%),
+    radial-gradient(circle at 20% 80%,  rgba(59,116,95,0.30),  transparent 70%),
+    linear-gradient(160deg, #020814 0%, #0B2335 45%, #020814 100%);
+
+  background-size: 220% 220%, 200% 200%, 240% 240%, 100% 100%;
   min-height: 100vh;
   overflow-x: hidden;
-  animation: bgShift 26s ease-in-out infinite alternate;
+  animation: bgShift 30s ease-in-out infinite alternate;
   position: relative;
+}
+
+/* make the glows slowly drift like aurora */
+@keyframes bgShift {
+  0% {
+    background-position:
+      0%   0%,
+      80%  10%,
+      10%  90%,
+      0%   0%;
+  }
+  50% {
+    background-position:
+      20%  10%,
+      60%  30%,
+      30%  70%,
+      0%   0%;
+  }
+  100% {
+    background-position:
+      40%  0%,
+      30%  20%,
+      0%   100%,
+      0%   0%;
+  }
 }
 
 
@@ -403,8 +429,8 @@
 }
     }
 
-   .strip {
-  background: rgba(7, 3, 20, 0.78);  /* dark plum glass */
+  .strip {
+  background: rgba(3, 10, 22, 0.78); /* dark, slightly blue glass */
   border-radius: 40px;
   padding: 26px 26px 28px;
   box-shadow: var(--shadow-soft);
@@ -414,6 +440,7 @@
   opacity: 0;
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
+
 
     .strip::before {
       content: "";
