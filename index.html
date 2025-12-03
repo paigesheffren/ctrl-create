@@ -5,29 +5,36 @@
   <title>CTRL & CREATE — AI-powered Web Design Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    :root {
-      --bg-teal-dark: #0b615b;
-      --bg-teal-light: #18c4b1;
-      --bg-deep: #00333b;
-      --pill-dark: #00524e;
+  :root {
+  /* Backgrounds */
+  --bg-deep: #020617;          /* near-black navy */
+  --bg-teal-dark: #03091a;     /* darker navy */
+  --bg-teal-light: #0b1120;    /* deep desaturated navy-blue */
+  --pill-dark: #0a0f1c;        /* nav pills */
 
-      --text-main: #ffffff;
-      --text-soft: #e5e5e5;
-      --text-muted: #c4c4c4;
-      --text-black: #050505;
+  /* Text */
+  --text-main: #e2e8f0;        /* soft white */
+  --text-soft: #cbd5e1;        /* soft grey-blue */
+  --text-muted: #94a3b8;       /* subtle text */
+  --text-black: #020617;       /* for light cards */
 
-      --accent-yellow: #facc15;
-      --accent-teal: #0f766e;
+  /* Accents */
+  --accent-teal: #22d3ee;      /* neon cyan */
+  --accent-yellow: #facc15;    /* keep tiny touches only */
 
-      --radius-pill: 999px;
-      --radius-card: 24px;
-      --radius-soft: 16px;
+  /* Radii */
+  --radius-pill: 999px;
+  --radius-card: 24px;
+  --radius-soft: 16px;
 
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.35);
+  /* Shadows */
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
 
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      --page-width: 1120px;
-    }
+  /* Font */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  --page-width: 1120px;
+}
+
 
     * {
       box-sizing: border-box;
@@ -39,16 +46,17 @@
       scroll-behavior: smooth;
     }
 
-    body {
-      font-family: var(--font-sans);
-      color: var(--text-main);
-      background: radial-gradient(circle at 0% 0%, #0b615b, #18c4b1 60%, #0b615b 100%);
-      background-size: 160% 160%;
-      min-height: 100vh;
-      overflow-x: hidden;
-      animation: bgShift 26s ease-in-out infinite alternate;
-      position: relative;
-    }
+   body {
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background: radial-gradient(circle at 20% 20%, #0b1120, #020617 55%, #01050e 100%);
+  background-size: 160% 160%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  animation: bgShift 26s ease-in-out infinite alternate;
+  position: relative;
+}
+
 
     @keyframes bgShift {
       0% { background-position: 0% 0%; }
