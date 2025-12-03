@@ -5,31 +5,32 @@
   <title>CTRL & CREATE — AI-powered Web Design Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-  :root {
-  /* Backgrounds */
-  --bg-dark: #1A0E18;
-  --bg-deep: #320D1F;
-  --bg-gradient-start: #320D1F;
-  --bg-gradient-end: #277396;
+ :root {
+  /* Core brand colours (from the image) */
+  --brand-pink: #C72A83;
+  --brand-blue: #277396;
+  --brand-plum: #320D1F;
+
+  /* Map to your existing names */
+  --bg-teal-dark: #320D1F;   /* deep plum */
+  --bg-teal-light: #277396;  /* blue side */
+  --bg-deep: #1b0815;        /* slightly lighter plum for depth */
+  --pill-dark: #320D1F;
 
   /* Text */
-  --text-main: #F4F4F7;
-  --text-soft: #D3CFD8;
-  --text-muted: #A59BA9;
-  --text-dark: #1A0E18;  /* for inside cards */
+  --text-main: #F9FAFB;      /* main light text */
+  --text-soft: #E5E7EB;      /* soft light grey */
+  --text-muted: #C4C4C4;     /* subtle */
+  --text-black: #F9FAFB;     /* for stuff on the gradient */
 
-  /* Accents */
-  --accent-pink: #C72A83;
-  --accent-blue: #277396;
+  /* Accents – reuse existing names so your CSS still works */
+  --accent-yellow: #C72A83;  /* use pink where "yellow" was */
+  --accent-teal: #277396;    /* use blue where "teal" was */
 
   /* Radii */
   --radius-pill: 999px;
   --radius-card: 24px;
   --radius-soft: 16px;
-
-  /* Surfaces */
-  --card-bg: #F7F7FA;
-  --card-border: rgba(0,0,0,0.08);
 
   /* Shadows */
   --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
@@ -38,7 +39,6 @@
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   --page-width: 1120px;
 }
-
 
     * {
       box-sizing: border-box;
@@ -55,13 +55,14 @@
   color: var(--text-main);
   background: linear-gradient(
     135deg,
-    var(--bg-gradient-start) 0%,
-    var(--bg-gradient-end) 100%
+    #320D1F 0%,     /* plum (left) */
+    #277396 100%    /* blue (right) */
   );
-  background-size: 180% 180%;
-  animation: bgShift 25s ease-in-out infinite alternate;
+  background-size: 160% 160%;
   min-height: 100vh;
   overflow-x: hidden;
+  animation: bgShift 26s ease-in-out infinite alternate;
+  position: relative;
 }
 
 
@@ -111,7 +112,7 @@
     .scroll-progress-bar {
       width: 100%;
       height: 0%;
-      background: linear-gradient(180deg, #facc15, #0ea5e9);
+     background: linear-gradient(180deg, #C72A83, #277396);
       border-radius: inherit;
       transform-origin: top;
       transition: height 0.15s ease-out;
@@ -357,14 +358,14 @@
       gap: 16px;
       margin-bottom: 24px;
       flex-wrap: wrap;
-      color: #031716;
+     color: var(--text-main);
     }
 
     .section-kicker {
       font-size: 11px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(3, 23, 22, 0.8);
+      color: var(--text-soft);
       margin-bottom: 6px;
       position: relative;
       padding-bottom: 4px;
@@ -392,25 +393,27 @@
       font-size: 22px;
       text-transform: uppercase;
       font-weight: 800;
+      color: var(--text-main);
     }
 
     .section-subtitle {
       max-width: 420px;
       font-size: 13px;
-      color: #06342f;
+   color: var(--text-soft);
+}
     }
 
-    .strip {
-      background: rgba(0, 0, 0, 0.08);
-      border-radius: 40px;
-      padding: 26px 26px 28px;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-      transform: translateY(40px);
-      opacity: 0;
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
+   .strip {
+  background: rgba(7, 3, 20, 0.78);  /* dark plum glass */
+  border-radius: 40px;
+  padding: 26px 26px 28px;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
 
     .strip::before {
       content: "";
