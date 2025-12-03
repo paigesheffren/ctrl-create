@@ -7,25 +7,29 @@
   <style>
   :root {
   /* Backgrounds */
-  --bg-deep: #020617;          /* near-black navy */
-  --bg-teal-dark: #03091a;     /* darker navy */
-  --bg-teal-light: #0b1120;    /* deep desaturated navy-blue */
-  --pill-dark: #0a0f1c;        /* nav pills */
+  --bg-dark: #1A0E18;
+  --bg-deep: #320D1F;
+  --bg-gradient-start: #320D1F;
+  --bg-gradient-end: #277396;
 
   /* Text */
-  --text-main: #e2e8f0;        /* soft white */
-  --text-soft: #cbd5e1;        /* soft grey-blue */
-  --text-muted: #94a3b8;       /* subtle text */
-  --text-black: #020617;       /* for light cards */
+  --text-main: #F4F4F7;
+  --text-soft: #D3CFD8;
+  --text-muted: #A59BA9;
+  --text-dark: #1A0E18;  /* for inside cards */
 
   /* Accents */
-  --accent-teal: #22d3ee;      /* neon cyan */
-  --accent-yellow: #facc15;    /* keep tiny touches only */
+  --accent-pink: #C72A83;
+  --accent-blue: #277396;
 
   /* Radii */
   --radius-pill: 999px;
   --radius-card: 24px;
   --radius-soft: 16px;
+
+  /* Surfaces */
+  --card-bg: #F7F7FA;
+  --card-border: rgba(0,0,0,0.08);
 
   /* Shadows */
   --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
@@ -46,15 +50,18 @@
       scroll-behavior: smooth;
     }
 
-   body {
+  body {
   font-family: var(--font-sans);
   color: var(--text-main);
-  background: radial-gradient(circle at 20% 20%, #0b1120, #020617 55%, #01050e 100%);
-  background-size: 160% 160%;
+  background: linear-gradient(
+    135deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-end) 100%
+  );
+  background-size: 180% 180%;
+  animation: bgShift 25s ease-in-out infinite alternate;
   min-height: 100vh;
   overflow-x: hidden;
-  animation: bgShift 26s ease-in-out infinite alternate;
-  position: relative;
 }
 
 
