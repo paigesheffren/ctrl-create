@@ -199,14 +199,14 @@
       perspective: 1200px;
     }
 
-    .hero-screen-wrap {
-      max-width: 520px;
-      margin-left: -20px;
-      transform-origin: center;
-      transform: translateY(10px);
-      opacity: 0;
-      animation: heroIn 0.9s ease forwards 0.25s;
-    }
+.hero-screen-wrap {
+  max-width: 620px;          /* bigger logo */
+  margin-left: -10px;
+  transform-origin: center;
+  transform: translateY(10px);
+  opacity: 0;
+  animation: heroIn 0.9s ease forwards 0.25s;
+}
 
     @keyframes heroIn {
       to {
@@ -215,15 +215,23 @@
       }
     }
 
-    .hero-screen-wrap img {
-      animation: float 6s ease-in-out infinite alternate;
-      transform-origin: center;
-    }
+.hero-screen-wrap img {
+  width: 100%;
+  animation: float 8s ease-in-out infinite alternate;
+  transform-origin: center;
+}
 
-    @keyframes float {
-      0% { transform: translate3d(0,0,0) rotateX(0deg) rotateY(0deg); }
-      100% { transform: translate3d(0,-10px,0) rotateX(2deg) rotateY(-3deg); }
-    }
+@keyframes float {
+  0% {
+    transform: translate3d(0,0,0) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(0,-12px,0) rotateX(3deg) rotateY(-4deg) scale(1.03);
+  }
+  100% {
+    transform: translate3d(0,-24px,0) rotateX(6deg) rotateY(-8deg) scale(1.06);
+  }
+}
 
     .hero-doodle {
       position: absolute;
@@ -952,6 +960,16 @@
       .process-grid,
       .pricing-grid,
       .work-grid { grid-template-columns: minmax(0, 1fr); }
+      /* NEW: better FAQ on mobile */
+.faq-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.faq-inner {
+  height: auto;
+  min-height: 220px;
+}
+
 
       .strip { padding: 20px 16px 22px; }
       .hero-tagline-main { font-size: 22px; }
@@ -1170,7 +1188,7 @@
         <div class="work-grid">
           <a class="work-card js-work" href="https://paigesheffren.github.io/ctrl-create/" target="_blank" rel="noopener">
             <div class="work-inner">
-              <img src="assets/work-ctrl-create.jpg" alt="CTRL & CREATE site preview">
+             <img src="assets/work-ctrl-create.jpg" alt="CTRL & CREATE website">
               <div class="work-overlay">
                 <div class="work-meta">
                   <div class="work-title">CTRL &amp; CREATE</div>
@@ -1183,7 +1201,7 @@
 
           <a class="work-card js-work" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
             <div class="work-inner">
-              <img src="assets/work-s3sammy.jpg" alt="S3 Sammy site preview">
+              <img src="assets/work-s3sammy.jpg" alt="S3 Sammy website">
               <div class="work-overlay">
                 <div class="work-meta">
                   <div class="work-title">S3 Sammy</div>
@@ -1196,7 +1214,7 @@
 
           <a class="work-card js-work" href="#" target="_blank" rel="noopener">
             <div class="work-inner">
-              <img src="assets/work-placeholder.jpg" alt="Client project preview">
+              <img src="assets/work-placeholder.jpg" alt="Client project">
               <div class="work-overlay">
                 <div class="work-meta">
                   <div class="work-title">Client project</div>
