@@ -5,40 +5,36 @@
   <title>CTRL & CREATE — AI-powered Web Design Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-:root {
-  /* Backgrounds */
-  --bg-main: #050509;
-  --bg-deep: #020308;
-  --bg-teal-dark: #050509;   /* reuse old names */
-  --bg-teal-light: #111827;
-  --pill-dark: #050509;
+    :root {
+      /* Backgrounds */
+      --bg-main: #050509;
+      --bg-panel: #050509;
+      --bg-panel-soft: #0b0b12;
+      --bg-panel-muted: #11111a;
 
-  /* Text */
-  --text-main: #f9fafb;
-  --text-soft: #e5e5e5;
-  --text-muted: #a1a1aa;
-  --text-black: #020617;     /* for text on light surfaces, if any */
+      /* Ibiza Sunset gradient */
+      --grad-start: #ee0979;
+      --grad-end: #ff6a00;
+      --accent-gradient: linear-gradient(135deg, #ee0979, #ff6a00);
 
-  /* Ibiza sunset accents */
-  --accent-pink: #ee0979;
-  --accent-orange: #ff6a00;
-  --accent-gradient: linear-gradient(135deg, #ee0979, #ff6a00);
+      /* Text */
+      --text-main: #f9fafb;
+      --text-soft: #e5e5e5;
+      --text-muted: #a1a1aa;
+      --text-dark: #020617;
 
-  /* keep your old names mapped to the new colours */
-  --accent-teal: #ee0979;
-  --accent-yellow: #ff6a00;
+      /* Accent aliases mapped to old names (so JS / HTML still work) */
+      --accent-teal: #ee0979;
+      --accent-yellow: #ff6a00;
 
-  /* Radii / shadows / font */
-  --radius-pill: 999px;
-  --radius-card: 24px;
-  --radius-soft: 16px;
-
-  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
-
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-  --page-width: 1120px;
-}
-
+      /* Layout + misc */
+      --radius-pill: 999px;
+      --radius-card: 24px;
+      --radius-soft: 16px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      --page-width: 1120px;
+    }
 
     * {
       box-sizing: border-box;
@@ -50,49 +46,40 @@
       scroll-behavior: smooth;
     }
 
-body {
-  font-family: var(--font-sans);
-  color: var(--text-main);
-
-  /* black base + moving pink/orange glows */
-  background:
-    radial-gradient(circle at 0% 0%,   rgba(238, 9, 121, 0.28), transparent 55%),
-    radial-gradient(circle at 100% 100%, rgba(255, 106, 0, 0.26), transparent 55%),
-    linear-gradient(145deg, #020308 0%, #050509 40%, #020308 100%);
-
-  background-size: 220% 220%, 220% 220%, 100% 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-  animation: bgShift 26s ease-in-out infinite alternate;
-  position: relative;
-}
-
-@keyframes bgShift {
-  0% {
-    background-position:
-      0% 0%,
-      100% 100%,
-      0% 0%;
-  }
-  50% {
-    background-position:
-      20% 10%,
-      80% 80%,
-      0% 0%;
-  }
-  100% {
-    background-position:
-      40% 0%,
-      60% 100%,
-      0% 0%;
-  }
-}
-
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      /* black base + moving Ibiza Sunset glows */
+      background:
+        radial-gradient(circle at 0% 0%, rgba(238, 9, 121, 0.32), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 106, 0, 0.30), transparent 55%),
+        linear-gradient(145deg, #020308 0%, #050509 40%, #020308 100%);
+      background-size: 220% 220%, 220% 220%, 100% 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      animation: bgShift 26s ease-in-out infinite alternate;
+      position: relative;
+    }
 
     @keyframes bgShift {
-      0% { background-position: 0% 0%; }
-      50% { background-position: 50% 60%; }
-      100% { background-position: 100% 100%; }
+      0% {
+        background-position:
+          0% 0%,
+          100% 100%,
+          0% 0%;
+      }
+      50% {
+        background-position:
+          20% 10%,
+          80% 80%,
+          0% 0%;
+      }
+      100% {
+        background-position:
+          40% 0%,
+          60% 100%,
+          0% 0%;
+      }
     }
 
     a { color: inherit; text-decoration: none; }
@@ -111,7 +98,7 @@ body {
       height: 120px;
       border-radius: 50%;
       pointer-events: none;
-      background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 60%);
+      background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 60%);
       mix-blend-mode: screen;
       transform: translate3d(-999px, -999px, 0);
       transition: opacity 0.3s ease;
@@ -127,7 +114,7 @@ body {
       width: 4px;
       height: 60vh;
       border-radius: 999px;
-      background: rgba(0,0,0,0.18);
+      background: rgba(24,24,27,0.9);
       overflow: hidden;
       z-index: 40;
     }
@@ -135,35 +122,37 @@ body {
     .scroll-progress-bar {
       width: 100%;
       height: 0%;
-     background: linear-gradient(180deg, #C72A83, #277396);
+      background: var(--accent-gradient);
       border-radius: inherit;
       transform-origin: top;
       transition: height 0.15s ease-out;
     }
 
-    /* TOP PILL NAV */
+    /* NAV */
     .nav-shell {
       padding-top: 26px;
       padding-bottom: 10px;
       position: sticky;
       top: 0;
       z-index: 30;
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(20px);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
     }
 
     .nav-pills {
       display: flex;
       justify-content: center;
       gap: 26px;
+      flex-wrap: wrap;
     }
 
     .nav-pill {
       min-width: 140px;
       padding: 12px 26px;
       border-radius: var(--radius-pill);
-      border: none;
-      background: var(--pill-dark);
-      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #09090f;
+      color: var(--text-soft);
       font-size: 13px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -172,7 +161,7 @@ body {
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.55);
       transform: translateY(-10px);
       opacity: 0;
       animation: pillIn 0.7s ease forwards;
@@ -203,17 +192,18 @@ body {
       bottom: 9px;
       height: 2px;
       border-radius: 999px;
-      background: rgba(240, 253, 250, 0.9);
+      background: var(--accent-gradient);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.25s ease;
-      opacity: 0.7;
+      opacity: 0.95;
     }
 
     .nav-pill:hover {
       transform: translateY(-2px) scale(1.02);
-      background: #016a63;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+      background: #11111a;
+      color: #ffffff;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
     }
 
     .nav-pill:hover::after {
@@ -274,7 +264,6 @@ body {
       100% { transform: translate3d(0,-10px,0) rotateX(2deg) rotateY(-3deg); }
     }
 
-    /* floating doodles */
     .hero-doodle {
       position: absolute;
       width: 40px;
@@ -288,7 +277,8 @@ body {
       justify-content: center;
       font-size: 18px;
       color: #ffffff;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      background: rgba(9,9,11,0.9);
       animation: doodleFloat 10s ease-in-out infinite;
     }
 
@@ -316,7 +306,7 @@ body {
       line-height: 1.2;
       font-weight: 800;
       text-transform: uppercase;
-      color: var(--text-black);
+      color: #ffffff;
       margin-bottom: 10px;
     }
 
@@ -342,8 +332,8 @@ body {
 
     .hero-subcopy {
       font-size: 14px;
-      color: var(--text-black);
-      opacity: 0.9;
+      color: var(--text-soft);
+      opacity: 0.95;
     }
 
     .hero-badge {
@@ -353,8 +343,8 @@ body {
       margin-top: 20px;
       padding: 6px 12px;
       border-radius: var(--radius-pill);
-      background: rgba(0, 0, 0, 0.12);
-      color: var(--text-black);
+      background: rgba(15,15,23,0.9);
+      color: var(--text-soft);
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -365,8 +355,8 @@ body {
       width: 7px;
       height: 7px;
       border-radius: 999px;
-      background: radial-gradient(circle, #22c55e, #166534);
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+      background: var(--accent-gradient);
+      box-shadow: 0 0 12px rgba(255, 106, 0, 0.8);
     }
 
     section {
@@ -381,7 +371,7 @@ body {
       gap: 16px;
       margin-bottom: 24px;
       flex-wrap: wrap;
-     color: var(--text-main);
+      color: var(--text-main);
     }
 
     .section-kicker {
@@ -402,7 +392,7 @@ body {
       width: 60px;
       height: 2px;
       border-radius: 999px;
-      background: rgba(3, 105, 161, 0.85);
+      background: var(--accent-gradient);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.6s ease;
@@ -422,28 +412,26 @@ body {
     .section-subtitle {
       max-width: 420px;
       font-size: 13px;
-   color: var(--text-soft);
-}
+      color: var(--text-soft);
     }
 
-  .strip {
-  background: rgba(3, 10, 22, 0.78); /* dark, slightly blue glass */
-  border-radius: 40px;
-  padding: 26px 26px 28px;
-  box-shadow: var(--shadow-soft);
-  position: relative;
-  overflow: hidden;
-  transform: translateY(40px);
-  opacity: 0;
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
+    .strip {
+      background: rgba(15, 15, 23, 0.96);
+      border-radius: 40px;
+      padding: 26px 26px 28px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
 
     .strip::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.18), transparent 60%);
+      background: linear-gradient(120deg, rgba(255,255,255,0.06), transparent 60%);
       opacity: 0;
       transform: translateX(-40%);
       transition: opacity 0.7s ease, transform 0.9s ease;
@@ -460,119 +448,102 @@ body {
       transform: translateX(20%);
     }
 
-
     /* FAQ flip cards */
-.faq-strip {
-  margin-top: 10px;
-}
+    .faq-strip {
+      margin-top: 10px;
+    }
 
-.faq-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
 
-.faq-card {
-  perspective: 1200px;
-}
+    .faq-card {
+      perspective: 1200px;
+    }
 
-.faq-inner {
-  position: relative;
-  width: 100%;
-  height: 260px;
-  border-radius: 24px;
-  border: 2px solid #111827;
-  background: #ffffff;
-  box-shadow: 0 16px 30px rgba(0,0,0,0.35);
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
-}
+    .faq-inner {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--bg-panel-soft);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.6);
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
 
-.faq-card.flipped .faq-inner {
-  transform: rotateY(180deg);
-}
+    .faq-card.flipped .faq-inner {
+      transform: rotateY(180deg);
+    }
 
-.faq-face {
-  position: absolute;
-  inset: 0;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;      /* center horizontally */
-  text-align: center;       /* center text */
-  gap: 12px;
-  backface-visibility: hidden;
-}
+    .faq-face {
+      position: absolute;
+      inset: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      backface-visibility: hidden;
+      color: var(--text-main);
+    }
 
+    .faq-back {
+      transform: rotateY(180deg);
+    }
 
-.faq-front {
-  text-align: left;
-}
+    .faq-icon {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
 
-.faq-back {
-  transform: rotateY(180deg);
-}
+    .faq-question {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.4;
+      color: var(--text-main);
+      max-width: 85%;
+    }
 
-.faq-icon {
-  font-size: 26px;
-  margin-bottom: 8px;
-}
-.faq-question {
-  font-size: 18px;
-  font-weight: 800;
-  text-transform: none;
-  line-height: 1.4;
-  color: #0f172a;
-  max-width: 85%;
-}
+    .faq-answer {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.6;
+      max-width: 85%;
+    }
 
-.faq-question span.accent {
-  color: #059669;
-}
+    .faq-flip-btn {
+      align-self: flex-start;
+      margin-top: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: none;
+      background-image: var(--accent-gradient);
+      color: #f9fafb;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+    }
 
-.faq-answer {
-  font-size: 14px;
-  color: #374151;
-  line-height: 1.6;
-  max-width: 85%;
-  text-align: center;
-}
+    .faq-flip-btn:hover {
+      transform: translateY(1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+    }
 
-
-.faq-flip-btn {
-  align-self: flex-start;
-  margin-top: 8px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  background: #111827;
-  color: #f9fafb;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 6px 0 #6b7280;
-}
-
-.faq-flip-btn:hover {
-  transform: translateY(1px);
-  box-shadow: 0 4px 0 #6b7280;
-}
-
-/* FAQ responsive */
-@media (max-width: 960px) {
-  .faq-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 720px) {
-  .faq-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
+    @media (max-width: 960px) {
+      .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .faq-grid { grid-template-columns: minmax(0, 1fr); }
+    }
 
     /* Process */
     .process-grid {
@@ -591,7 +562,7 @@ body {
       top: 50%;
       height: 2px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(15,118,110,0.15), rgba(15,118,110,0.6), rgba(15,118,110,0.15));
+      background: linear-gradient(90deg, rgba(238,9,121,0.3), rgba(255,106,0,0.6), rgba(238,9,121,0.3));
       transform-origin: left;
       transform: scaleX(0);
       transition: transform 0.8s ease-out;
@@ -605,10 +576,10 @@ body {
 
     .process-card {
       border-radius: var(--radius-soft);
-      background: #fdfdfd;
+      background: #f9fafb;
       padding: 18px 14px 16px;
-      color: #031716;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+      color: var(--text-dark);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
       transform: translateY(24px);
       opacity: 0;
       transition: opacity 0.6s ease, transform 0.6s ease;
@@ -650,10 +621,10 @@ body {
 
     .pricing-card {
       border-radius: var(--radius-soft);
-      background: #fdfdfd;
+      background: var(--bg-panel-soft);
       padding: 18px 16px 16px;
-      color: #031716;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+      color: var(--text-main);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -662,10 +633,16 @@ body {
       transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.2s ease, transform 0.2s ease;
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .pricing-card.highlight { border: 2px solid var(--accent-teal); }
-    .pricing-card.chosen { border: 2px solid #f97316; box-shadow: 0 16px 34px rgba(0,0,0,0.35); }
+    .pricing-card.highlight {
+      border-color: #f97316;
+    }
+    .pricing-card.chosen {
+      border-color: #f97316;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.75);
+    }
 
     .pricing-card.chosen::before {
       content: "Chosen";
@@ -689,7 +666,7 @@ body {
 
     .pricing-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(0,0,0,0.32);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.85);
     }
 
     .pricing-name {
@@ -700,22 +677,24 @@ body {
 
     .pricing-label {
       font-size: 12px;
-      color: #4b5563;
+      color: var(--text-soft);
     }
 
     .pricing-price {
       font-size: 22px;
       font-weight: 800;
-      color: var(--accent-teal);
+      color: var(--accent-yellow);
       margin-top: 6px;
     }
 
-    .pricing-card.highlight .pricing-price { color: #b45309; }
+    .pricing-card.highlight .pricing-price {
+      color: var(--accent-teal);
+    }
 
     .pricing-list {
       list-style: none;
       font-size: 13px;
-      color: #374151;
+      color: var(--text-soft);
       margin-top: 8px;
       margin-bottom: 10px;
     }
@@ -734,8 +713,8 @@ body {
       margin-top: 5px;
     }
 
-    .pricing-card.highlight .pricing-dot { background: #b45309; }
-    .pricing-card.chosen .pricing-dot { background: #f97316; }
+    .pricing-card.highlight .pricing-dot { background: var(--accent-yellow); }
+    .pricing-card.chosen .pricing-dot { background: var(--accent-yellow); }
 
     .pricing-cta {
       margin-top: auto;
@@ -743,7 +722,7 @@ body {
       padding: 9px 16px;
       border-radius: var(--radius-pill);
       border: none;
-      background: var(--accent-teal);
+      background-image: var(--accent-gradient);
       color: #f9fafb;
       font-size: 12px;
       font-weight: 700;
@@ -752,6 +731,7 @@ body {
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.6);
     }
 
     .pricing-cta::after {
@@ -768,19 +748,20 @@ body {
     .pricing-addons {
       margin-top: 16px;
       font-size: 11px;
-      color: #022c22;
+      color: var(--text-soft);
     }
 
     /* Package details */
     #package-details {
       margin-top: 22px;
       border-radius: var(--radius-soft);
-      background: #fdfdfd;
+      background: var(--bg-panel-soft);
       padding: 16px 16px 14px;
-      color: #031716;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+      color: var(--text-main);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
       display: none;
       font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     #package-details h3 {
@@ -790,7 +771,7 @@ body {
       margin-bottom: 6px;
     }
 
-    #package-details p { margin-bottom: 8px; color: #374151; }
+    #package-details p { margin-bottom: 8px; color: var(--text-soft); }
 
     #package-list { margin-left: 18px; margin-bottom: 12px; }
     #package-list li { margin-bottom: 4px; }
@@ -801,13 +782,14 @@ body {
       gap: 6px;
       padding: 8px 14px;
       border-radius: var(--radius-pill);
-      border: 1px solid var(--accent-teal);
-      background: var(--accent-teal);
+      border: none;
+      background-image: var(--accent-gradient);
       color: #f9fafb;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.6);
     }
 
     /* Work */
@@ -820,13 +802,14 @@ body {
     .work-card {
       border-radius: var(--radius-soft);
       overflow: hidden;
-      background: #022c22;
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+      background: #050509;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.8);
       cursor: pointer;
       position: relative;
       transform: translateY(24px);
       opacity: 0;
       transition: opacity 0.6s ease, transform 0.6s ease;
+      border: 1px solid rgba(255,255,255,0.06);
     }
 
     .work-card.visible {
@@ -852,7 +835,7 @@ body {
     .work-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.8) 100%);
+      background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.85) 100%);
       display: flex;
       align-items: flex-end;
       padding: 14px;
@@ -879,9 +862,10 @@ body {
       letter-spacing: 0.12em;
       text-transform: uppercase;
       border: none;
-      background: #fefce8;
-      color: #022c22;
+      background-image: var(--accent-gradient);
+      color: #f9fafb;
       font-weight: 700;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.7);
     }
 
     .work-card:hover img { transform: translate3d(-6px,-6px,0) scale(1.08); }
@@ -896,15 +880,16 @@ body {
 
     .contact-card {
       border-radius: var(--radius-soft);
-      background: #fdfdfd;
+      background: var(--bg-panel-soft);
       padding: 18px 16px 16px;
-      color: #022c22;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      color: var(--text-main);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
       font-size: 14px;
       transform: translateY(24px);
       opacity: 0;
       transition: opacity 0.6s ease, transform 0.6s ease;
       position: relative;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     .contact-card.visible {
@@ -940,18 +925,20 @@ body {
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: #4b5563;
+      color: var(--text-muted);
       transition: transform 0.25s ease, color 0.25s ease;
     }
 
     .field input,
     .field textarea {
       border-radius: 12px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid #27272f;
       padding: 8px 10px;
       font-family: inherit;
       font-size: 13px;
       outline: none;
+      color: var(--text-main);
+      background: #020617;
       transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
     }
 
@@ -968,8 +955,8 @@ body {
     .field:focus-within input,
     .field:focus-within textarea {
       border-color: var(--accent-teal);
-      box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.4);
-      background: #f0fdfa;
+      box-shadow: 0 0 0 1px rgba(238,9,121,0.5);
+      background: #02041b;
     }
 
     .field.completed::after {
@@ -997,7 +984,7 @@ body {
       padding: 9px 16px;
       border-radius: var(--radius-pill);
       border: none;
-      background: var(--accent-teal);
+      background-image: var(--accent-gradient);
       color: #f9fafb;
       font-size: 12px;
       font-weight: 700;
@@ -1006,6 +993,7 @@ body {
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.7);
     }
 
     .contact-submit::after {
@@ -1021,14 +1009,14 @@ body {
 
     .contact-note {
       font-size: 11px;
-      color: #4b5563;
+      color: var(--text-muted);
       margin-top: 4px;
     }
 
     footer {
       padding: 24px 0 30px;
       font-size: 11px;
-      color: rgba(3, 23, 22, 0.9);
+      color: var(--text-soft);
     }
 
     .footer-row {
@@ -1087,133 +1075,6 @@ body {
         transition-duration: 0.01ms !important;
       }
     }
-    /* --- DARK THEME OVERRIDES FOR IBIZA SUNSET --- */
-
-/* Section text on dark */
-.section-header,
-.section-title {
-  color: var(--text-main);
-}
-
-.section-kicker,
-.section-subtitle {
-  color: var(--text-soft);
-}
-
-.section-kicker::after {
-  background: var(--accent-gradient);
-}
-
-/* Strip panels */
-.strip {
-  background: rgba(15, 15, 23, 0.92);
-  box-shadow: var(--shadow-soft);
-}
-
-/* Nav bar + pills */
-.nav-shell {
-  backdrop-filter: blur(20px);
-  background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
-}
-
-.nav-pills {
-  justify-content: center;
-}
-
-.nav-pill {
-  background: #09090f;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-soft);
-}
-
-.nav-pill::before {
-  background: var(--accent-gradient);
-}
-
-.nav-pill:hover {
-  background: #11111a;
-  color: #ffffff;
-}
-
-/* Hero badge dot */
-.hero-badge-dot {
-  background: var(--accent-gradient);
-  box-shadow: 0 0 12px rgba(255, 106, 0, 0.8);
-}
-
-/* Cards: pricing / contact / FAQ backs */
-.pricing-card,
-.contact-card,
-.faq-inner {
-  background: #0b0b12;
-  color: var(--text-main);
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-.pricing-label,
-.pricing-list,
-.faq-answer,
-.contact-note {
-  color: var(--text-soft);
-}
-
-/* Work cards shell */
-.work-card {
-  background: #050509;
-}
-
-/* Dots inside pricing list */
-.pricing-dot {
-  background: var(--accent-pink);
-}
-.pricing-card.highlight .pricing-dot,
-.pricing-card.chosen .pricing-dot {
-  background: var(--accent-orange);
-}
-
-/* Gradient buttons */
-.pricing-cta,
-.contact-submit,
-.package-contact-btn,
-.work-btn,
-.faq-flip-btn {
-  background-image: var(--accent-gradient);
-  border: none;
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.6);
-}
-
-.pricing-cta:hover,
-.contact-submit:hover,
-.package-contact-btn:hover,
-.work-btn:hover,
-.faq-flip-btn:hover {
-  transform: translateY(1px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.7);
-}
-
-/* Scroll progress bar */
-.scroll-progress {
-  background: rgba(24,24,27,0.8);
-}
-
-.scroll-progress-bar {
-  background: var(--accent-gradient);
-}
-
-/* Hero word swap stays readable */
-.hero-tagline-main {
-  color: #ffffff;
-}
-.hero-subcopy {
-  color: var(--text-soft);
-}
-.hero-badge {
-  background: rgba(15,15,23,0.85);
-  color: var(--text-soft);
-}
-
   </style>
 </head>
 <body>
@@ -1265,7 +1126,7 @@ body {
           </p>
           <div class="hero-badge">
             <span class="hero-badge-dot"></span>
-            <span>Montreal-based studio • single & multi-page builds</span>
+            <span>Montreal-based studio • single &amp; multi-page builds</span>
           </div>
         </div>
       </div>
@@ -1459,13 +1320,13 @@ body {
     </div>
   </section>
 
-    <!-- FAQ / Q&A -->
+  <!-- FAQ / Q&A -->
   <section id="faq-section">
     <div class="container">
       <div class="strip js-strip faq-strip">
         <div class="section-header">
           <div>
-            <div class="section-kicker">Questions & answers</div>
+            <div class="section-kicker">Questions &amp; answers</div>
             <h2 class="section-title">How working with us works</h2>
           </div>
           <p class="section-subtitle">
@@ -1480,15 +1341,15 @@ body {
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">💻</div>
-        <h3 class="faq-question">
-  What types of websites do you build?
-</h3>
+                  <h3 class="faq-question">
+                    What types of websites do you build?
+                  </h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
               <div class="faq-face faq-back">
                 <p class="faq-answer">
-                  We do single-page landings, 3–10 page business sites, and light e-commerce or booking flows. 
+                  We do single-page landings, 3–10 page business sites, and light e-commerce or booking flows.
                   Everything is custom-designed for your brand, not a generic template.
                 </p>
                 <button class="faq-flip-btn" type="button">Back</button>
@@ -1502,15 +1363,15 @@ body {
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">⏱️</div>
-<h3 class="faq-question">
-  How long does a typical project take?
-</h3>
+                  <h3 class="faq-question">
+                    How long does a typical project take?
+                  </h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
               <div class="faq-face faq-back">
                 <p class="faq-answer">
-                  Most Starter builds ship in 1–2 weeks. Business Pro is usually 2–4 weeks. 
+                  Most Starter builds ship in 1–2 weeks. Business Pro is usually 2–4 weeks.
                   Premium Custom depends on scope, but we’ll give you a clear timeline before we start.
                 </p>
                 <button class="faq-flip-btn" type="button">Back</button>
@@ -1524,15 +1385,15 @@ body {
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">🎯</div>
-<h3 class="faq-question">
-  Can you redesign or improve my existing site?
-</h3>
+                  <h3 class="faq-question">
+                    Can you redesign or improve my existing site?
+                  </h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
               <div class="faq-face faq-back">
                 <p class="faq-answer">
-                  Yes. We can redesign around your current content, refresh the layout, or rebuild the whole thing 
+                  Yes. We can redesign around your current content, refresh the layout, or rebuild the whole thing
                   while keeping your domain, SEO, and tools intact.
                 </p>
                 <button class="faq-flip-btn" type="button">Back</button>
@@ -1546,15 +1407,15 @@ body {
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">📂</div>
-<h3 class="faq-question">
-  What do you need from me before starting?
-</h3>
+                  <h3 class="faq-question">
+                    What do you need from me before starting?
+                  </h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
               <div class="faq-face faq-back">
                 <p class="faq-answer">
-                  A rough brief, any existing logo/brand assets, and a sense of your budget and deadline. 
+                  A rough brief, any existing logo/brand assets, and a sense of your budget and deadline.
                   We’ll guide you through the rest on a short kickoff call or email thread.
                 </p>
                 <button class="faq-flip-btn" type="button">Back</button>
@@ -1568,15 +1429,15 @@ body {
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">🤖</div>
-<h3 class="faq-question">
-  How much of the project is actually done by AI?
-</h3>
+                  <h3 class="faq-question">
+                    How much of the project is actually done by AI?
+                  </h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
               <div class="faq-face faq-back">
                 <p class="faq-answer">
-                  We use AI for drafts, structure, and ideas — then rewrite, redesign, and clean everything by hand. 
+                  We use AI for drafts, structure, and ideas — then rewrite, redesign, and clean everything by hand.
                   You always get a human-reviewed, on-brand final result.
                 </p>
                 <button class="faq-flip-btn" type="button">Back</button>
@@ -1590,15 +1451,15 @@ body {
               <div class="faq-face faq-front">
                 <div>
                   <div class="faq-icon">💳</div>
-<h3 class="faq-question">
-  How do payments work for a website project?
-</h3>
+                  <h3 class="faq-question">
+                    How do payments work for a website project?
+                  </h3>
                 </div>
                 <button class="faq-flip-btn" type="button">Flip card</button>
               </div>
               <div class="faq-face faq-back">
                 <p class="faq-answer">
-                  Typically 50% to reserve your slot and 50% on launch. For bigger projects, we can split it into 
+                  Typically 50% to reserve your slot and 50% on launch. For bigger projects, we can split it into
                   milestones so it lines up with your cash flow.
                 </p>
                 <button class="faq-flip-btn" type="button">Back</button>
@@ -1609,7 +1470,6 @@ body {
       </div>
     </div>
   </section>
-
 
   <!-- CONTACT -->
   <section id="contact-section">
@@ -1915,15 +1775,14 @@ body {
     }
 
     // FAQ flip cards
-document.querySelectorAll(".faq-card").forEach(card => {
-  const buttons = card.querySelectorAll(".faq-flip-btn");
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      card.classList.toggle("flipped");
+    document.querySelectorAll(".faq-card").forEach(card => {
+      const buttons = card.querySelectorAll(".faq-flip-btn");
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          card.classList.toggle("flipped");
+        });
+      });
     });
-  });
-});
-
   </script>
 </body>
 </html>
