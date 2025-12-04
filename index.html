@@ -6,37 +6,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
 :root {
-  /* Aurora palette (sampled from your image) */
-  --aurora-lime:  #72B66E;  /* bright green glow */
-  --aurora-teal:  #4B9691;  /* teal band */
-  --aurora-mid:   #3B745F;  /* mid green */
-  --aurora-deep:  #1F4629;  /* forest green */
-  --aurora-sky:   #0B2335;  /* deep night blue */
-
-  /* Hook into your existing names */
-  --bg-teal-dark: var(--aurora-sky);
-  --bg-teal-light: var(--aurora-deep);
-  --bg-deep: #020814;
-  --pill-dark: #020814;
+  /* Backgrounds */
+  --bg-main: #050509;
+  --bg-deep: #020308;
+  --bg-teal-dark: #050509;   /* reuse old names */
+  --bg-teal-light: #111827;
+  --pill-dark: #050509;
 
   /* Text */
-  --text-main: #F9FAFB;
-  --text-soft: #E5E7EB;
-  --text-muted: #94A3B8;
-  --text-black: #020617;  /* for text on white cards */
+  --text-main: #f9fafb;
+  --text-soft: #e5e5e5;
+  --text-muted: #a1a1aa;
+  --text-black: #020617;     /* for text on light surfaces, if any */
 
-  /* Accents (reuse your existing var names) */
-  --accent-teal: var(--aurora-teal);
-  --accent-yellow: var(--aurora-lime); /* now a neon green accent */
+  /* Ibiza sunset accents */
+  --accent-pink: #ee0979;
+  --accent-orange: #ff6a00;
+  --accent-gradient: linear-gradient(135deg, #ee0979, #ff6a00);
 
-  /* Radii / shadows / fonts unchanged */
+  /* keep your old names mapped to the new colours */
+  --accent-teal: #ee0979;
+  --accent-yellow: #ff6a00;
+
+  /* Radii / shadows / font */
   --radius-pill: 999px;
   --radius-card: 24px;
   --radius-soft: 16px;
-  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   --page-width: 1120px;
 }
+
 
     * {
       box-sizing: border-box;
@@ -52,42 +54,37 @@ body {
   font-family: var(--font-sans);
   color: var(--text-main);
 
-  /* multiple layers: soft glows + night sky */
+  /* black base + moving pink/orange glows */
   background:
-    radial-gradient(circle at 10% 0%,   rgba(114,182,110,0.38), transparent 60%),
-    radial-gradient(circle at 80% 10%,  rgba(75,150,145,0.35), transparent 65%),
-    radial-gradient(circle at 20% 80%,  rgba(59,116,95,0.30),  transparent 70%),
-    linear-gradient(160deg, #020814 0%, #0B2335 45%, #020814 100%);
+    radial-gradient(circle at 0% 0%,   rgba(238, 9, 121, 0.28), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(255, 106, 0, 0.26), transparent 55%),
+    linear-gradient(145deg, #020308 0%, #050509 40%, #020308 100%);
 
-  background-size: 220% 220%, 200% 200%, 240% 240%, 100% 100%;
+  background-size: 220% 220%, 220% 220%, 100% 100%;
   min-height: 100vh;
   overflow-x: hidden;
-  animation: bgShift 30s ease-in-out infinite alternate;
+  animation: bgShift 26s ease-in-out infinite alternate;
   position: relative;
 }
 
-/* make the glows slowly drift like aurora */
 @keyframes bgShift {
   0% {
     background-position:
-      0%   0%,
-      80%  10%,
-      10%  90%,
-      0%   0%;
+      0% 0%,
+      100% 100%,
+      0% 0%;
   }
   50% {
     background-position:
-      20%  10%,
-      60%  30%,
-      30%  70%,
-      0%   0%;
+      20% 10%,
+      80% 80%,
+      0% 0%;
   }
   100% {
     background-position:
-      40%  0%,
-      30%  20%,
-      0%   100%,
-      0%   0%;
+      40% 0%,
+      60% 100%,
+      0% 0%;
   }
 }
 
@@ -1090,6 +1087,133 @@ body {
         transition-duration: 0.01ms !important;
       }
     }
+    /* --- DARK THEME OVERRIDES FOR IBIZA SUNSET --- */
+
+/* Section text on dark */
+.section-header,
+.section-title {
+  color: var(--text-main);
+}
+
+.section-kicker,
+.section-subtitle {
+  color: var(--text-soft);
+}
+
+.section-kicker::after {
+  background: var(--accent-gradient);
+}
+
+/* Strip panels */
+.strip {
+  background: rgba(15, 15, 23, 0.92);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Nav bar + pills */
+.nav-shell {
+  backdrop-filter: blur(20px);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
+}
+
+.nav-pills {
+  justify-content: center;
+}
+
+.nav-pill {
+  background: #09090f;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-soft);
+}
+
+.nav-pill::before {
+  background: var(--accent-gradient);
+}
+
+.nav-pill:hover {
+  background: #11111a;
+  color: #ffffff;
+}
+
+/* Hero badge dot */
+.hero-badge-dot {
+  background: var(--accent-gradient);
+  box-shadow: 0 0 12px rgba(255, 106, 0, 0.8);
+}
+
+/* Cards: pricing / contact / FAQ backs */
+.pricing-card,
+.contact-card,
+.faq-inner {
+  background: #0b0b12;
+  color: var(--text-main);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.pricing-label,
+.pricing-list,
+.faq-answer,
+.contact-note {
+  color: var(--text-soft);
+}
+
+/* Work cards shell */
+.work-card {
+  background: #050509;
+}
+
+/* Dots inside pricing list */
+.pricing-dot {
+  background: var(--accent-pink);
+}
+.pricing-card.highlight .pricing-dot,
+.pricing-card.chosen .pricing-dot {
+  background: var(--accent-orange);
+}
+
+/* Gradient buttons */
+.pricing-cta,
+.contact-submit,
+.package-contact-btn,
+.work-btn,
+.faq-flip-btn {
+  background-image: var(--accent-gradient);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+}
+
+.pricing-cta:hover,
+.contact-submit:hover,
+.package-contact-btn:hover,
+.work-btn:hover,
+.faq-flip-btn:hover {
+  transform: translateY(1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  background: rgba(24,24,27,0.8);
+}
+
+.scroll-progress-bar {
+  background: var(--accent-gradient);
+}
+
+/* Hero word swap stays readable */
+.hero-tagline-main {
+  color: #ffffff;
+}
+.hero-subcopy {
+  color: var(--text-soft);
+}
+.hero-badge {
+  background: rgba(15,15,23,0.85);
+  color: var(--text-soft);
+}
+
   </style>
 </head>
 <body>
