@@ -5,6 +5,7 @@
   <title>CTRL & CREATE — AI-powered Web Design Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     :root {
       /* Background / panels */
       --bg-main: #050509;
@@ -31,9 +32,16 @@
       --radius-card: 24px;
       --radius-soft: 16px;
       --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+     --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
       --page-width: 1120px;
     }
+.section-title,
+.hero-tagline-main,
+.pricing-name,
+.work-title,
+.faq-question {
+  font-weight: 700;
+}
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
