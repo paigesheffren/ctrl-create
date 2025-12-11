@@ -95,7 +95,7 @@
       .scroll-track { display: none; }
     }
 
-    /* NAV - top pill row + sticky side labels on desktop */
+    /* NAV - top pill row */
     .top-nav {
       position: sticky;
       top: 0;
@@ -537,6 +537,7 @@
       transform: translateY(18px);
       opacity: 0;
       transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      position: relative;
     }
 
     .pricing-card.visible { opacity: 1; transform: translateY(0); }
@@ -896,6 +897,27 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* === SPECIAL SWIPE ANIMATION BETWEEN PROCESS & PRICING === */
+
+    /* Pricing panel starts off to the right (hidden) */
+    .panel.pricing-before-swipe {
+      transform: translateX(120%) translateY(0);
+      opacity: 0;
+    }
+
+    /* When active, pricing slides into place */
+    .panel.pricing-swipe-in {
+      transform: translateX(0) translateY(0);
+      opacity: 1;
+    }
+
+    /* Process panel slides off to the left */
+    .panel.process-swipe-out {
+      transform: translateX(-120%) translateY(0);
+      opacity: 0;
+    }
+
   </style>
 </head>
 <body>
@@ -977,7 +999,7 @@
         </div>
 
         <div class="scene-right">
-          <div class="panel js-panel">
+          <div class="panel js-panel" id="process-panel">
             <div class="process-grid" id="processGrid">
               <article class="process-card js-step">
                 <div class="process-step">Step 1</div>
@@ -1026,7 +1048,7 @@
         </div>
 
         <div class="scene-right">
-          <div class="panel js-panel">
+          <div class="panel js-panel pricing-before-swipe" id="pricing-panel">
             <div class="pricing-grid">
               <article class="pricing-card js-price" data-card="Starter">
                 <div class="pricing-name">Starter</div>
@@ -1516,6 +1538,40 @@
     window.addEventListener("scroll", updateScrollStuff);
     window.addEventListener("resize", updateScrollStuff);
     updateScrollStuff();
+
+    /* ==== SPECIAL SWIPE BETWEEN PROCESS & PRICING ==== */
+
+    const processSection = document.getElementById("process-section");
+    const pricingSection = document.getElementById("pricing-section");
+    const processPanel = document.getElementById("process-panel");
+    const pricingPanel = document.getElementById("pricing-panel");
+
+    if ("IntersectionObserver" in window && processSection && pricingSection && processPanel && pricingPanel && !prefersReduced) {
+      // When pricing comes into view → swipe process out left, pricing in from right
+      const pricingObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            processPanel.classList.add("process-swipe-out");
+            pricingPanel.classList.add("pricing-swipe-in");
+            pricingPanel.classList.remove("pricing-before-swipe");
+          }
+        });
+      }, { threshold: 0.4 });
+
+      // When we go back to process → bring process back, hide pricing off to right again
+      const processObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            processPanel.classList.remove("process-swipe-out");
+            pricingPanel.classList.remove("pricing-swipe-in");
+            pricingPanel.classList.add("pricing-before-swipe");
+          }
+        });
+      }, { threshold: 0.4 });
+
+      pricingObserver.observe(pricingSection);
+      processObserver.observe(processSection);
+    }
   </script>
 </body>
 </html>
