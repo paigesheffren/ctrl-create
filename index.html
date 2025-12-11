@@ -862,12 +862,11 @@
     }
 
     .faq-card { perspective: 1200px; }
-
+    
 .faq-inner {
   position: relative;
   width: 100%;
-  min-height: 230px;     /* base height */
-  height: auto;          /* grow to fit text */
+  height: 290px;          /* bigger card so the answer fits */
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.06);
   background: #050509;
@@ -877,6 +876,7 @@
   transform: translateY(18px);
   opacity: 0;
 }
+
 
 
     .faq-inner.visible {
@@ -906,19 +906,19 @@
 
     .faq-icon { font-size: 24px; margin-bottom: 6px; }
 
-    .faq-question {
-      font-size: 15px;
-      font-weight: 800;
-      line-height: 1.4;
-      max-width: 85%;
-    }
+.faq-question {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.4;
+  max-width: 85%;
+}
 
-    .faq-answer {
-      font-size: 13px;
-      color: var(--text-soft);
-      line-height: 1.6;
-      max-width: 85%;
-    }
+.faq-answer {
+  font-size: 12px;
+  line-height: 1.55;
+  max-width: 85%;
+}
+
 
     .faq-flip-btn {
       align-self: flex-start;
