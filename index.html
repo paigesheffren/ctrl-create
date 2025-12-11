@@ -91,28 +91,34 @@
       z-index: 0;
     }
 
-    .scroll-track-base {
-      position: absolute;
-      inset: 15vh 0 15vh;
-      margin: auto;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.6);
-      box-shadow: 0 0 32px rgba(0,0,0,0.8);
-    }
+.scroll-track-base {
+  position: absolute;
+  top: 30vh;      /* starts lower, below hero copy */
+  bottom: 8vh;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 32px rgba(0,0,0,0.8);
+}
 
-    .scroll-track-progress {
-      position: absolute;
-      inset: 15vh 0 auto;
-      margin: auto;
-      height: 0;
-      border-radius: 999px;
-      background: var(--accent-gradient);
-      box-shadow:
-        0 0 18px rgba(0,0,0,0.9),
-        0 0 32px rgba(255,255,255,0.18);
-      transform-origin: top;
-      transition: height 0.18s ease-out;
-    }
+.scroll-track-progress {
+  position: absolute;
+  top: 30vh;      /* match base top */
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 0;
+  border-radius: 999px;
+  background: var(--accent-gradient);
+  box-shadow:
+    0 0 18px rgba(0,0,0,0.9),
+    0 0 32px rgba(255,255,255,0.18);
+  transform-origin: top;
+  transition: height 0.18s ease-out;
+}
+
 
     @media (max-width: 800px) {
       .scroll-track { display: none; }
@@ -135,13 +141,14 @@
 
     /* NAV - top pill row */
     .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      padding: 18px 0 10px;
-      backdrop-filter: blur(20px);
-      background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
-    }
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 18px 0 10px;
+  backdrop-filter: blur(20px);
+  background: transparent; /* no more black bar */
+}
+
 
     .top-nav-inner {
       display: flex;
@@ -800,6 +807,17 @@
       transition: transform 0.35s ease;
     }
 
+    .work-hint {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+  text-align: right;
+  opacity: 0.9;
+}
+
+
     .work-overlay {
       position: absolute;
       inset: 0;
@@ -845,19 +863,21 @@
 
     .faq-card { perspective: 1200px; }
 
-    .faq-inner {
-      position: relative;
-      width: 100%;
-      height: 230px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: #050509;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.8);
-      transform-style: preserve-3d;
-      transition: transform 0.6s ease, opacity 0.5s ease, transform 0.5s ease;
-      transform: translateY(18px);
-      opacity: 0;
-    }
+.faq-inner {
+  position: relative;
+  width: 100%;
+  min-height: 230px;     /* base height */
+  height: auto;          /* grow to fit text */
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #050509;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.8);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(18px);
+  opacity: 0;
+}
+
 
     .faq-inner.visible {
       opacity: 1;
@@ -1010,9 +1030,6 @@
     <!-- top nav -->
     <header class="top-nav">
       <div class="top-nav-inner">
-        <button class="nav-pill" data-scroll="hero">
-          <span class="dot"></span> Intro
-        </button>
         <button class="nav-pill" data-scroll="process-section">
           <span class="dot"></span> Process
         </button>
@@ -1210,6 +1227,7 @@
 
         <div class="scene-right">
           <div class="panel js-panel">
+            <div class="work-hint">Swipe to see more →</div>
             <div class="work-strip">
               <div class="work-track">
                 <a class="work-card js-work" href="https://paigesheffren.github.io/OOTD.com/" target="_blank" rel="noopener">
@@ -1609,11 +1627,11 @@
 
     /* SCROLL TRACK + ACTIVE NAV + BG SHIFTS + WASH */
     const scrollTrack = document.getElementById("scrollTrackProgress");
-    const navPills = document.querySelectorAll(".nav-pill");
-    const sectionIds = ["hero", "process-section", "pricing-section", "work-section", "contact-section"];
-    const sections = sectionIds.map(id => document.getElementById(id));
-    const sceneWash = document.getElementById("sceneWash");
-    const bodySceneClasses = ["scene-hero", "scene-process", "scene-pricing", "scene-work", "scene-contact"];
+const navPills = document.querySelectorAll(".nav-pill");
+const sectionIds = ["process-section", "pricing-section", "work-section", "contact-section"];
+const sections = sectionIds.map(id => document.getElementById(id));
+const sceneWash = document.getElementById("sceneWash");
+const bodySceneClasses = ["scene-process", "scene-pricing", "scene-work", "scene-contact"];
     let prevActiveIndex = null;
     let washTimeoutId = null;
 
