@@ -44,6 +44,7 @@
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
+      transition: background 0.7s ease;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -54,9 +55,31 @@
       margin: 0 auto;
       padding: 0 20px 80px;
       position: relative;
+      z-index: 1;
     }
 
-    /* central glowing vertical line to tie everything together */
+    /* background variations per section */
+    body.scene-hero {
+      background: radial-gradient(circle at top, #ffb3d6, #ee0979 35%, #140511 75%, #050509 100%);
+    }
+
+    body.scene-process {
+      background: radial-gradient(circle at top, #fca5f1, #ee0979 35%, #120518 75%, #050509 100%);
+    }
+
+    body.scene-pricing {
+      background: radial-gradient(circle at top, #ffd8a0, #ff6a00 35%, #19070d 75%, #050509 100%);
+    }
+
+    body.scene-work {
+      background: radial-gradient(circle at top, #f9a8ff, #ee0979 35%, #060416 75%, #050509 100%);
+    }
+
+    body.scene-contact {
+      background: radial-gradient(circle at top, #fed7aa, #ff6a00 35%, #05030f 75%, #050509 100%);
+    }
+
+    /* central glowing scroll track */
     .scroll-track {
       position: fixed;
       top: 0;
@@ -93,6 +116,21 @@
 
     @media (max-width: 800px) {
       .scroll-track { display: none; }
+    }
+
+    /* scene wash overlay */
+    .scene-wash {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.09), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      mix-blend-mode: screen;
+      z-index: 2;
+    }
+    .scene-wash.flash {
+      opacity: 1;
     }
 
     /* NAV - top pill row */
@@ -132,7 +170,10 @@
       animation: pillIn 0.7s ease forwards;
       position: relative;
       overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+      transition:
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
     }
 
     .nav-pill span.dot {
@@ -160,7 +201,6 @@
     }
 
     .nav-pill:hover {
-      transform: translateY(-1px) scale(1.02);
       box-shadow: 0 16px 38px rgba(0,0,0,0.95);
       background: #000;
     }
@@ -176,13 +216,12 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* SECTION LAYOUT - “nodes” hanging off the central line */
+    /* SECTION LAYOUT */
     .scene {
       position: relative;
       min-height: 100vh;
       display: flex;
       align-items: center;
-      z-index: 1;
     }
 
     .scene-inner {
@@ -192,6 +231,11 @@
       align-items: center;
       width: 100%;
       padding: 60px 0;
+    }
+
+    .scene--pinned .scene-inner {
+      position: sticky;
+      top: 80px;
     }
 
     .scene-left {
@@ -229,6 +273,16 @@
       margin-left: auto;
     }
 
+    .js-text-reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .js-text-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @media (max-width: 900px) {
       .scene-inner {
         grid-template-columns: minmax(0, 1fr);
@@ -239,9 +293,12 @@
         padding-right: 0;
       }
       .scene-sub { margin-left: 0; }
+      .scene--pinned .scene-inner {
+        position: static;
+      }
     }
 
-    /* Cards / panels */
+    /* Panels */
     .panel {
       border-radius: 30px;
       background: rgba(5,5,9,0.96);
@@ -249,7 +306,7 @@
       padding: 24px 20px 22px;
       position: relative;
       overflow: hidden;
-      transform: translateY(40px) translateX(18px);
+      transform: translateY(40px) translateX(18px) scale(0.98);
       opacity: 0;
       transition:
         opacity 0.7s ease,
@@ -272,7 +329,7 @@
 
     .panel-visible {
       opacity: 1;
-      transform: translateY(0) translateX(0);
+      transform: translateY(0) translateX(0) scale(1);
     }
 
     .panel-visible::before {
@@ -345,6 +402,7 @@
       text-transform: uppercase;
       margin-bottom: 14px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+      color: var(--text-soft);
     }
 
     .hero-pill-dot {
@@ -450,7 +508,7 @@
       100% { transform: translateY(34px); }
     }
 
-    /* PROCESS STYLES */
+    /* PROCESS */
     .process-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -484,16 +542,37 @@
       border-radius: 18px;
       background: #f9fafb;
       color: var(--text-dark);
-      padding: 14px 12px 14px;
+      padding: 12px 12px 13px;
       box-shadow: 0 10px 24px rgba(0,0,0,0.35);
       transform: translateY(18px);
       opacity: 0;
       transition: opacity 0.5s ease, transform 0.5s ease;
+      position: relative;
     }
 
     .process-card.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .process-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.9);
+      border: 2px solid rgba(255,255,255,0.4);
+      box-shadow: 0 0 0 rgba(238,9,121,0);
+      position: absolute;
+      left: 50%;
+      top: -16px;
+      transform: translateX(-50%);
+      transition: box-shadow 0.4s ease, background 0.4s ease, transform 0.4s ease;
+    }
+
+    .process-card.active .process-dot {
+      background: #ee0979;
+      box-shadow: 0 0 16px rgba(238,9,121,0.8);
+      transform: translateX(-50%) scale(1.15);
     }
 
     .process-step {
@@ -536,7 +615,7 @@
       border: 1px solid rgba(255,255,255,0.06);
       transform: translateY(18px);
       opacity: 0;
-      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
       position: relative;
     }
 
@@ -561,7 +640,6 @@
     }
 
     .pricing-card:hover {
-      transform: translateY(-3px);
       box-shadow: 0 20px 40px rgba(0,0,0,1);
     }
 
@@ -681,12 +759,17 @@
       box-shadow: 0 10px 24px rgba(0,0,0,0.8);
     }
 
-    /* WORK */
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* WORK - horizontal strip */
+    .work-strip {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+
+    .work-track {
+      display: flex;
       gap: 14px;
-      margin-top: 6px;
     }
 
     .work-card {
@@ -698,8 +781,10 @@
       position: relative;
       transform: translateY(18px);
       opacity: 0;
-      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
       border: 1px solid rgba(255,255,255,0.06);
+      min-width: 260px;
+      scroll-snap-align: center;
     }
 
     .work-card.visible { opacity: 1; transform: translateY(0); }
@@ -743,6 +828,7 @@
       color: #f9fafb;
       font-weight: 700;
       box-shadow: 0 8px 18px rgba(0,0,0,0.9);
+      cursor: pointer;
     }
 
     .work-card:hover img { transform: translate3d(-6px,-6px,0) scale(1.08); }
@@ -768,7 +854,7 @@
       background: #050509;
       box-shadow: 0 16px 30px rgba(0,0,0,0.8);
       transform-style: preserve-3d;
-      transition: transform 0.6s ease;
+      transition: transform 0.6s ease, opacity 0.5s ease, transform 0.5s ease;
       transform: translateY(18px);
       opacity: 0;
     }
@@ -862,12 +948,9 @@
 
     /* RESPONSIVE */
     @media (max-width: 960px) {
-      .work-grid,
-      .pricing-grid,
-      .process-grid,
-      .faq-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 720px) {
@@ -875,18 +958,15 @@
       .scene { min-height: auto; }
       .scene-inner { padding: 40px 0; }
 
-      .work-grid,
+      .faq-grid,
       .pricing-grid,
-      .process-grid,
-      .faq-grid {
+      .process-grid {
         grid-template-columns: minmax(0, 1fr);
       }
 
-      .panel {
-        transform: translateY(30px) translateX(0);
-      }
-
       .hero-title { font-size: 24px; }
+      .work-track { gap: 10px; }
+      .work-card { min-width: 220px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -900,27 +980,26 @@
 
     /* === SPECIAL SWIPE ANIMATION BETWEEN PROCESS & PRICING === */
 
-    /* Pricing panel starts off to the right (hidden) */
     .panel.pricing-before-swipe {
-      transform: translateX(120%) translateY(0);
+      transform: translateX(120%) translateY(0) scale(0.98);
       opacity: 0;
     }
 
-    /* When active, pricing slides into place */
     .panel.pricing-swipe-in {
-      transform: translateX(0) translateY(0);
+      transform: translateX(0) translateY(0) scale(1);
       opacity: 1;
     }
 
-    /* Process panel slides off to the left */
     .panel.process-swipe-out {
-      transform: translateX(-120%) translateY(0);
+      transform: translateX(-120%) translateY(0) scale(0.98);
       opacity: 0;
     }
-
   </style>
 </head>
 <body>
+  <!-- scene wash -->
+  <div class="scene-wash" id="sceneWash"></div>
+
   <!-- central scroll track -->
   <div class="scroll-track">
     <div class="scroll-track-base"></div>
@@ -949,10 +1028,10 @@
       </div>
     </header>
 
-    <!-- HERO “INTRO” SCENE -->
+    <!-- HERO -->
     <section class="hero-scene" id="hero">
       <div class="hero-content">
-        <div class="hero-pill">
+        <div class="hero-pill js-text-reveal">
           <span class="hero-pill-dot"></span>
           CTRL &amp; CREATE — Montréal
         </div>
@@ -961,7 +1040,7 @@
           <img src="assets/transctrl.png" alt="CTRL & CREATE logo">
         </div>
 
-        <h1 class="hero-title">
+        <h1 class="hero-title js-text-reveal">
           <span class="swap-word">
             <span class="swap-word-text" id="heroSwap">AI-powered</span>
           </span>
@@ -969,12 +1048,12 @@
           human-finished details.
         </h1>
 
-        <p class="hero-copy">
+        <p class="hero-copy js-text-reveal">
           We use AI to speed up structure, copy, and assets — then finish everything by hand so
           your site feels clean, on-brand, and ready to launch.
         </p>
 
-        <div class="hero-badge-row">
+        <div class="hero-badge-row js-text-reveal">
           <span class="hero-badge-chip">Single-page &amp; multi-page builds</span>
           <span class="hero-badge-chip">Montreal-based studio</span>
         </div>
@@ -986,13 +1065,13 @@
       </div>
     </section>
 
-    <!-- PROCESS SCENE -->
-    <section class="scene" id="process-section">
+    <!-- PROCESS -->
+    <section class="scene scene--pinned" id="process-section">
       <div class="scene-inner">
         <div class="scene-left">
-          <div class="scene-label">Our workflow</div>
-          <h2 class="scene-title">A simple, fast process</h2>
-          <p class="scene-sub">
+          <div class="scene-label js-text-reveal">Our workflow</div>
+          <h2 class="scene-title js-text-reveal">A simple, fast process</h2>
+          <p class="scene-sub js-text-reveal">
             From first call to launch, we keep things clear and focused so
             you always know what we’re doing — and why.
           </p>
@@ -1002,6 +1081,7 @@
           <div class="panel js-panel" id="process-panel">
             <div class="process-grid" id="processGrid">
               <article class="process-card js-step">
+                <div class="process-dot"></div>
                 <div class="process-step">Step 1</div>
                 <div class="process-title">Discover</div>
                 <p class="process-body">
@@ -1009,6 +1089,7 @@
                 </p>
               </article>
               <article class="process-card js-step">
+                <div class="process-dot"></div>
                 <div class="process-step">Step 2</div>
                 <div class="process-title">Design</div>
                 <p class="process-body">
@@ -1016,6 +1097,7 @@
                 </p>
               </article>
               <article class="process-card js-step">
+                <div class="process-dot"></div>
                 <div class="process-step">Step 3</div>
                 <div class="process-title">Build</div>
                 <p class="process-body">
@@ -1023,6 +1105,7 @@
                 </p>
               </article>
               <article class="process-card js-step">
+                <div class="process-dot"></div>
                 <div class="process-step">Step 4</div>
                 <div class="process-title">Launch</div>
                 <p class="process-body">
@@ -1035,13 +1118,13 @@
       </div>
     </section>
 
-    <!-- PRICING SCENE -->
-    <section class="scene" id="pricing-section">
+    <!-- PRICING -->
+    <section class="scene scene--pinned" id="pricing-section">
       <div class="scene-inner">
         <div class="scene-left">
-          <div class="scene-label">Transparent pricing</div>
-          <h2 class="scene-title">Three ways to ship your site</h2>
-          <p class="scene-sub">
+          <div class="scene-label js-text-reveal">Transparent pricing</div>
+          <h2 class="scene-title js-text-reveal">Three ways to ship your site</h2>
+          <p class="scene-sub js-text-reveal">
             We stay roughly 20–40% below typical Montréal agency rates —
             without cutting corners on design or implementation.
           </p>
@@ -1060,7 +1143,7 @@
                   <li><span class="pricing-dot"></span><span>Responsive + basic SEO</span></li>
                   <li><span class="pricing-dot"></span><span>Contact form</span></li>
                 </ul>
-                <button class="pricing-cta pricing-btn" data-package="Starter">
+                <button class="pricing-cta pricing-btn magnet-target" data-package="Starter">
                   Choose Starter
                 </button>
               </article>
@@ -1075,7 +1158,7 @@
                   <li><span class="pricing-dot"></span><span>Gallery / blog</span></li>
                   <li><span class="pricing-dot"></span><span>Analytics + handoff</span></li>
                 </ul>
-                <button class="pricing-cta pricing-btn" data-package="Business Pro">
+                <button class="pricing-cta pricing-btn magnet-target" data-package="Business Pro">
                   Choose Business Pro
                 </button>
               </article>
@@ -1090,7 +1173,7 @@
                   <li><span class="pricing-dot"></span><span>Light e-commerce</span></li>
                   <li><span class="pricing-dot"></span><span>AI visuals &amp; copy</span></li>
                 </ul>
-                <button class="pricing-cta pricing-btn" data-package="Premium Custom">
+                <button class="pricing-cta pricing-btn magnet-target" data-package="Premium Custom">
                   Choose Premium
                 </button>
               </article>
@@ -1113,13 +1196,13 @@
       </div>
     </section>
 
-    <!-- WORK SCENE -->
+    <!-- WORK -->
     <section class="scene" id="work-section">
       <div class="scene-inner">
         <div class="scene-left">
-          <div class="scene-label">Selected work</div>
-          <h2 class="scene-title">Sites we’ve brought to life</h2>
-          <p class="scene-sub">
+          <div class="scene-label js-text-reveal">Selected work</div>
+          <h2 class="scene-title js-text-reveal">Sites we’ve brought to life</h2>
+          <p class="scene-sub js-text-reveal">
             Real builds with motion, clean copy, and AI-assisted workflows —
             including CTRL &amp; CREATE itself.
           </p>
@@ -1127,58 +1210,60 @@
 
         <div class="scene-right">
           <div class="panel js-panel">
-            <div class="work-grid">
-              <a class="work-card js-work" href="https://paigesheffren.github.io/OOTD.com/" target="_blank" rel="noopener">
-                <div class="work-inner">
-                  <img src="assets/work-OOTD.jpg" alt="OOTD site preview">
-                  <div class="work-overlay">
-                    <div class="work-meta">
-                      <div class="work-title">OOTD</div>
-                      <div class="work-sub">Outfit generator</div>
-                      <button class="work-btn">View site</button>
+            <div class="work-strip">
+              <div class="work-track">
+                <a class="work-card js-work" href="https://paigesheffren.github.io/OOTD.com/" target="_blank" rel="noopener">
+                  <div class="work-inner">
+                    <img src="assets/work-OOTD.jpg" alt="OOTD site preview">
+                    <div class="work-overlay">
+                      <div class="work-meta">
+                        <div class="work-title">OOTD</div>
+                        <div class="work-sub">Outfit generator</div>
+                        <button class="work-btn magnet-target">View site</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
+                </a>
 
-              <a class="work-card js-work" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
-                <div class="work-inner">
-                  <img src="assets/work-s3sammy.jpg" alt="S3 Sammy site preview">
-                  <div class="work-overlay">
-                    <div class="work-meta">
-                      <div class="work-title">S3 Sammy</div>
-                      <div class="work-sub">Automotive photo portfolio</div>
-                      <button class="work-btn">View site</button>
+                <a class="work-card js-work" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
+                  <div class="work-inner">
+                    <img src="assets/work-s3sammy.jpg" alt="S3 Sammy site preview">
+                    <div class="work-overlay">
+                      <div class="work-meta">
+                        <div class="work-title">S3 Sammy</div>
+                        <div class="work-sub">Automotive photo portfolio</div>
+                        <button class="work-btn magnet-target">View site</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
+                </a>
 
-              <a class="work-card js-work" href="https://paigesheffren.github.io/working-bee.com/" target="_blank" rel="noopener">
-                <div class="work-inner">
-                  <img src="assets/work-bee.jpg" alt="Working Bee site preview">
-                  <div class="work-overlay">
-                    <div class="work-meta">
-                      <div class="work-title">Working Bee</div>
-                      <div class="work-sub">Pre workout gummies</div>
-                      <button class="work-btn">View site</button>
+                <a class="work-card js-work" href="https://paigesheffren.github.io/working-bee.com/" target="_blank" rel="noopener">
+                  <div class="work-inner">
+                    <img src="assets/work-bee.jpg" alt="Working Bee site preview">
+                    <div class="work-overlay">
+                      <div class="work-meta">
+                        <div class="work-title">Working Bee</div>
+                        <div class="work-sub">Pre workout gummies</div>
+                        <button class="work-btn magnet-target">View site</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ SCENE -->
+    <!-- FAQ -->
     <section class="scene" id="faq-section">
       <div class="scene-inner">
         <div class="scene-left">
-          <div class="scene-label">Questions &amp; answers</div>
-          <h2 class="scene-title">How working with us works</h2>
-          <p class="scene-sub">
+          <div class="scene-label js-text-reveal">Questions &amp; answers</div>
+          <h2 class="scene-title js-text-reveal">How working with us works</h2>
+          <p class="scene-sub js-text-reveal">
             Quick answers to the stuff people usually ask before we start a project.
             Tap “flip card” to see more detail.
           </p>
@@ -1306,13 +1391,13 @@
       </div>
     </section>
 
-    <!-- CONTACT SCENE -->
+    <!-- CONTACT -->
     <section class="scene" id="contact-section">
       <div class="scene-inner">
         <div class="scene-left">
-          <div class="scene-label">Start a project</div>
-          <h2 class="scene-title">Tell us what you’re building</h2>
-          <p class="scene-sub">
+          <div class="scene-label js-text-reveal">Start a project</div>
+          <h2 class="scene-title js-text-reveal">Tell us what you’re building</h2>
+          <p class="scene-sub js-text-reveal">
             A quick brief is enough. We’ll reply with options, timelines, and a recommended package.
           </p>
         </div>
@@ -1394,7 +1479,10 @@
 
             const steps = panel.querySelectorAll(".js-step");
             steps.forEach((el, i) =>
-              setTimeout(() => el.classList.add("visible"), i * 90)
+              setTimeout(() => {
+                el.classList.add("visible");
+                el.classList.add("active");
+              }, i * 120)
             );
 
             const prices = panel.querySelectorAll(".js-price");
@@ -1422,6 +1510,26 @@
       document.querySelectorAll(".panel").forEach(p => p.classList.add("panel-visible"));
       document.querySelectorAll(".process-card,.pricing-card,.work-card,.faq-inner")
         .forEach(el => el.classList.add("visible"));
+    }
+
+    /* TEXT REVEAL FOR SECTION HEADERS */
+    if ("IntersectionObserver" in window && !prefersReduced) {
+      const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const scene = entry.target;
+            const texts = scene.querySelectorAll(".js-text-reveal");
+            texts.forEach((el, i) => {
+              setTimeout(() => el.classList.add("revealed"), i * 100);
+            });
+            textObserver.unobserve(scene);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      document.querySelectorAll(".scene, .hero-scene").forEach(sc => textObserver.observe(sc));
+    } else {
+      document.querySelectorAll(".js-text-reveal").forEach(el => el.classList.add("revealed"));
     }
 
     /* PRICING DETAILS */
@@ -1499,11 +1607,15 @@
       });
     });
 
-    /* SCROLL TRACK + ACTIVE NAV */
+    /* SCROLL TRACK + ACTIVE NAV + BG SHIFTS + WASH */
     const scrollTrack = document.getElementById("scrollTrackProgress");
     const navPills = document.querySelectorAll(".nav-pill");
     const sectionIds = ["hero", "process-section", "pricing-section", "work-section", "contact-section"];
     const sections = sectionIds.map(id => document.getElementById(id));
+    const sceneWash = document.getElementById("sceneWash");
+    const bodySceneClasses = ["scene-hero", "scene-process", "scene-pricing", "scene-work", "scene-contact"];
+    let prevActiveIndex = null;
+    let washTimeoutId = null;
 
     function updateScrollStuff() {
       const h = document.documentElement;
@@ -1533,21 +1645,36 @@
       navPills.forEach((pill, idx) => {
         pill.classList.toggle("active", idx === closestIndex);
       });
+
+      if (closestIndex !== prevActiveIndex) {
+        if (prevActiveIndex !== null) {
+          document.body.classList.remove(bodySceneClasses[prevActiveIndex]);
+        }
+        document.body.classList.add(bodySceneClasses[closestIndex]);
+
+        if (sceneWash) {
+          sceneWash.classList.add("flash");
+          if (washTimeoutId) clearTimeout(washTimeoutId);
+          washTimeoutId = setTimeout(() => {
+            sceneWash.classList.remove("flash");
+          }, 350);
+        }
+
+        prevActiveIndex = closestIndex;
+      }
     }
 
     window.addEventListener("scroll", updateScrollStuff);
     window.addEventListener("resize", updateScrollStuff);
     updateScrollStuff();
 
-    /* ==== SPECIAL SWIPE BETWEEN PROCESS & PRICING ==== */
-
+    /* SPECIAL SWIPE BETWEEN PROCESS & PRICING */
     const processSection = document.getElementById("process-section");
     const pricingSection = document.getElementById("pricing-section");
     const processPanel = document.getElementById("process-panel");
     const pricingPanel = document.getElementById("pricing-panel");
 
     if ("IntersectionObserver" in window && processSection && pricingSection && processPanel && pricingPanel && !prefersReduced) {
-      // When pricing comes into view → swipe process out left, pricing in from right
       const pricingObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -1558,7 +1685,6 @@
         });
       }, { threshold: 0.4 });
 
-      // When we go back to process → bring process back, hide pricing off to right again
       const processObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -1571,6 +1697,33 @@
 
       pricingObserver.observe(pricingSection);
       processObserver.observe(processSection);
+    }
+
+    /* MAGNET EFFECT FOR CTAS & WORK BUTTONS (light) */
+    function addMagnetEffect(el) {
+      if (!el) return;
+      const strength = 12; // px
+
+      function onMove(e) {
+        const rect = el.getBoundingClientRect();
+        const relX = e.clientX - (rect.left + rect.width / 2);
+        const relY = e.clientY - (rect.top + rect.height / 2);
+        const distX = (relX / rect.width) * strength;
+        const distY = (relY / rect.height) * strength;
+        el.style.transform = `translate(${distX}px, ${distY}px)`;
+      }
+
+      function onLeave() {
+        el.style.transform = "translate(0, 0)";
+      }
+
+      el.addEventListener("mousemove", onMove);
+      el.addEventListener("mouseleave", onLeave);
+      el.addEventListener("blur", onLeave);
+    }
+
+    if (!prefersReduced) {
+      document.querySelectorAll(".magnet-target").forEach(addMagnetEffect);
     }
   </script>
 </body>
