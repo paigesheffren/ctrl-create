@@ -6,42 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
     :root {
-      /* Background / panels */
       --bg-main: #050509;
       --bg-panel: #050509;
       --bg-panel-soft: #0b0b12;
 
-      /* Ibiza Sunset gradient */
       --grad-start: #ee0979;
       --grad-end: #ff6a00;
       --accent-gradient: linear-gradient(135deg, #ee0979, #ff6a00);
 
-      /* Text */
       --text-main: #f9fafb;
       --text-soft: #e5e5e5;
       --text-muted: #a1a1aa;
       --text-dark: #02010a;
 
-      /* Accent aliases so old names still work */
       --accent-teal: #ee0979;
       --accent-yellow: #ff6a00;
 
-      /* Layout + misc */
       --radius-pill: 999px;
-      --radius-card: 24px;
-      --radius-soft: 16px;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+      --radius-card: 28px;
+      --radius-soft: 20px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.75);
       --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
       --page-width: 1120px;
-    }
-
-    .section-title,
-    .hero-tagline-main,
-    .pricing-name,
-    .work-title,
-    .faq-question {
-      font-weight: 700;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,264 +39,338 @@
       font-family: var(--font-sans);
       color: var(--text-main);
       background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      /* allow subtle motion of the gradient */
-      background-size: 140% 140%;
+      background-size: 150% 150%;
       background-attachment: fixed;
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
-      transition: background-position 0.2s ease-out;
     }
 
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
 
-    .container {
+    .page-shell {
       max-width: var(--page-width);
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 20px 80px;
+      position: relative;
     }
 
-    /* Cursor halo */
-    .cursor-halo {
+    /* central glowing vertical line to tie everything together */
+    .scroll-track {
       position: fixed;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      pointer-events: none;
-      background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 60%);
-      mix-blend-mode: screen;
-      transform: translate3d(-999px, -999px, 0);
-      transition: opacity 0.3s ease;
-      opacity: 0;
-      z-index: 50;
-    }
-
-    /* Scroll progress bar */
-    .scroll-progress {
-      position: fixed;
-      right: 14px;
-      top: 70px;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 4px;
-      height: 60vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .scroll-track-base {
+      position: absolute;
+      inset: 15vh 0 15vh;
+      margin: auto;
       border-radius: 999px;
-      background: rgba(0,0,0,0.35);
-      overflow: hidden;
-      z-index: 40;
+      background: rgba(0,0,0,0.6);
+      box-shadow: 0 0 32px rgba(0,0,0,0.8);
     }
 
-    .scroll-progress-bar {
-      width: 100%;
-      height: 0%;
+    .scroll-track-progress {
+      position: absolute;
+      inset: 15vh 0 auto;
+      margin: auto;
+      height: 0;
+      border-radius: 999px;
       background: var(--accent-gradient);
-      border-radius: inherit;
+      box-shadow:
+        0 0 18px rgba(0,0,0,0.9),
+        0 0 32px rgba(255,255,255,0.18);
       transform-origin: top;
-      transition: height 0.15s ease-out;
+      transition: height 0.18s ease-out;
     }
 
-    /* NAV */
-    .nav-shell {
-      padding-top: 26px;
-      padding-bottom: 10px;
+    @media (max-width: 800px) {
+      .scroll-track { display: none; }
+    }
+
+    /* NAV - top pill row + sticky side labels on desktop */
+    .top-nav {
       position: sticky;
       top: 0;
-      z-index: 30;
+      z-index: 20;
+      padding: 18px 0 10px;
       backdrop-filter: blur(20px);
-      background: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
     }
 
-    .nav-pills {
+    .top-nav-inner {
       display: flex;
       justify-content: center;
-      gap: 26px;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
     .nav-pill {
-      min-width: 140px;
-      padding: 12px 26px;
+      padding: 9px 20px;
       border-radius: var(--radius-pill);
-      border: none;
-      background: #050509;
-      color: #ffffff;
-      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(5,5,9,0.94);
+      color: #fff;
+      font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
       cursor: pointer;
       box-shadow: 0 12px 26px rgba(0, 0, 0, 0.7);
-      transform: translateY(-10px);
       opacity: 0;
+      transform: translateY(-6px);
       animation: pillIn 0.7s ease forwards;
       position: relative;
       overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
     }
 
-    .nav-pill:nth-child(1) { animation-delay: 0.1s; }
-    .nav-pill:nth-child(2) { animation-delay: 0.2s; }
-    .nav-pill:nth-child(3) { animation-delay: 0.3s; }
-    .nav-pill:nth-child(4) { animation-delay: 0.4s; }
+    .nav-pill span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent-gradient);
+      box-shadow: 0 0 10px rgba(0,0,0,0.9);
+    }
+
+    .nav-pill:nth-child(1) { animation-delay: 0.05s; }
+    .nav-pill:nth-child(2) { animation-delay: 0.1s; }
+    .nav-pill:nth-child(3) { animation-delay: 0.15s; }
+    .nav-pill:nth-child(4) { animation-delay: 0.2s; }
+    .nav-pill:nth-child(5) { animation-delay: 0.25s; }
 
     .nav-pill::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.25), transparent 60%);
+      background: linear-gradient(120deg, rgba(255,255,255,0.3), transparent 60%);
       transform: translateX(-130%);
       transition: transform 0.4s ease;
       pointer-events: none;
     }
 
-    .nav-pill::before {
-      content: "";
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 9px;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--accent-gradient);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.25s ease;
-      opacity: 0.95;
-    }
-
     .nav-pill:hover {
-      transform: translateY(-2px) scale(1.02);
-      background: #000000;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 16px 38px rgba(0,0,0,0.95);
+      background: #000;
     }
-
     .nav-pill:hover::after { transform: translateX(130%); }
-    .nav-pill:hover::before { transform: scaleX(1); }
 
-    /* active state based on scroll */
     .nav-pill.active {
-      background: #000000;
+      background: #000;
+      border-color: var(--accent-yellow);
       box-shadow: 0 18px 40px rgba(0,0,0,1);
-      transform: translateY(-2px) scale(1.03);
-    }
-    .nav-pill.active::before {
-      transform: scaleX(1);
     }
 
     @keyframes pillIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* HERO */
-    .hero {
-      padding: 40px 0 70px;
-    }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 32px;
+    /* SECTION LAYOUT - “nodes” hanging off the central line */
+    .scene {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
       align-items: center;
+      z-index: 1;
+    }
+
+    .scene-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 40px;
+      align-items: center;
+      width: 100%;
+      padding: 60px 0;
+    }
+
+    .scene-left {
+      text-align: right;
+      padding-right: 40px;
       position: relative;
     }
 
-    .hero-visual {
+    .scene-right {
       position: relative;
-      perspective: 1200px;
+      z-index: 1;
     }
 
-    .hero-screen-wrap {
-      max-width: 620px;
-      margin-left: -10px;
-      transform-origin: center;
-      transform: translateY(10px);
+    .scene-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+      opacity: 0.7;
+    }
+
+    .scene-title {
+      font-size: 26px;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .scene-sub {
+      font-size: 13px;
+      color: var(--text-soft);
+      max-width: 320px;
+      margin-left: auto;
+    }
+
+    @media (max-width: 900px) {
+      .scene-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+      }
+      .scene-left {
+        text-align: left;
+        padding-right: 0;
+      }
+      .scene-sub { margin-left: 0; }
+    }
+
+    /* Cards / panels */
+    .panel {
+      border-radius: 30px;
+      background: rgba(5,5,9,0.96);
+      box-shadow: var(--shadow-soft);
+      padding: 24px 20px 22px;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px) translateX(18px);
       opacity: 0;
-      animation: heroIn 0.9s ease forwards 0.25s;
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        box-shadow 0.4s ease,
+        background 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 60%);
+      opacity: 0;
+      transform: translate3d(-40px, 0, 0);
+      transition: opacity 0.8s ease, transform 0.9s ease;
+      pointer-events: none;
+    }
+
+    .panel-visible {
+      opacity: 1;
+      transform: translateY(0) translateX(0);
+    }
+
+    .panel-visible::before {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .panel:hover {
+      box-shadow: 0 24px 50px rgba(0,0,0,0.95);
+      background: #050509;
+    }
+
+    /* HERO SCENE */
+    .hero-scene {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-logo-wrap {
+      max-width: 520px;
+      margin: 0 auto 16px;
+      filter: drop-shadow(0 25px 50px rgba(0,0,0,0.9));
+      transform-origin: center;
+      opacity: 0;
+      transform: translateY(20px) scale(0.96);
+      animation: heroIn 0.9s ease forwards 0.2s;
+    }
+
+    .hero-logo-wrap img {
+      width: 100%;
+      animation: heroFloat 9s ease-in-out infinite alternate;
     }
 
     @keyframes heroIn {
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
-    .hero-screen-wrap img {
-      width: 100%;
-      animation: float 8s ease-in-out infinite alternate;
-      transform-origin: center;
+    @keyframes heroFloat {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, -10px, 0) scale(1.02); }
+      100% { transform: translate3d(0, -20px, 0) scale(1.04); }
     }
 
-    @keyframes float {
-      0% {
-        transform: translate3d(0,0,0) rotateX(0deg) rotateY(0deg) scale(1);
-      }
-      50% {
-        transform: translate3d(0,-12px,0) rotateX(3deg) rotateY(-4deg) scale(1.03);
-      }
-      100% {
-        transform: translate3d(0,-24px,0) rotateX(6deg) rotateY(-8deg) scale(1.06);
-      }
-    }
-
-    .hero-doodle {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      border-radius: 16px;
-      border: 2px solid rgba(0,0,0,0.85);
-      opacity: 0.8;
-      backdrop-filter: blur(6px);
-      display: flex;
+    .hero-pill {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      color: #000000;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-      background: rgba(255,255,255,0.6);
-      animation: doodleFloat 10s ease-in-out infinite;
-    }
-
-    .hero-doodle.d1 { top: 12%; left: 18%; animation-delay: 0s; }
-    .hero-doodle.d2 { bottom: 4%; left: 40%; animation-delay: 1.6s; }
-    .hero-doodle.d3 { top: 10%; right: 10%; animation-delay: 3s; }
-
-    @keyframes doodleFloat {
-      0% { transform: translate3d(0,0,0); }
-      50% { transform: translate3d(8px,-14px,0); }
-      100% { transform: translate3d(-6px,4px,0); }
-    }
-
-    .hero-tagline-block {
-      text-align: right;
-      max-width: 380px;
-      margin-left: auto;
-      transform: translateY(18px);
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.4s;
-    }
-
-    .hero-tagline-main {
-      font-size: 28px;
-      line-height: 1.2;
-      font-weight: 800;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      background: rgba(5,5,9,0.96);
+      border: 1px solid rgba(255,255,255,0.16);
+      font-size: 11px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #000000;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.9);
     }
 
-    .hero-tagline-main span.swap-word {
+    .hero-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-gradient);
+      box-shadow: 0 0 12px rgba(0,0,0,0.9);
+    }
+
+    .hero-title {
+      font-size: 30px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #000;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .hero-title span.swap-word {
       display: inline-block;
+      min-width: 120px;
       position: relative;
-      min-width: 110px;
     }
 
-    .hero-tagline-main span.swap-word-text {
+    .swap-word-text {
       display: inline-block;
       transition: opacity 0.35s ease, transform 0.35s ease;
     }
@@ -317,243 +379,116 @@
       opacity: 0;
       transform: translateY(-8px);
     }
+
     .swap-word-text.fade-in {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .hero-subcopy {
+    .hero-copy {
       font-size: 14px;
-      color: #111111;
-      opacity: 0.95;
+      color: #111;
+      max-width: 420px;
+      margin: 0 auto 18px;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 20px;
-      padding: 6px 12px;
-      border-radius: var(--radius-pill);
-      background: #000000;
-      color: #ffffff;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-weight: 600;
-    }
-
-    .hero-badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--accent-gradient);
-      box-shadow: 0 0 12px rgba(0,0,0,0.8);
-    }
-
-    section { padding: 50px 0; background: transparent; }
-
-    .section-header {
+    .hero-badge-row {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 16px;
-      margin-bottom: 24px;
+      justify-content: center;
+      gap: 10px;
       flex-wrap: wrap;
-      color: var(--text-main);
+      font-size: 11px;
+      color: #111;
     }
 
-    .section-kicker {
+    .hero-badge-chip {
+      background: rgba(255,255,255,0.75);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .hero-scroll {
+      margin-top: 26px;
       font-size: 11px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-soft);
-      margin-bottom: 6px;
-      position: relative;
-      padding-bottom: 4px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.8;
     }
 
-    .section-kicker::after {
+    .hero-scroll-line {
+      width: 1px;
+      height: 34px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-scroll-line::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: 0;
-      width: 60px;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--accent-gradient);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.6s ease;
-    }
-
-    .strip.is-visible .section-kicker::after {
-      transform: scaleX(1);
-    }
-
-    .section-title {
-      font-size: 22px;
-      text-transform: uppercase;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .section-subtitle {
-      max-width: 420px;
-      font-size: 13px;
-      color: var(--text-soft);
-    }
-
-    /* Strips */
-    .strip {
-      background: #050509;
-      border-radius: 40px;
-      padding: 26px 26px 28px;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(40px) scale(var(--strip-scale, 0.96));
-      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.4s ease;
-    }
-
-    .strip::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.06), transparent 60%);
-      opacity: 0;
-      transform: translateX(-40%);
-      transition: opacity 0.7s ease, transform 0.9s ease;
-      pointer-events: none;
-    }
-
-    .strip.is-visible {
-      opacity: 1;
-      transform: translateY(0) scale(var(--strip-scale, 1));
-    }
-
-    .strip.is-visible::before {
-      opacity: 1;
-      transform: translateX(20%);
-    }
-
-    /* FAQ flip cards */
-    .faq-strip { margin-top: 10px; }
-
-    .faq-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .faq-card { perspective: 1200px; }
-
-    .faq-inner {
-      position: relative;
+      right: 0;
+      top: -34px;
+      margin: auto;
       width: 100%;
-      height: 260px;
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: #050509;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.7);
-      transform-style: preserve-3d;
-      transition: transform 0.6s ease;
+      height: 34px;
+      background: var(--accent-gradient);
+      animation: scrollDot 1.3s linear infinite;
     }
 
-    .faq-card.flipped .faq-inner { transform: rotateY(180deg); }
-
-    .faq-face {
-      position: absolute;
-      inset: 0;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
-      backface-visibility: hidden;
-      color: var(--text-main);
+    @keyframes scrollDot {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(34px); }
     }
 
-    .faq-back { transform: rotateY(180deg); }
-
-    .faq-icon { font-size: 26px; margin-bottom: 8px; }
-
-    .faq-question {
-      font-size: 18px;
-      font-weight: 800;
-      line-height: 1.4;
-      max-width: 85%;
-    }
-
-    .faq-answer {
-      font-size: 14px;
-      color: var(--text-soft);
-      line-height: 1.6;
-      max-width: 85%;
-    }
-
-    .faq-flip-btn {
-      align-self: flex-start;
-      margin-top: 8px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: none;
-      background-image: var(--accent-gradient);
-      color: #f9fafb;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.7);
-    }
-
-    .faq-flip-btn:hover {
-      transform: translateY(1px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.85);
-    }
-
-    /* Process */
+    /* PROCESS STYLES */
     .process-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
+      gap: 16px;
+      margin-top: 8px;
       position: relative;
-      margin-top: 6px;
     }
 
     .process-grid::before {
       content: "";
       position: absolute;
-      left: 5%;
-      right: 5%;
+      left: 6%;
+      right: 6%;
       top: 50%;
       height: 2px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(238,9,121,0.35), rgba(255,106,0,0.8), rgba(238,9,121,0.35));
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform 0.8s ease-out;
+      background: radial-gradient(circle, rgba(238,9,121,0.6), rgba(255,106,0,0.9));
+      opacity: 0;
+      transform: scaleX(0.5);
+      transform-origin: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
       pointer-events: none;
-      z-index: 0;
     }
 
-    .process-grid.line-visible::before { transform: scaleX(1); }
+    .panel-visible .process-grid::before {
+      opacity: 0.8;
+      transform: scaleX(1);
+    }
 
     .process-card {
-      border-radius: var(--radius-soft);
+      border-radius: 18px;
       background: #f9fafb;
-      padding: 18px 14px 16px;
       color: var(--text-dark);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
-      transform: translateY(24px);
+      padding: 14px 12px 14px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      transform: translateY(18px);
       opacity: 0;
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      position: relative;
-      z-index: 1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     .process-card.visible {
@@ -562,51 +497,52 @@
     }
 
     .process-step {
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--accent-teal);
       margin-bottom: 4px;
+      font-weight: 700;
     }
 
     .process-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .process-body {
-      font-size: 13px;
-      color: #374151;
+      font-size: 12px;
+      color: #4b5563;
     }
 
-    /* Pricing */
+    /* PRICING */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      gap: 16px;
+      margin-top: 6px;
     }
 
     .pricing-card {
-      border-radius: var(--radius-soft);
+      border-radius: 18px;
       background: #050509;
-      padding: 18px 16px 16px;
+      padding: 15px 13px 14px;
       color: var(--text-main);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.9);
       display: flex;
       flex-direction: column;
       gap: 6px;
-      transform: translateY(24px);
-      opacity: 0;
-      transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.2s ease, transform 0.2s ease;
-      position: relative;
-      overflow: hidden;
       border: 1px solid rgba(255,255,255,0.06);
+      transform: translateY(18px);
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, transform 0.2s ease;
     }
 
+    .pricing-card.visible { opacity: 1; transform: translateY(0); }
+
     .pricing-card.highlight { border-color: #ff6a00; }
-    .pricing-card.chosen   { border-color: #ff6a00; box-shadow: 0 16px 34px rgba(0,0,0,0.9); }
+    .pricing-card.chosen   { border-color: #ff6a00; box-shadow: 0 16px 34px rgba(0,0,0,1); }
 
     .pricing-card.chosen::before {
       content: "Chosen";
@@ -617,56 +553,52 @@
       border-radius: 999px;
       background: #f97316;
       color: #0b1120;
-      font-size: 10px;
+      font-size: 9px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       font-weight: 800;
     }
 
-    .pricing-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .pricing-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 20px 40px rgba(0,0,0,1);
     }
 
     .pricing-name {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       text-transform: uppercase;
     }
 
-    .pricing-label { font-size: 12px; color: var(--text-soft); }
+    .pricing-label { font-size: 11px; color: var(--text-soft); }
 
     .pricing-price {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--accent-yellow);
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .pricing-card.highlight .pricing-price { color: var(--accent-teal); }
 
     .pricing-list {
       list-style: none;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-soft);
-      margin-top: 8px;
-      margin-bottom: 10px;
+      margin-top: 6px;
+      margin-bottom: 8px;
     }
 
     .pricing-list li {
       display: flex;
       gap: 6px;
       margin-bottom: 4px;
+      align-items: flex-start;
     }
 
     .pricing-dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 999px;
       background: var(--accent-teal);
       margin-top: 5px;
@@ -678,12 +610,12 @@
     .pricing-cta {
       margin-top: auto;
       align-self: flex-start;
-      padding: 9px 16px;
+      padding: 8px 14px;
       border-radius: var(--radius-pill);
       border: none;
       background-image: var(--accent-gradient);
       color: #f9fafb;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -705,108 +637,104 @@
     .pricing-cta:hover::after { transform: translateX(130%); }
 
     .pricing-addons {
-      margin-top: 16px;
+      margin-top: 12px;
       font-size: 11px;
       color: var(--text-soft);
     }
 
-    /* Package details */
     #package-details {
-      margin-top: 22px;
-      border-radius: var(--radius-soft);
+      margin-top: 18px;
+      border-radius: 18px;
       background: #050509;
-      padding: 16px 16px 14px;
+      padding: 12px 13px 12px;
       color: var(--text-main);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.9);
       display: none;
-      font-size: 13px;
+      font-size: 12px;
       border: 1px solid rgba(255,255,255,0.08);
     }
 
     #package-details h3 {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 800;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
-    #package-details p { margin-bottom: 8px; color: var(--text-soft); }
-    #package-list { margin-left: 18px; margin-bottom: 12px; }
+    #package-list { margin-left: 18px; margin-bottom: 10px; }
     #package-list li { margin-bottom: 4px; }
 
     .package-contact-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
+      padding: 7px 12px;
       border-radius: var(--radius-pill);
       border: none;
       background-image: var(--accent-gradient);
       color: #f9fafb;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       box-shadow: 0 10px 24px rgba(0,0,0,0.8);
     }
 
-    /* Work */
+    /* WORK */
     .work-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      gap: 14px;
+      margin-top: 6px;
     }
 
     .work-card {
-      border-radius: var(--radius-soft);
+      border-radius: 18px;
       overflow: hidden;
       background: #050509;
       box-shadow: 0 12px 26px rgba(0, 0, 0, 0.9);
       cursor: pointer;
       position: relative;
-      transform: translateY(24px);
+      transform: translateY(18px);
       opacity: 0;
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, transform 0.2s ease;
       border: 1px solid rgba(255,255,255,0.06);
     }
 
-    .work-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .work-card.visible { opacity: 1; transform: translateY(0); }
 
     .work-inner { position: relative; height: 100%; overflow: hidden; }
 
     .work-card img {
       width: 100%;
-      height: 210px;
+      height: 200px;
       object-fit: cover;
       display: block;
       transform: translate3d(0,0,0) scale(1.03);
-      transition: transform 0.3s ease;
+      transition: transform 0.35s ease;
     }
 
     .work-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.85) 100%);
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.9) 100%);
       display: flex;
       align-items: flex-end;
-      padding: 14px;
+      padding: 12px;
       pointer-events: none;
       transform: translate3d(0,0,0);
-      transition: transform 0.3s ease;
+      transition: transform 0.35s ease;
     }
 
-    .work-meta { font-size: 13px; }
+    .work-meta { font-size: 12px; }
     .work-title { font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
     .work-sub { color: var(--text-soft); }
 
     .work-btn {
       margin-top: 6px;
-      padding: 5px 10px;
+      padding: 4px 9px;
       border-radius: var(--radius-pill);
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       border: none;
@@ -818,41 +746,104 @@
 
     .work-card:hover img { transform: translate3d(-6px,-6px,0) scale(1.08); }
     .work-card:hover .work-overlay { transform: translate3d(4px,4px,0); }
+    .work-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,1); }
 
-    /* Contact */
-    .contact-grid {
+    /* FAQ */
+    .faq-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 6px;
     }
 
-    .contact-card {
-      border-radius: var(--radius-soft);
-      background: #050509;
-      padding: 18px 16px 16px;
-      color: var(--text-main);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.9);
-      font-size: 14px;
-      transform: translateY(24px);
-      opacity: 0;
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    .faq-card { perspective: 1200px; }
+
+    .faq-inner {
       position: relative;
+      width: 100%;
+      height: 230px;
+      border-radius: 18px;
       border: 1px solid rgba(255,255,255,0.06);
+      background: #050509;
+      box-shadow: 0 16px 30px rgba(0,0,0,0.8);
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+      transform: translateY(18px);
+      opacity: 0;
     }
 
-    .contact-card.visible {
+    .faq-inner.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .contact-card strong {
+    .faq-card.flipped .faq-inner {
+      transform: rotateY(180deg);
+    }
+
+    .faq-face {
+      position: absolute;
+      inset: 0;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      backface-visibility: hidden;
+      color: var(--text-main);
+    }
+
+    .faq-back { transform: rotateY(180deg); }
+
+    .faq-icon { font-size: 24px; margin-bottom: 6px; }
+
+    .faq-question {
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.4;
+      max-width: 85%;
+    }
+
+    .faq-answer {
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.6;
+      max-width: 85%;
+    }
+
+    .faq-flip-btn {
+      align-self: flex-start;
+      margin-top: 6px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: none;
+      background-image: var(--accent-gradient);
+      color: #f9fafb;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.8);
+    }
+
+    /* CONTACT */
+    .contact-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      font-size: 13px;
+    }
+
+    .contact-item strong {
       font-weight: 800;
       text-transform: uppercase;
       font-size: 11px;
       letter-spacing: 0.16em;
+      color: var(--text-soft);
     }
-
-    .contact-row { margin-bottom: 12px; }
 
     .contact-note {
       font-size: 11px;
@@ -861,55 +852,40 @@
     }
 
     footer {
-      padding: 24px 0 30px;
+      padding: 18px 0 24px;
       font-size: 11px;
       color: #000000;
       text-shadow: 0 1px 3px rgba(255,255,255,0.4);
+      text-align: center;
     }
 
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    /* Responsive */
+    /* RESPONSIVE */
     @media (max-width: 960px) {
-      .hero-inner { grid-template-columns: minmax(0, 1fr); }
-      .hero-screen-wrap { margin: 0 auto; }
-      .hero-tagline-block { max-width: none; text-align: left; }
-
-      .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .contact-grid { grid-template-columns: minmax(0, 1fr); }
-      .scroll-progress { display: none; }
+      .work-grid,
+      .pricing-grid,
+      .process-grid,
+      .faq-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 720px) {
-      .nav-pills { gap: 12px; flex-wrap: wrap; }
+      .page-shell { padding-bottom: 60px; }
+      .scene { min-height: auto; }
+      .scene-inner { padding: 40px 0; }
 
-      .process-grid,
+      .work-grid,
       .pricing-grid,
-      .work-grid { grid-template-columns: minmax(0, 1fr); }
-
+      .process-grid,
       .faq-grid {
         grid-template-columns: minmax(0, 1fr);
       }
 
-      .faq-inner {
-        height: auto;
-        min-height: 220px;
+      .panel {
+        transform: translateY(30px) translateX(0);
       }
 
-      .strip { padding: 20px 16px 22px; }
-      .hero-tagline-main { font-size: 22px; }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+      .hero-title { font-size: 24px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -923,415 +899,426 @@
   </style>
 </head>
 <body>
-
-  <!-- Cursor halo -->
-  <div class="cursor-halo" id="cursorHalo"></div>
-
-  <!-- Scroll progress -->
-  <div class="scroll-progress">
-    <div class="scroll-progress-bar" id="scrollBar"></div>
+  <!-- central scroll track -->
+  <div class="scroll-track">
+    <div class="scroll-track-base"></div>
+    <div class="scroll-track-progress" id="scrollTrackProgress"></div>
   </div>
 
-  <!-- NAV -->
-  <div class="nav-shell">
-    <div class="container">
-      <nav class="nav-pills">
-        <button class="nav-pill" data-scroll="process-section">Process</button>
-        <button class="nav-pill" data-scroll="pricing-section">Pricing</button>
-        <button class="nav-pill" data-scroll="work-section">Work</button>
-        <button class="nav-pill" data-scroll="contact-section">Contact</button>
-      </nav>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <header class="hero" id="top">
-    <div class="container">
-      <div class="hero-inner">
-        <div class="hero-visual">
-          <div class="hero-screen-wrap" id="heroScreen">
-            <img src="assets/transctrl.png" alt="CTRL & CREATE hero graphic">
-          </div>
-          <div class="hero-doodle d1">⌘</div>
-          <div class="hero-doodle d2">&lt;/&gt;</div>
-          <div class="hero-doodle d3">★</div>
-        </div>
-        <div class="hero-tagline-block">
-          <h1 class="hero-tagline-main">
-            <span class="swap-word">
-              <span class="swap-word-text" id="heroSwap">AI-powered</span>
-            </span>
-            web design<br />
-            human-finished details
-          </h1>
-          <p class="hero-subcopy">
-            We use AI to speed up structure, copy, and assets — then finish everything by hand
-            so your site feels clean, on-brand, and ready to launch.
-          </p>
-          <div class="hero-badge">
-            <span class="hero-badge-dot"></span>
-            <span>Montreal-based studio • single &amp; multi-page builds</span>
-          </div>
-        </div>
+  <div class="page-shell">
+    <!-- top nav -->
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <button class="nav-pill" data-scroll="hero">
+          <span class="dot"></span> Intro
+        </button>
+        <button class="nav-pill" data-scroll="process-section">
+          <span class="dot"></span> Process
+        </button>
+        <button class="nav-pill" data-scroll="pricing-section">
+          <span class="dot"></span> Pricing
+        </button>
+        <button class="nav-pill" data-scroll="work-section">
+          <span class="dot"></span> Work
+        </button>
+        <button class="nav-pill" data-scroll="contact-section">
+          <span class="dot"></span> Contact
+        </button>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- PROCESS -->
-  <section id="process-section">
-    <div class="container">
-      <div class="strip js-strip">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Our workflow</div>
-            <h2 class="section-title">A simple, fast process</h2>
-          </div>
-          <p class="section-subtitle">
-            From first call to launch, we keep things clear and focused so you always know what we’re doing — and why.
-          </p>
+    <!-- HERO “INTRO” SCENE -->
+    <section class="hero-scene" id="hero">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          CTRL &amp; CREATE — Montréal
         </div>
 
-        <div class="process-grid" id="processGrid">
-          <article class="process-card js-step">
-            <div class="process-step">Step 1</div>
-            <div class="process-title">Discover</div>
-            <p class="process-body">
-              Tell us your goals, audience, and examples you like. We align on scope and timeline.
-            </p>
-          </article>
-          <article class="process-card js-step">
-            <div class="process-step">Step 2</div>
-            <div class="process-title">Design</div>
-            <p class="process-body">
-              We draft structure, copy, and visuals using AI + human review to lock the direction.
-            </p>
-          </article>
-          <article class="process-card js-step">
-            <div class="process-step">Step 3</div>
-            <div class="process-title">Build</div>
-            <p class="process-body">
-              We implement, optimize for mobile &amp; SEO, and integrate your tools.
-            </p>
-          </article>
-          <article class="process-card js-step">
-            <div class="process-step">Step 4</div>
-            <div class="process-title">Launch</div>
-            <p class="process-body">
-              We deploy, hand over assets, and offer maintenance to keep you sharp.
-            </p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing-section">
-    <div class="container">
-      <div class="strip js-strip">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Transparent pricing</div>
-            <h2 class="section-title">Three ways to ship your site</h2>
-          </div>
-          <p class="section-subtitle">
-            We stay roughly 20–40% below typical Montréal agency rates — without cutting corners on design or implementation.
-          </p>
+        <div class="hero-logo-wrap" id="heroLogo">
+          <img src="assets/transctrl.png" alt="CTRL & CREATE logo">
         </div>
 
-        <div class="pricing-grid">
-          <article class="pricing-card js-price" data-card="Starter">
-            <div class="pricing-name">Starter</div>
-            <div class="pricing-label">Perfect for launches</div>
-            <div class="pricing-price">$600–$900</div>
-            <ul class="pricing-list">
-              <li><span class="pricing-dot"></span><span>One-page site</span></li>
-              <li><span class="pricing-dot"></span><span>AI-assisted copy</span></li>
-              <li><span class="pricing-dot"></span><span>Responsive + basic SEO</span></li>
-              <li><span class="pricing-dot"></span><span>Contact form</span></li>
-            </ul>
-            <button class="pricing-cta pricing-btn" data-package="Starter">
-              Choose Starter
-            </button>
-          </article>
+        <h1 class="hero-title">
+          <span class="swap-word">
+            <span class="swap-word-text" id="heroSwap">AI-powered</span>
+          </span>
+          web design,<br>
+          human-finished details.
+        </h1>
 
-          <article class="pricing-card highlight js-price" data-card="Business Pro">
-            <div class="pricing-name">Business Pro</div>
-            <div class="pricing-label">Best value for SMBs</div>
-            <div class="pricing-price">$1,000–$1,800</div>
-            <ul class="pricing-list">
-              <li><span class="pricing-dot"></span><span>3–5 pages</span></li>
-              <li><span class="pricing-dot"></span><span>SEO setup</span></li>
-              <li><span class="pricing-dot"></span><span>Gallery / blog</span></li>
-              <li><span class="pricing-dot"></span><span>Analytics + handoff</span></li>
-            </ul>
-            <button class="pricing-cta pricing-btn" data-package="Business Pro">
-              Choose Business Pro
-            </button>
-          </article>
-
-          <article class="pricing-card js-price" data-card="Premium Custom">
-            <div class="pricing-name">Premium Custom</div>
-            <div class="pricing-label">Bigger scope, still fast</div>
-            <div class="pricing-price">$2,000–$3,500</div>
-            <ul class="pricing-list">
-              <li><span class="pricing-dot"></span><span>6–10 pages</span></li>
-              <li><span class="pricing-dot"></span><span>Brand integration</span></li>
-              <li><span class="pricing-dot"></span><span>Light e-commerce</span></li>
-              <li><span class="pricing-dot"></span><span>AI visuals &amp; copy</span></li>
-            </ul>
-            <button class="pricing-cta pricing-btn" data-package="Premium Custom">
-              Choose Premium
-            </button>
-          </article>
-        </div>
-
-        <div id="package-details" aria-live="polite">
-          <h3 id="package-heading">Choosing …</h3>
-          <p id="package-intro"></p>
-          <ul id="package-list"></ul>
-          <a id="package-contact" class="package-contact-btn" href="mailto:ctrlcreate@gmail.com">
-            <span>Contact us to start</span>
-          </a>
-        </div>
-
-        <p class="pricing-addons">
-          Add-ons: maintenance ($60–$100/mo), logo design ($150–$250), hosting setup ($150).
+        <p class="hero-copy">
+          We use AI to speed up structure, copy, and assets — then finish everything by hand so
+          your site feels clean, on-brand, and ready to launch.
         </p>
-      </div>
-    </div>
-  </section>
 
-  <!-- WORK -->
-  <section id="work-section">
-    <div class="container">
-      <div class="strip js-strip">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Selected work</div>
-            <h2 class="section-title">Sites we’ve brought to life</h2>
-          </div>
-          <p class="section-subtitle">
-            Show real builds with motion, clean copy, and AI-assisted workflows — including CTRL &amp; CREATE itself.
+        <div class="hero-badge-row">
+          <span class="hero-badge-chip">Single-page &amp; multi-page builds</span>
+          <span class="hero-badge-chip">Montreal-based studio</span>
+        </div>
+
+        <div class="hero-scroll">
+          <span>Scroll to explore</span>
+          <div class="hero-scroll-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS SCENE -->
+    <section class="scene" id="process-section">
+      <div class="scene-inner">
+        <div class="scene-left">
+          <div class="scene-label">Our workflow</div>
+          <h2 class="scene-title">A simple, fast process</h2>
+          <p class="scene-sub">
+            From first call to launch, we keep things clear and focused so
+            you always know what we’re doing — and why.
           </p>
         </div>
 
-        <div class="work-grid">
-          <a class="work-card js-work" href="https://paigesheffren.github.io/OOTD.com/" target="_blank" rel="noopener">
-            <div class="work-inner">
-              <img src="assets/work-OOTD.jpg" alt="OOTD site preview">
-              <div class="work-overlay">
-                <div class="work-meta">
-                  <div class="work-title">OOTD</div>
-                  <div class="work-sub">Outfit generator</div>
-                  <button class="work-btn">View site</button>
-                </div>
-              </div>
+        <div class="scene-right">
+          <div class="panel js-panel">
+            <div class="process-grid" id="processGrid">
+              <article class="process-card js-step">
+                <div class="process-step">Step 1</div>
+                <div class="process-title">Discover</div>
+                <p class="process-body">
+                  Tell us your goals, audience, and examples you like. We align on scope and timeline.
+                </p>
+              </article>
+              <article class="process-card js-step">
+                <div class="process-step">Step 2</div>
+                <div class="process-title">Design</div>
+                <p class="process-body">
+                  We draft structure, copy, and visuals using AI + human review to lock the direction.
+                </p>
+              </article>
+              <article class="process-card js-step">
+                <div class="process-step">Step 3</div>
+                <div class="process-title">Build</div>
+                <p class="process-body">
+                  We implement, optimize for mobile &amp; SEO, and integrate your tools.
+                </p>
+              </article>
+              <article class="process-card js-step">
+                <div class="process-step">Step 4</div>
+                <div class="process-title">Launch</div>
+                <p class="process-body">
+                  We deploy, hand over assets, and offer maintenance to keep you sharp.
+                </p>
+              </article>
             </div>
-          </a>
-
-          <a class="work-card js-work" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
-            <div class="work-inner">
-              <img src="assets/work-s3sammy.jpg" alt="S3 Sammy site preview">
-              <div class="work-overlay">
-                <div class="work-meta">
-                  <div class="work-title">S3 Sammy</div>
-                  <div class="work-sub">Automotive photo portfolio</div>
-                  <button class="work-btn">View site</button>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a class="work-card js-work" href="https://paigesheffren.github.io/working-bee.com/" target="_blank" rel="noopener">
-            <div class="work-inner">
-              <img src="assets/work-bee.jpg" alt="Working Bee site preview">
-              <div class="work-overlay">
-                <div class="work-meta">
-                  <div class="work-title">Working Bee</div>
-                  <div class="work-sub">Pre workout gummies</div>
-                  <button class="work-btn">View site</button>
-                </div>
-              </div>
-            </div>
-          </a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ / Q&A -->
-  <section id="faq-section">
-    <div class="container">
-      <div class="strip js-strip faq-strip">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Questions &amp; answers</div>
-            <h2 class="section-title">How working with us works</h2>
-          </div>
-          <p class="section-subtitle">
-            Quick answers to the stuff people usually ask before we start a project. Tap “flip card” to see more detail.
+    <!-- PRICING SCENE -->
+    <section class="scene" id="pricing-section">
+      <div class="scene-inner">
+        <div class="scene-left">
+          <div class="scene-label">Transparent pricing</div>
+          <h2 class="scene-title">Three ways to ship your site</h2>
+          <p class="scene-sub">
+            We stay roughly 20–40% below typical Montréal agency rates —
+            without cutting corners on design or implementation.
           </p>
         </div>
 
-        <div class="faq-grid">
-          <article class="faq-card">
-            <div class="faq-inner">
-              <div class="faq-face faq-front">
-                <div>
-                  <div class="faq-icon">💻</div>
-                  <h3 class="faq-question">What types of websites do you build?</h3>
-                </div>
-                <button class="faq-flip-btn" type="button">Flip card</button>
-              </div>
-              <div class="faq-face faq-back">
-                <p class="faq-answer">
-                  We do single-page landings, 3–10 page business sites, and light e-commerce or booking flows.
-                  Everything is custom-designed for your brand, not a generic template.
-                </p>
-                <button class="faq-flip-btn" type="button">Back</button>
-              </div>
-            </div>
-          </article>
+        <div class="scene-right">
+          <div class="panel js-panel">
+            <div class="pricing-grid">
+              <article class="pricing-card js-price" data-card="Starter">
+                <div class="pricing-name">Starter</div>
+                <div class="pricing-label">Perfect for launches</div>
+                <div class="pricing-price">$600–$900</div>
+                <ul class="pricing-list">
+                  <li><span class="pricing-dot"></span><span>One-page site</span></li>
+                  <li><span class="pricing-dot"></span><span>AI-assisted copy</span></li>
+                  <li><span class="pricing-dot"></span><span>Responsive + basic SEO</span></li>
+                  <li><span class="pricing-dot"></span><span>Contact form</span></li>
+                </ul>
+                <button class="pricing-cta pricing-btn" data-package="Starter">
+                  Choose Starter
+                </button>
+              </article>
 
-          <article class="faq-card">
-            <div class="faq-inner">
-              <div class="faq-face faq-front">
-                <div>
-                  <div class="faq-icon">⏱️</div>
-                  <h3 class="faq-question">How long does a typical project take?</h3>
-                </div>
-                <button class="faq-flip-btn" type="button">Flip card</button>
-              </div>
-              <div class="faq-face faq-back">
-                <p class="faq-answer">
-                  Most Starter builds ship in 1–2 weeks. Business Pro is usually 2–4 weeks.
-                  Premium Custom depends on scope, but we’ll give you a clear timeline before we start.
-                </p>
-                <button class="faq-flip-btn" type="button">Back</button>
-              </div>
-            </div>
-          </article>
+              <article class="pricing-card highlight js-price" data-card="Business Pro">
+                <div class="pricing-name">Business Pro</div>
+                <div class="pricing-label">Best value for SMBs</div>
+                <div class="pricing-price">$1,000–$1,800</div>
+                <ul class="pricing-list">
+                  <li><span class="pricing-dot"></span><span>3–5 pages</span></li>
+                  <li><span class="pricing-dot"></span><span>SEO setup</span></li>
+                  <li><span class="pricing-dot"></span><span>Gallery / blog</span></li>
+                  <li><span class="pricing-dot"></span><span>Analytics + handoff</span></li>
+                </ul>
+                <button class="pricing-cta pricing-btn" data-package="Business Pro">
+                  Choose Business Pro
+                </button>
+              </article>
 
-          <article class="faq-card">
-            <div class="faq-inner">
-              <div class="faq-face faq-front">
-                <div>
-                  <div class="faq-icon">🎯</div>
-                  <h3 class="faq-question">Can you redesign or improve my existing site?</h3>
-                </div>
-                <button class="faq-flip-btn" type="button">Flip card</button>
-              </div>
-              <div class="faq-face faq-back">
-                <p class="faq-answer">
-                  Yes. We can redesign around your current content, refresh the layout, or rebuild the whole thing
-                  while keeping your domain, SEO, and tools intact.
-                </p>
-                <button class="faq-flip-btn" type="button">Back</button>
-              </div>
+              <article class="pricing-card js-price" data-card="Premium Custom">
+                <div class="pricing-name">Premium Custom</div>
+                <div class="pricing-label">Bigger scope, still fast</div>
+                <div class="pricing-price">$2,000–$3,500</div>
+                <ul class="pricing-list">
+                  <li><span class="pricing-dot"></span><span>6–10 pages</span></li>
+                  <li><span class="pricing-dot"></span><span>Brand integration</span></li>
+                  <li><span class="pricing-dot"></span><span>Light e-commerce</span></li>
+                  <li><span class="pricing-dot"></span><span>AI visuals &amp; copy</span></li>
+                </ul>
+                <button class="pricing-cta pricing-btn" data-package="Premium Custom">
+                  Choose Premium
+                </button>
+              </article>
             </div>
-          </article>
 
-          <article class="faq-card">
-            <div class="faq-inner">
-              <div class="faq-face faq-front">
-                <div>
-                  <div class="faq-icon">📂</div>
-                  <h3 class="faq-question">What do you need from me before starting?</h3>
-                </div>
-                <button class="faq-flip-btn" type="button">Flip card</button>
-              </div>
-              <div class="faq-face faq-back">
-                <p class="faq-answer">
-                  A rough brief, any existing logo/brand assets, and a sense of your budget and deadline.
-                  We’ll guide you through the rest on a short kickoff call or email thread.
-                </p>
-                <button class="faq-flip-btn" type="button">Back</button>
-              </div>
+            <div id="package-details" aria-live="polite">
+              <h3 id="package-heading">Choosing …</h3>
+              <p id="package-intro"></p>
+              <ul id="package-list"></ul>
+              <a id="package-contact" class="package-contact-btn" href="mailto:ctrlcreate@gmail.com">
+                <span>Contact us to start</span>
+              </a>
             </div>
-          </article>
 
-          <article class="faq-card">
-            <div class="faq-inner">
-              <div class="faq-face faq-front">
-                <div>
-                  <div class="faq-icon">🤖</div>
-                  <h3 class="faq-question">How much of the project is actually done by AI?</h3>
-                </div>
-                <button class="faq-flip-btn" type="button">Flip card</button>
-              </div>
-              <div class="faq-face faq-back">
-                <p class="faq-answer">
-                  We use AI for drafts, structure, and ideas — then rewrite, redesign, and clean everything by hand.
-                  You always get a human-reviewed, on-brand final result.
-                </p>
-                <button class="faq-flip-btn" type="button">Back</button>
-              </div>
-            </div>
-          </article>
-
-          <article class="faq-card">
-            <div class="faq-inner">
-              <div class="faq-face faq-front">
-                <div>
-                  <div class="faq-icon">💳</div>
-                  <h3 class="faq-question">How do payments work for a website project?</h3>
-                </div>
-                <button class="faq-flip-btn" type="button">Flip card</button>
-              </div>
-              <div class="faq-face faq-back">
-                <p class="faq-answer">
-                  Typically 50% to reserve your slot and 50% on launch. For bigger projects, we can split it into
-                  milestones so it lines up with your cash flow.
-                </p>
-                <button class="faq-flip-btn" type="button">Back</button>
-              </div>
-            </div>
-          </article>
+            <p class="pricing-addons">
+              Add-ons: maintenance ($60–$100/mo), logo design ($150–$250), hosting setup ($150).
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contact-section">
-    <div class="container">
-      <div class="strip js-strip">
-        <div class="section-header">
-          <div>
-            <div class="section-kicker">Start a project</div>
-            <h2 class="section-title">Tell us what you’re building</h2>
+    <!-- WORK SCENE -->
+    <section class="scene" id="work-section">
+      <div class="scene-inner">
+        <div class="scene-left">
+          <div class="scene-label">Selected work</div>
+          <h2 class="scene-title">Sites we’ve brought to life</h2>
+          <p class="scene-sub">
+            Real builds with motion, clean copy, and AI-assisted workflows —
+            including CTRL &amp; CREATE itself.
+          </p>
+        </div>
+
+        <div class="scene-right">
+          <div class="panel js-panel">
+            <div class="work-grid">
+              <a class="work-card js-work" href="https://paigesheffren.github.io/OOTD.com/" target="_blank" rel="noopener">
+                <div class="work-inner">
+                  <img src="assets/work-OOTD.jpg" alt="OOTD site preview">
+                  <div class="work-overlay">
+                    <div class="work-meta">
+                      <div class="work-title">OOTD</div>
+                      <div class="work-sub">Outfit generator</div>
+                      <button class="work-btn">View site</button>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a class="work-card js-work" href="https://paigesheffren.github.io/s3sammy.com/" target="_blank" rel="noopener">
+                <div class="work-inner">
+                  <img src="assets/work-s3sammy.jpg" alt="S3 Sammy site preview">
+                  <div class="work-overlay">
+                    <div class="work-meta">
+                      <div class="work-title">S3 Sammy</div>
+                      <div class="work-sub">Automotive photo portfolio</div>
+                      <button class="work-btn">View site</button>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a class="work-card js-work" href="https://paigesheffren.github.io/working-bee.com/" target="_blank" rel="noopener">
+                <div class="work-inner">
+                  <img src="assets/work-bee.jpg" alt="Working Bee site preview">
+                  <div class="work-overlay">
+                    <div class="work-meta">
+                      <div class="work-title">Working Bee</div>
+                      <div class="work-sub">Pre workout gummies</div>
+                      <button class="work-btn">View site</button>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
           </div>
-          <p class="section-subtitle">
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SCENE -->
+    <section class="scene" id="faq-section">
+      <div class="scene-inner">
+        <div class="scene-left">
+          <div class="scene-label">Questions &amp; answers</div>
+          <h2 class="scene-title">How working with us works</h2>
+          <p class="scene-sub">
+            Quick answers to the stuff people usually ask before we start a project.
+            Tap “flip card” to see more detail.
+          </p>
+        </div>
+
+        <div class="scene-right">
+          <div class="panel js-panel">
+            <div class="faq-grid">
+              <article class="faq-card">
+                <div class="faq-inner">
+                  <div class="faq-face faq-front">
+                    <div>
+                      <div class="faq-icon">💻</div>
+                      <h3 class="faq-question">What types of websites do you build?</h3>
+                    </div>
+                    <button class="faq-flip-btn" type="button">Flip card</button>
+                  </div>
+                  <div class="faq-face faq-back">
+                    <p class="faq-answer">
+                      We do single-page landings, 3–10 page business sites, and light e-commerce or booking flows.
+                      Everything is custom-designed for your brand, not a generic template.
+                    </p>
+                    <button class="faq-flip-btn" type="button">Back</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="faq-card">
+                <div class="faq-inner">
+                  <div class="faq-face faq-front">
+                    <div>
+                      <div class="faq-icon">⏱️</div>
+                      <h3 class="faq-question">How long does a typical project take?</h3>
+                    </div>
+                    <button class="faq-flip-btn" type="button">Flip card</button>
+                  </div>
+                  <div class="faq-face faq-back">
+                    <p class="faq-answer">
+                      Most Starter builds ship in 1–2 weeks. Business Pro is usually 2–4 weeks.
+                      Premium Custom depends on scope, but we’ll give you a clear timeline before we start.
+                    </p>
+                    <button class="faq-flip-btn" type="button">Back</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="faq-card">
+                <div class="faq-inner">
+                  <div class="faq-face faq-front">
+                    <div>
+                      <div class="faq-icon">🎯</div>
+                      <h3 class="faq-question">Can you redesign or improve my existing site?</h3>
+                    </div>
+                    <button class="faq-flip-btn" type="button">Flip card</button>
+                  </div>
+                  <div class="faq-face faq-back">
+                    <p class="faq-answer">
+                      Yes. We can redesign around your current content, refresh the layout, or rebuild the whole thing
+                      while keeping your domain, SEO, and tools intact.
+                    </p>
+                    <button class="faq-flip-btn" type="button">Back</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="faq-card">
+                <div class="faq-inner">
+                  <div class="faq-face faq-front">
+                    <div>
+                      <div class="faq-icon">📂</div>
+                      <h3 class="faq-question">What do you need from me before starting?</h3>
+                    </div>
+                    <button class="faq-flip-btn" type="button">Flip card</button>
+                  </div>
+                  <div class="faq-face faq-back">
+                    <p class="faq-answer">
+                      A rough brief, any existing logo/brand assets, and a sense of your budget and deadline.
+                      We’ll guide you through the rest on a short kickoff call or email thread.
+                    </p>
+                    <button class="faq-flip-btn" type="button">Back</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="faq-card">
+                <div class="faq-inner">
+                  <div class="faq-face faq-front">
+                    <div>
+                      <div class="faq-icon">🤖</div>
+                      <h3 class="faq-question">How much of the project is actually done by AI?</h3>
+                    </div>
+                    <button class="faq-flip-btn" type="button">Flip card</button>
+                  </div>
+                  <div class="faq-face faq-back">
+                    <p class="faq-answer">
+                      We use AI for drafts, structure, and ideas — then rewrite, redesign, and clean everything by hand.
+                      You always get a human-reviewed, on-brand final result.
+                    </p>
+                    <button class="faq-flip-btn" type="button">Back</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="faq-card">
+                <div class="faq-inner">
+                  <div class="faq-face faq-front">
+                    <div>
+                      <div class="faq-icon">💳</div>
+                      <h3 class="faq-question">How do payments work for a website project?</h3>
+                    </div>
+                    <button class="faq-flip-btn" type="button">Flip card</button>
+                  </div>
+                  <div class="faq-face faq-back">
+                    <p class="faq-answer">
+                      Typically 50% to reserve your slot and 50% on launch. For bigger projects, we can split it into
+                      milestones so it lines up with your cash flow.
+                    </p>
+                    <button class="faq-flip-btn" type="button">Back</button>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SCENE -->
+    <section class="scene" id="contact-section">
+      <div class="scene-inner">
+        <div class="scene-left">
+          <div class="scene-label">Start a project</div>
+          <h2 class="scene-title">Tell us what you’re building</h2>
+          <p class="scene-sub">
             A quick brief is enough. We’ll reply with options, timelines, and a recommended package.
           </p>
         </div>
 
-        <div class="contact-grid">
-          <div class="contact-card js-contact">
-            <div class="contact-row">
-              <strong>Email</strong><br>
-              <a href="mailto:ctrlcreate@gmail.com">ctrlcreate@gmail.com</a>
-            </div>
-            <div class="contact-row">
-              <strong>Instagram</strong><br>
-              <a href="https://www.instagram.com/ctrl.create.mtl/" target="_blank" rel="noopener">@ctrl.create.mtl</a>
+        <div class="scene-right">
+          <div class="panel js-panel">
+            <div class="contact-panel">
+              <div class="contact-item">
+                <strong>Email</strong><br>
+                <a href="mailto:ctrlcreate@gmail.com">ctrlcreate@gmail.com</a>
+              </div>
+              <div class="contact-item">
+                <strong>Instagram</strong><br>
+                <a href="https://www.instagram.com/ctrl.create.mtl/" target="_blank" rel="noopener">@ctrl.create.mtl</a>
+              </div>
+              <p class="contact-note">
+                Share your idea, timeline, and any links or inspo. We’ll come back with a clear path to launch.
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-row">
-        <div>© 2025 CTRL &amp; CREATE — Montreal-based web design studio</div>
-        <div>AI-assisted • Human-finished • Conversion-minded</div>
-      </div>
-    </div>
-  </footer>
+    <footer>
+      © 2025 CTRL &amp; CREATE — Montreal-based web design studio · AI-assisted • Human-finished • Conversion-minded
+    </footer>
+  </div>
 
   <script>
     const prefersReduced =
@@ -1342,7 +1329,7 @@
       const el = document.getElementById(id);
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      const top = window.scrollY + rect.top - 40;
+      const top = window.scrollY + rect.top - 60;
       if (prefersReduced) {
         window.scrollTo(0, top);
       } else {
@@ -1357,58 +1344,65 @@
       });
     });
 
-    const heroScreen = document.getElementById("heroScreen");
-    if (heroScreen && !prefersReduced) {
-      heroScreen.addEventListener("mousemove", (e) => {
-        const rect = heroScreen.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        heroScreen.style.transform =
-          `rotateX(${y * -6}deg) rotateY(${x * 8}deg) translateY(0)`;
-      });
-      heroScreen.addEventListener("mouseleave", () => {
-        heroScreen.style.transform = "";
-      });
+    /* HERO WORD SWAP */
+    const swapEl = document.getElementById("heroSwap");
+    if (swapEl && !prefersReduced) {
+      const words = ["AI-powered", "Conversion-minded", "Launch-ready"];
+      let idx = 0;
+      setInterval(() => {
+        const next = (idx + 1) % words.length;
+        swapEl.classList.add("fade-out");
+        setTimeout(() => {
+          swapEl.textContent = words[next];
+          swapEl.classList.remove("fade-out");
+          swapEl.classList.add("fade-in");
+          setTimeout(() => swapEl.classList.remove("fade-in"), 320);
+          idx = next;
+        }, 220);
+      }, 4800);
     }
 
-    /* Intersection reveal */
+    /* PANEL REVEAL + CARD STAGGERS */
     if ("IntersectionObserver" in window && !prefersReduced) {
-      const stripObserver = new IntersectionObserver((entries) => {
+      const panelObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const strip = entry.target;
-            strip.classList.add("is-visible");
+            const panel = entry.target;
+            panel.classList.add("panel-visible");
 
-            const steps = strip.querySelectorAll(".js-step");
-            steps.forEach((el, i) => setTimeout(() => el.classList.add("visible"), i * 90));
+            const steps = panel.querySelectorAll(".js-step");
+            steps.forEach((el, i) =>
+              setTimeout(() => el.classList.add("visible"), i * 90)
+            );
 
-            const prices = strip.querySelectorAll(".js-price");
-            prices.forEach((el, i) => setTimeout(() => el.classList.add("visible"), i * 110));
+            const prices = panel.querySelectorAll(".js-price");
+            prices.forEach((el, i) =>
+              setTimeout(() => el.classList.add("visible"), i * 110)
+            );
 
-            const works = strip.querySelectorAll(".js-work");
-            works.forEach((el, i) => setTimeout(() => el.classList.add("visible"), i * 110));
+            const works = panel.querySelectorAll(".js-work");
+            works.forEach((el, i) =>
+              setTimeout(() => el.classList.add("visible"), i * 100)
+            );
 
-            const contacts = strip.querySelectorAll(".js-contact");
-            contacts.forEach((el, i) => setTimeout(() => el.classList.add("visible"), i * 120));
+            const faqInners = panel.querySelectorAll(".faq-inner");
+            faqInners.forEach((el, i) =>
+              setTimeout(() => el.classList.add("visible"), i * 100)
+            );
 
-            const pg = strip.querySelector(".process-grid");
-            if (pg) setTimeout(() => pg.classList.add("line-visible"), 200);
-
-            stripObserver.unobserve(strip);
+            panelObserver.unobserve(panel);
           }
         });
-      }, { threshold: 0.18 });
+      }, { threshold: 0.2 });
 
-      document.querySelectorAll(".js-strip").forEach(strip => stripObserver.observe(strip));
+      document.querySelectorAll(".js-panel").forEach(p => panelObserver.observe(p));
     } else {
-      document.querySelectorAll(".strip").forEach(s => s.classList.add("is-visible"));
-      document.querySelectorAll(".process-card,.pricing-card,.work-card,.contact-card")
+      document.querySelectorAll(".panel").forEach(p => p.classList.add("panel-visible"));
+      document.querySelectorAll(".process-card,.pricing-card,.work-card,.faq-inner")
         .forEach(el => el.classList.add("visible"));
-      const pg = document.querySelector(".process-grid");
-      if (pg) pg.classList.add("line-visible");
     }
 
-    /* pricing details + chosen state */
+    /* PRICING DETAILS */
     const PACKAGE_CONTENT = {
       "Starter": {
         intro: "Choosing Starter means you get a focused, fast-launch foundation:",
@@ -1475,108 +1469,53 @@
       btn.addEventListener("click", () => openPackage(btn.dataset.package));
     });
 
-    /* scroll-related extras: progress bar, gradient parallax, strip scale, nav active */
-    const scrollBar = document.getElementById("scrollBar");
-    const sectionIds = ["process-section", "pricing-section", "work-section", "contact-section"];
-    const sections = sectionIds.map(id => document.getElementById(id));
-    const navPills = document.querySelectorAll(".nav-pill");
-    const strips = document.querySelectorAll(".strip");
-
-    function updateScrollStuff() {
-      if (scrollBar) {
-        const h = document.documentElement;
-        const scrollTop = h.scrollTop || document.body.scrollTop;
-        const max = h.scrollHeight - h.clientHeight;
-        const pct = max > 0 ? (scrollTop / max) * 100 : 0;
-        scrollBar.style.height = pct + "%";
-
-        // Gradient parallax
-        document.body.style.backgroundPosition = `center ${-pct * 0.4}vh`;
-      }
-
-      const vh = window.innerHeight || 1;
-
-      // strip scale based on distance to center of viewport
-      strips.forEach(strip => {
-        const rect = strip.getBoundingClientRect();
-        const center = rect.top + rect.height / 2;
-        const dist = Math.abs(center - vh / 2);
-        const norm = Math.min(dist / (vh / 2), 1);
-        const scale = 1 + (1 - norm) * 0.04; // 1..1.04
-        strip.style.setProperty("--strip-scale", scale.toFixed(3));
-      });
-
-      // active nav section
-      let closestIndex = -1;
-      let closestDist = Infinity;
-      sections.forEach((sec, idx) => {
-        if (!sec) return;
-        const rect = sec.getBoundingClientRect();
-        const dist = Math.abs(rect.top - vh * 0.25);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closestIndex = idx;
-        }
-      });
-      navPills.forEach((pill, idx) => {
-        pill.classList.toggle("active", idx === closestIndex);
-      });
-    }
-
-    window.addEventListener("scroll", updateScrollStuff);
-    updateScrollStuff();
-
-    /* cursor halo */
-    const cursorHalo = document.getElementById("cursorHalo");
-    if (cursorHalo && !prefersReduced) {
-      let targetX = 0, targetY = 0;
-      let currentX = 0, currentY = 0;
-      let rafId;
-
-      function animateHalo() {
-        currentX += (targetX - currentX) * 0.16;
-        currentY += (targetY - currentY) * 0.16;
-        cursorHalo.style.transform = `translate3d(${currentX - 60}px, ${currentY - 60}px, 0)`;
-        rafId = requestAnimationFrame(animateHalo);
-      }
-
-      window.addEventListener("mousemove", (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-        cursorHalo.style.opacity = 1;
-        if (!rafId) animateHalo();
-      });
-
-      window.addEventListener("mouseleave", () => {
-        cursorHalo.style.opacity = 0;
-      });
-    }
-
-    /* hero word swap */
-    const swapEl = document.getElementById("heroSwap");
-    if (swapEl && !prefersReduced) {
-      const words = ["AI-powered", "Conversion-minded", "Launch-ready"];
-      let idx = 0;
-      setInterval(() => {
-        const next = (idx + 1) % words.length;
-        swapEl.classList.add("fade-out");
-        setTimeout(() => {
-          swapEl.textContent = words[next];
-          swapEl.classList.remove("fade-out");
-          swapEl.classList.add("fade-in");
-          setTimeout(() => swapEl.classList.remove("fade-in"), 350);
-          idx = next;
-        }, 250);
-      }, 5000);
-    }
-
-    // FAQ flip cards
+    /* FAQ flip */
     document.querySelectorAll(".faq-card").forEach(card => {
       const buttons = card.querySelectorAll(".faq-flip-btn");
       buttons.forEach(btn => {
         btn.addEventListener("click", () => card.classList.toggle("flipped"));
       });
     });
+
+    /* SCROLL TRACK + ACTIVE NAV */
+    const scrollTrack = document.getElementById("scrollTrackProgress");
+    const navPills = document.querySelectorAll(".nav-pill");
+    const sectionIds = ["hero", "process-section", "pricing-section", "work-section", "contact-section"];
+    const sections = sectionIds.map(id => document.getElementById(id));
+
+    function updateScrollStuff() {
+      const h = document.documentElement;
+      const scrollTop = h.scrollTop || document.body.scrollTop;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (scrollTop / max) * 100 : 0;
+
+      if (scrollTrack) {
+        scrollTrack.style.height = (pct * 0.7 + 10) + "%";
+      }
+      document.body.style.backgroundPosition = `center ${-pct * 0.4}vh`;
+
+      const vh = window.innerHeight || 1;
+      let closestIndex = 0;
+      let closestDist = Infinity;
+
+      sections.forEach((sec, idx) => {
+        if (!sec) return;
+        const rect = sec.getBoundingClientRect();
+        const dist = Math.abs(rect.top - vh * 0.3);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIndex = idx;
+        }
+      });
+
+      navPills.forEach((pill, idx) => {
+        pill.classList.toggle("active", idx === closestIndex);
+      });
+    }
+
+    window.addEventListener("scroll", updateScrollStuff);
+    window.addEventListener("resize", updateScrollStuff);
+    updateScrollStuff();
   </script>
 </body>
 </html>
